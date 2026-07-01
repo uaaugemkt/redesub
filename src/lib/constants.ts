@@ -94,31 +94,75 @@ export const PLANS = [
 export const PROBLEM_TIMELINE = [
   {
     time: "08:00",
-    title: "Chamada de trabalho travando",
-    description: "Reunião importante, imagem congelada, áudio cortando — e você perdendo credibilidade.",
-    pain: "Trava",
     icon: "video",
+    bad: {
+      title: "Chamada de trabalho travando",
+      description:
+        "Imagem congela, áudio corta e você perde credibilidade.",
+      badge: "TRAVA",
+      badgeKey: "trava",
+    },
+    good: {
+      title: "Reunião fluindo com estabilidade",
+      description:
+        "Com a RedeSub, vídeo e áudio seguem estáveis para você trabalhar sem interrupções.",
+      badge: "ESTÁVEL",
+      badgeKey: "estavel",
+    },
   },
   {
     time: "14:00",
-    title: "Vídeo carregando na aula",
-    description: "Criança esperando o buffer, aula interrompida e frustração tomando conta da sala.",
-    pain: "Carregando",
     icon: "school",
+    bad: {
+      title: "Vídeo carregando na aula",
+      description:
+        "Buffer constante, aula interrompida e frustração tomando conta.",
+      badge: "CARREGANDO",
+      badgeKey: "carregando",
+    },
+    good: {
+      title: "Aula fluindo sem pausas",
+      description:
+        "Com a RedeSub, o conteúdo roda melhor para estudar sem interrupções.",
+      badge: "FLUINDO",
+      badgeKey: "fluindo",
+    },
   },
   {
     time: "20:00",
-    title: "Filme travando na TV",
-    description: "Série no streaming, cena de suspense virando rodinha de loading. Noite perdida.",
-    pain: "Buffer",
     icon: "tv",
+    bad: {
+      title: "Filme travando na TV",
+      description:
+        "Série no streaming, cena de suspense virando rodinha de loading.",
+      badge: "BUFFER",
+      badgeKey: "buffer",
+    },
+    good: {
+      title: "Streaming sem interrupções",
+      description:
+        "Com a RedeSub, sua noite rende mais com filmes e séries rodando liso.",
+      badge: "SEM TRAVAS",
+      badgeKey: "sem-travas",
+    },
   },
   {
     time: "22:00",
-    title: "Jogo online com ping alto",
-    description: "Lag no multiplayer, time reclamando no chat e derrota garantida por culpa da conexão.",
-    pain: "Ping alto",
     icon: "game",
+    bad: {
+      title: "Jogo online com ping alto",
+      description:
+        "Lag no multiplayer, atraso nos comandos e derrota por culpa da conexão.",
+      badge: "PING ALTO",
+      badgeKey: "ping",
+    },
+    good: {
+      title: "Mais estabilidade para jogar",
+      description:
+        "Com a RedeSub, sua conexão responde melhor para jogar com mais tranquilidade.",
+      badge: "BAIXA LATÊNCIA",
+      badgeKey: "baixa-latencia",
+    },
   },
 ] as const;
 

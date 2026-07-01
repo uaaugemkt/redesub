@@ -1,18 +1,5 @@
+import AutoCompareTimelineItem from "../components/AutoCompareTimelineItem";
 import { PROBLEM_TIMELINE } from "../lib/constants";
-
-const ICONS: Record<string, string> = {
-  video: "📹",
-  school: "📚",
-  tv: "📺",
-  game: "🎮",
-};
-
-const PAIN_VARIANT: Record<string, string> = {
-  Trava: "trava",
-  Carregando: "carregando",
-  Buffer: "buffer",
-  "Ping alto": "ping",
-};
 
 export default function ProblemSection() {
   return (
@@ -29,34 +16,8 @@ export default function ProblemSection() {
         </div>
 
         <div className="problem__timeline">
-          {PROBLEM_TIMELINE.map((item, i) => (
-            <div
-              key={item.time}
-              className="problem__moment"
-              style={{ animationDelay: `${i * 120}ms` }}
-            >
-              <div className="problem__moment-time">{item.time}</div>
-              <div className="problem__moment-line" aria-hidden="true">
-                <div className="problem__moment-dot" />
-              </div>
-              <div className="problem__moment-card">
-                <span className="problem__moment-icon" aria-hidden="true">
-                  {ICONS[item.icon]}
-                </span>
-                <div className="problem__moment-body">
-                  <div className="problem__moment-head">
-                    <h3>{item.title}</h3>
-                    <span
-                      className={`problem__pain-tag problem__pain-tag--${PAIN_VARIANT[item.pain] ?? "default"}`}
-                    >
-                      <span className="problem__pain-dot" aria-hidden="true" />
-                      {item.pain}
-                    </span>
-                  </div>
-                  <p>{item.description}</p>
-                </div>
-              </div>
-            </div>
+          {PROBLEM_TIMELINE.map((item, index) => (
+            <AutoCompareTimelineItem key={item.time} item={item} index={index} />
           ))}
         </div>
 
