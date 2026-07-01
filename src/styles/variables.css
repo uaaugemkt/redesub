@@ -1,0 +1,41 @@
+:root {
+  /* Cores oficiais RedeSub */
+  --brand-blue: #00a1fd;
+  --brand-orange: #ff8300;
+  --brand-black: #000000;
+  --brand-white: #ffffff;
+
+  /* Profundidade premium (azul escuro) */
+  --blue: #0a2d6b;
+  --blue-light: #1a4fa0;
+  --blue-dark: #061d47;
+
+  /* CTAs e destaques */
+  --orange: #ff8300;
+  --orange-hover: #e67500;
+  --orange-light: #fff4e8;
+
+  --sky: #e6f7ff;
+  --white: #ffffff;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --shadow-sm: 0 2px 8px rgba(10, 45, 107, 0.08);
+  --shadow-md: 0 8px 32px rgba(10, 45, 107, 0.12);
+  --shadow-lg: 0 16px 48px rgba(10, 45, 107, 0.18);
+  --shadow-orange: 0 8px 28px rgba(255, 131, 0, 0.4);
+  --shadow-brand: 0 8px 32px rgba(0, 161, 253, 0.25);
+  --font: "Plus Jakarta Sans", system-ui, sans-serif;
+  --header-h: 88px;
+  --container: 1200px;
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}

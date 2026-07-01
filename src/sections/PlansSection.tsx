@@ -1,0 +1,114 @@
+import { useState } from "react";
+import { NONE_APP_ID, PLAN_APP_CONFIG, getAppDisplayName, isNoneApp } from "../config/apps";
+import { PLANS } from "../lib/constants";
+import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "../lib/whatsapp";
+import PlanAppSelector from "../components/PlanAppSelector";
+
+type Plan = (typeof PLANS)[number];
+
+export default function PlansSection() {
+  return (
+    <section className="plans section" id="planos">
+      <div className="container">
+        <div className="section__header section__header--center">
+          <span className="eyebrow">Escolha pelo seu uso</span>
+          <h2 className="section__title">Qual plano combina com sua casa?</h2>
+          <p className="section__desc">
+            Escolha o plano pelo seu uso, não só pelo número de megas. Fibra
+            para assistir, trabalhar, estudar e jogar ao mesmo tempo.
+          </p>
+        </div>
+
+        <div className="plans__grid">
+          {PLANS.map((plan) => (
+            <PlanCard key={plan.id} plan={plan} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PlanCard({ plan }: { plan: Plan }) {
+  const [selectedAppId, setSelectedAppId] = useState(NONE_APP_ID);
+  const [selectorOpen, setSelectorOpen] = useState(false);
+  const appConfig = PLAN_APP_CONFIG[plan.id] ?? {
+    includedAppIds: [],
+    additionalAppIds: [NONE_APP_ID],
+  };
+
+  const additionalAppName = isNoneApp(selectedAppId)
+    ? null
+    : getAppDisplayName(selectedAppId);
+
+  const whatsappHref = buildWhatsAppLink(
+    WHATSAPP_MESSAGES.planWithApp(plan.speed, additionalAppName)
+  );
+
+  return (
+    <article
+      className={`plan-card ${plan.recommended ? "plan-card--featured" : ""} ${selectorOpen ? "plan-card--selector-open" : ""}`}
+    >
+      {plan.badge && <span className="plan-card__badge">{plan.badge}</span>}
+
+      <div className="plan-card__header">
+        <span className="plan-card__name">{plan.name}</span>
+        <span className="plan-card__speed">{plan.speed}</span>
+      </div>
+
+      <div className="plan-card__price">
+        <span className="plan-card__currency">R$</span>
+        <span className="plan-card__amount">{plan.price}</span>
+        <span className="plan-card__period">/mês</span>
+      </div>
+      <p className="plan-card__note">
+        fale com a equipe e confirme disponibilidade
+      </p>
+
+      <p className="plan-card__profile">
+        <strong>Indicado para:</strong> {plan.profile}
+      </p>
+
+      <ul className="plan-card__features">
+        {plan.features.map((f) => (
+          <li key={f}>
+            <FeatureCheckIcon />
+            {f}
+          </li>
+        ))}
+      </ul>
+
+      <PlanAppSelector
+        includedAppIds={appConfig.includedAppIds}
+        availableAppIds={appConfig.additionalAppIds}
+        selectedAppId={selectedAppId}
+        onSelect={setSelectedAppId}
+        onOpenChange={setSelectorOpen}
+      />
+
+      <a
+        href={whatsappHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`btn ${plan.recommended ? "btn--primary" : "btn--secondary"} btn--md plan-card__cta`}
+      >
+        Quero esse plano
+      </a>
+    </article>
+  );
+}
+
+function FeatureCheckIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <circle cx="10" cy="10" r="10" fill="var(--sky)" />
+      <path
+        d="M6 10l3 3 5-6"
+        stroke="var(--blue)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
