@@ -830,7 +830,6 @@ ul {
   background: var(--white);
   position: relative;
   z-index: 5;
-  padding-bottom: 80px;
   overflow: visible;
 }
 
@@ -2513,67 +2512,53 @@ ul {
 }
 
 /* â”€â”€â”€ Mobile WhatsApp Bar â”€â”€â”€ */
-.mobile-wa-bar {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 90;
-  padding: 12px 16px;
-  padding-bottom: max(12px, env(safe-area-inset-bottom));
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid var(--gray-200);
-  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
-  transition:
-    transform 0.25s ease,
-    opacity 0.25s ease,
-    visibility 0.25s ease;
-}
-
-.mobile-wa-bar__btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 14px;
-  background: var(--orange);
-  color: var(--white);
-  font-family: var(--font);
-  font-size: 1rem;
-  font-weight: 700;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-orange);
-  transition: background var(--transition);
-}
-
-.mobile-wa-bar__btn:hover {
-  background: var(--orange-hover);
-}
-
 /* â”€â”€â”€ Desktop WhatsApp FAB â”€â”€â”€ */
 .desktop-wa-fab {
-  display: none;
+  display: flex;
   position: fixed;
-  bottom: 32px;
-  right: 32px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  right: 16px;
   z-index: 90;
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
+  min-width: 48px;
+  min-height: 48px;
   border-radius: 50%;
   background: #25d366;
   color: var(--white);
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
-  transition: transform var(--transition), box-shadow var(--transition);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    opacity 0.25s ease,
+    visibility 0.25s ease;
 }
 
 .desktop-wa-fab:hover {
   transform: scale(1.1);
   box-shadow: 0 8px 32px rgba(37, 211, 102, 0.5);
+}
+
+.desktop-wa-fab:focus-visible {
+  outline: 2px solid var(--brand-blue);
+  outline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .desktop-wa-fab {
+    bottom: 32px;
+    right: 32px;
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 320px) {
+  .desktop-wa-fab {
+    right: 12px;
+  }
 }
 
 /* â”€â”€â”€ Responsive â”€â”€â”€ */
@@ -2759,30 +2744,11 @@ ul {
     padding: 5px 10px 5px 6px;
   }
 
-  .mobile-wa-bar {
-    display: block;
-  }
-
-  body.has-problem-section-in-view .mobile-wa-bar {
+  body.has-problem-section-in-view .desktop-wa-fab {
     transform: translateY(110%);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-  }
-
-  .mobile-wa-bar__btn {
-    padding: 16px;
-    font-size: 1.05rem;
-  }
-
-  body {
-    padding-bottom: 80px;
-  }
-}
-
-@media (min-width: 769px) {
-  .desktop-wa-fab {
-    display: flex;
   }
 }
 

@@ -4,6 +4,7 @@ import PlansCarousel from "./PlansCarousel";
 import RegionFilter from "./RegionFilter";
 import WhatsAppButton from "./WhatsAppButton";
 import AppIcon from "./AppIcon";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 import {
   getAppDisplayName,
   getAppsByIds,
@@ -133,10 +134,15 @@ export default function PlanConfigurator() {
     };
   }, []);
 
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
   useEffect(() => {
-    document.body.classList.toggle("has-plans-summary", hasReachedConfigurator);
+    document.body.classList.toggle(
+      "has-plans-summary",
+      hasReachedConfigurator && isDesktop
+    );
     return () => document.body.classList.remove("has-plans-summary");
-  }, [hasReachedConfigurator]);
+  }, [hasReachedConfigurator, isDesktop]);
 
   useEffect(() => {
     const prev = prevRegionRef.current;

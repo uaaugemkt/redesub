@@ -1699,150 +1699,9 @@
   outline-offset: 2px;
 }
 
-/* Floating summary bar — portaled to body */
+/* Floating summary bar — portaled to body (desktop only) */
 :root {
   --plans-summary-height: 92px;
-}
-
-.floating-summary__compact {
-  display: none;
-}
-
-.floating-summary__desktop {
-  display: block;
-}
-
-.floating-summary__compact-main {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-  flex: 1;
-}
-
-.floating-summary__toggle {
-  flex-shrink: 0;
-  padding: 8px 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--brand-white);
-  color: var(--brand-blue);
-  font-size: 0.82rem;
-  font-weight: 700;
-  cursor: pointer;
-  min-height: 44px;
-}
-
-.floating-summary__toggle:focus-visible {
-  outline: 2px solid var(--brand-blue);
-  outline-offset: 2px;
-}
-
-.floating-summary__compact-copy {
-  min-width: 0;
-  flex: 1;
-}
-
-.floating-summary__compact-summary {
-  margin: 0;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--brand-navy);
-  line-height: 1.35;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.floating-summary__compact-price {
-  margin: 2px 0 0;
-  font-size: 0.92rem;
-  font-weight: 800;
-  color: var(--brand-blue);
-}
-
-.floating-summary__compact-action {
-  flex-shrink: 0;
-}
-
-.floating-summary__sheet {
-  position: fixed;
-  inset: 0;
-  z-index: 110;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.floating-summary__sheet-backdrop {
-  position: absolute;
-  inset: 0;
-  border: none;
-  background: rgba(1, 15, 26, 0.45);
-  cursor: pointer;
-}
-
-.floating-summary__sheet-panel {
-  position: relative;
-  z-index: 1;
-  width: min(100%, 480px);
-  max-height: min(75vh, 560px);
-  margin: 0;
-  padding: 0;
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-  background: var(--brand-white);
-  box-shadow: 0 -12px 40px rgba(1, 15, 26, 0.18);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.floating-summary__sheet-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 16px 18px;
-  border-bottom: 1px solid var(--border);
-}
-
-.floating-summary__sheet-header h2 {
-  margin: 0;
-  font-size: 1rem;
-  color: var(--brand-navy);
-}
-
-.floating-summary__sheet-close {
-  border: none;
-  background: none;
-  color: var(--brand-blue);
-  font-size: 0.88rem;
-  font-weight: 700;
-  cursor: pointer;
-  padding: 8px;
-  min-height: 44px;
-}
-
-.floating-summary__sheet-body {
-  padding: 16px 18px;
-  overflow-y: auto;
-  display: grid;
-  gap: 14px;
-}
-
-.floating-summary__sheet-price {
-  padding-top: 8px;
-  border-top: 1px solid var(--border);
-}
-
-.floating-summary__sheet-footer {
-  padding: 14px 18px max(14px, env(safe-area-inset-bottom));
-  border-top: 1px solid var(--border);
-}
-
-.floating-summary__sheet-footer .floating-summary__cta {
-  width: 100%;
-  justify-content: center;
 }
 
 .floating-summary {
@@ -1973,72 +1832,18 @@
   max-height: 54px;
 }
 
-body.has-plans-summary {
-  padding-bottom: calc(var(--plans-summary-height, 96px) + env(safe-area-inset-bottom) + 24px);
-}
+@media (min-width: 768px) {
+  body.has-plans-summary {
+    padding-bottom: calc(var(--plans-summary-height, 96px) + env(safe-area-inset-bottom) + 24px);
+  }
 
-body.has-plans-summary .desktop-wa-fab {
-  bottom: calc(var(--plans-summary-height) + 20px);
-  z-index: 90;
-}
-
-body.has-plans-summary .mobile-wa-bar {
-  display: none;
+  body.has-plans-summary .desktop-wa-fab {
+    bottom: calc(var(--plans-summary-height) + 20px);
+    z-index: 90;
+  }
 }
 
 @media (max-width: 767px) {
-  :root {
-    --plans-summary-height: 96px;
-  }
-
-  .floating-summary__desktop {
-    display: none;
-  }
-
-  .floating-summary__compact {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "main"
-      "cta";
-    gap: 10px;
-    padding: 10px 16px max(10px, env(safe-area-inset-bottom));
-  }
-
-  .floating-summary__compact-main {
-    grid-area: main;
-  }
-
-  .floating-summary__compact-action {
-    grid-area: cta;
-  }
-
-  @media (min-width: 360px) {
-    .floating-summary__compact {
-      grid-template-columns: minmax(0, 1fr) auto;
-      grid-template-areas: "main cta";
-      align-items: center;
-    }
-
-    .floating-summary__compact-action .floating-summary__cta {
-      width: auto;
-      min-width: 132px;
-    }
-  }
-
-  .floating-summary__compact-main {
-    align-items: flex-start;
-  }
-
-  .floating-summary__compact-action .floating-summary__cta {
-    width: 100%;
-    justify-content: center;
-    min-height: 48px;
-    max-height: 54px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
-
   .plans-configurator-section {
     padding-top: clamp(24px, 4vw, 32px);
     padding-bottom: clamp(32px, 5vw, 48px);

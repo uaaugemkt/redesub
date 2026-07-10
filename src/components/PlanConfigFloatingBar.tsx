@@ -1,11 +1,12 @@
-import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import type { ReactNode } from "react";
 import {
   MapPinIcon,
   PlusCircleIcon,
   WifiIcon,
 } from "./icons/BenefitIcons";
 import { buildWhatsAppLink } from "../lib/whatsapp";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 
 export function formatCompactAddons(addonNames: string[]): string {
   if (addonNames.length === 0) return "Nenhum selecionado";
@@ -31,17 +32,14 @@ interface PlanConfigFloatingBarProps {
   onReview: () => void;
 }
 
-function SummaryItem({
-  icon,
-  label,
-  value,
-  empty,
-}: {
+interface SummaryItemProps {
   icon: ReactNode;
   label: string;
   value: string;
   empty?: boolean;
-}) {
+}
+
+function SummaryItem({ icon, label, value, empty }: SummaryItemProps) {
   return (
     <div className="floating-summary__item">
       <span className="floating-summary__icon" aria-hidden="true">
@@ -59,20 +57,8 @@ function SummaryItem({
   );
 }
 
-function getCompactSummary(
-  activeStep: ConfigStep,
-  regionName: string | null,
-  planName: string | null,
-  speed: string | null
-): string {
-  if (activeStep === 1 || !regionName) return "Escolha sua região";
-  if (!planName) return `${regionName} · Escolha um plano`;
-  return speed ? `${planName} · ${speed}` : planName;
-}
-
 export default function PlanConfigFloatingBar({
   visible,
-  activeStep,
   regionName,
   planName,
   speed,
@@ -85,10 +71,7 @@ export default function PlanConfigFloatingBar({
   onContinue,
   onReview,
 }: PlanConfigFloatingBarProps) {
-  const compactRef = useRef<HTMLDivElement>(null);
-  const sheetRef = useRef<HTMLDivElement>(null);
-  const [expanded, setExpanded] = useState(false);
-  const sheetTitleId = useId();
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const hasRegion = !!regionName;
   const hasPlan = !!planName;
@@ -116,54 +99,11 @@ export default function PlanConfigFloatingBar({
   const planLabel = hasPlan && speed ? `${planName} — ${speed}` : "Não selecionado";
   const regionLabel = regionName ?? "Não selecionada";
   const priceLabel = price ? `R$ ${price}/mês` : "—";
-  const compactSummary = getCompactSummary(activeStep, regionName, planName, speed);
-  const showPrice = hasPlan && !!price;
-  const ctaDisabled = !hasRegion || (activeStep >= 2 && !hasPlan);
+  const ctaDisabled = !hasRegion || (hasRegion && !hasPlan && !showWhatsApp);
 
-  const closeSheet = useCallback(() => setExpanded(false), []);
-
-  useEffect(() => {
-    if (!visible) setExpanded(false);
-  }, [visible]);
-
-  useEffect(() => {
-    if (!expanded) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeSheet();
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [expanded, closeSheet]);
-
-  useEffect(() => {
-    document.body.style.overflow = expanded ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [expanded]);
-
-  useEffect(() => {
-    if (!visible) return;
-
-    const node = compactRef.current;
-    if (!node) return;
-
-    const updateHeight = () => {
-      const height = node.getBoundingClientRect().height;
-      document.documentElement.style.setProperty(
-        "--plans-summary-height",
-        `${Math.ceil(height)}px`
-      );
-    };
-
-    updateHeight();
-    const observer = new ResizeObserver(updateHeight);
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, [visible, expanded, activeStep, showPrice, actionLabel]);
+  if (!isDesktop || !visible) {
+    return null;
+  }
 
   const bar = (
     <div
@@ -171,27 +111,34 @@ export default function PlanConfigFloatingBar({
       aria-label="Resumo da configuração"
       aria-hidden={!visible}
     >
-      <div ref={compactRef} className="floating-summary__compact">
-        <div className="floating-summary__compact-main">
-          <button
-            type="button"
-            className="floating-summary__toggle"
-            aria-expanded={expanded}
-            aria-controls={sheetTitleId}
-            onClick={() => setExpanded((open) => !open)}
-          >
-            {expanded ? "Fechar resumo" : "Ver resumo"}
-          </button>
-
-          <div className="floating-summary__compact-copy">
-            <p className="floating-summary__compact-summary">{compactSummary}</p>
-            {showPrice ? (
-              <p className="floating-summary__compact-price">{priceLabel}</p>
-            ) : null}
-          </div>
+      <div className="floating-summary__inner container">
+        <div className="floating-summary__items" aria-live="polite">
+          <SummaryItem
+            icon={<MapPinIcon />}
+            label="Região"
+            value={regionLabel}
+            empty={!hasRegion}
+          />
+          <SummaryItem
+            icon={<WifiIcon />}
+            label="Plano"
+            value={planLabel}
+            empty={!hasPlan}
+          />
+          <SummaryItem
+            icon={<PlusCircleIcon />}
+            label="Adicionais"
+            value={addonsLabel}
+            empty={addonNames.length === 0}
+          />
         </div>
 
-        <div className="floating-summary__compact-action">
+        <div className="floating-summary__pricing">
+          <p className="floating-summary__price-label">Mensalidade estimada</p>
+          <p className="floating-summary__price-value">{priceLabel}</p>
+        </div>
+
+        <div className="floating-summary__action">
           {showWhatsApp ? (
             <a
               href={buildWhatsAppLink(whatsappMessage)}
@@ -215,139 +162,6 @@ export default function PlanConfigFloatingBar({
           )}
         </div>
       </div>
-
-      <div className="floating-summary__desktop">
-        <div className="floating-summary__inner container">
-          <div className="floating-summary__items" aria-live="polite">
-            <SummaryItem
-              icon={<MapPinIcon />}
-              label="Região"
-              value={regionLabel}
-              empty={!hasRegion}
-            />
-            <SummaryItem
-              icon={<WifiIcon />}
-              label="Plano"
-              value={planLabel}
-              empty={!hasPlan}
-            />
-            <SummaryItem
-              icon={<PlusCircleIcon />}
-              label="Adicionais"
-              value={addonsLabel}
-              empty={addonNames.length === 0}
-            />
-          </div>
-
-          <div className="floating-summary__pricing">
-            <p className="floating-summary__price-label">Mensalidade estimada</p>
-            <p className="floating-summary__price-value">{priceLabel}</p>
-          </div>
-
-          <div className="floating-summary__action">
-            {showWhatsApp ? (
-              <a
-                href={buildWhatsAppLink(whatsappMessage)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn--primary btn--md floating-summary__cta"
-                tabIndex={visible ? 0 : -1}
-              >
-                {actionLabel}
-              </a>
-            ) : (
-              <button
-                type="button"
-                className="btn btn--primary btn--md floating-summary__cta"
-                tabIndex={visible ? 0 : -1}
-                disabled={ctaDisabled}
-                onClick={handleAction}
-              >
-                {actionLabel}
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {expanded ? (
-        <div className="floating-summary__sheet" role="presentation">
-          <button
-            type="button"
-            className="floating-summary__sheet-backdrop"
-            aria-label="Fechar resumo"
-            onClick={closeSheet}
-          />
-          <div
-            ref={sheetRef}
-            className="floating-summary__sheet-panel"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={sheetTitleId}
-          >
-            <header className="floating-summary__sheet-header">
-              <h2 id={sheetTitleId}>Resumo da contratação</h2>
-              <button
-                type="button"
-                className="floating-summary__sheet-close"
-                onClick={closeSheet}
-              >
-                Fechar
-              </button>
-            </header>
-
-            <div className="floating-summary__sheet-body">
-              <SummaryItem
-                icon={<MapPinIcon />}
-                label="Região"
-                value={regionLabel}
-                empty={!hasRegion}
-              />
-              <SummaryItem
-                icon={<WifiIcon />}
-                label="Plano"
-                value={planLabel}
-                empty={!hasPlan}
-              />
-              <SummaryItem
-                icon={<PlusCircleIcon />}
-                label="Adicionais"
-                value={addonsLabel}
-                empty={addonNames.length === 0}
-              />
-              <div className="floating-summary__sheet-price">
-                <p className="floating-summary__price-label">Mensalidade estimada</p>
-                <p className="floating-summary__price-value">{priceLabel}</p>
-              </div>
-            </div>
-
-            <div className="floating-summary__sheet-footer">
-              {showWhatsApp ? (
-                <a
-                  href={buildWhatsAppLink(whatsappMessage)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn--primary btn--md floating-summary__cta"
-                >
-                  {actionLabel}
-                </a>
-              ) : (
-                <button
-                  type="button"
-                  className="btn btn--primary btn--md floating-summary__cta"
-                  disabled={ctaDisabled}
-                  onClick={() => {
-                    handleAction();
-                    closeSheet();
-                  }}
-                >
-                  {actionLabel}
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      ) : null}
     </div>
   );
 
