@@ -9,7 +9,7 @@ export interface InternalHeroBreadcrumb {
 interface InternalHeroProps {
   eyebrow?: string;
   title: string;
-  description: string;
+  description?: string;
   breadcrumbs?: InternalHeroBreadcrumb[];
   variant?: "default" | "compact";
   highlights?: readonly string[];
@@ -66,7 +66,7 @@ export default function InternalHero({
           <h1 id={titleId} className="internal-hero__title">
             {title}
           </h1>
-          <p className="internal-hero__desc">{description}</p>
+          {description && <p className="internal-hero__desc">{description}</p>}
 
           {highlights && highlights.length > 0 && (
             <ul className="internal-hero__highlights">

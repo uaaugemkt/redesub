@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import PlanConfigurator from "../components/PlanConfigurator";
 import FAQ from "../components/ui/FAQ";
 import InternalHero from "../components/layout/InternalHero";
@@ -11,7 +10,6 @@ import { usePageMeta } from "../hooks/usePageMeta";
 import { getRegionById } from "../lib/plans";
 import { WHATSAPP_MESSAGES } from "../lib/whatsapp";
 import AppsSection from "../sections/AppsSection";
-import CompareSection from "../sections/CompareSection";
 
 const PLANS_FAQ = [
   {
@@ -66,47 +64,20 @@ export default function PlansPage() {
       : WHATSAPP_MESSAGES.plansConsult(regionName);
 
   return (
-    <>
+    <div className="plans-page">
       <InternalHero
+        variant="compact"
         eyebrow="Planos de fibra"
         title="Escolha o plano certo para sua casa"
-        description="Configure região, plano e adicionais em um único fluxo e envie sua escolha para a equipe RedeSub confirmar disponibilidade e valor final."
         breadcrumbs={[
           { label: "Início", path: "/" },
           { label: "Planos" },
         ]}
-      >
-        <a href="#plan-configurator" className="btn btn--primary btn--lg btn--hero">
-          Começar configuração
-        </a>
-        <Link to="/cobertura" className="btn btn--outline-light btn--lg">
-          Ver cobertura
-        </Link>
-      </InternalHero>
+      />
 
       <PlanConfigurator />
 
-      <section className="plans-info-divider section">
-        <div className="container">
-          <div className="plans-info-divider__inner">
-            <span className="eyebrow">Conheça os benefícios</span>
-            <h2 className="section__title">
-              Tudo o que pode fazer parte da sua experiência RedeSub
-            </h2>
-            <p className="section__desc">
-              Veja serviços, recursos e informações que ajudam você a entender
-              melhor os planos.
-            </p>
-          </div>
-        </div>
-      </section>
-
       <AppsSection variant="full" informativeOnly />
-
-      <CompareSection
-        eyebrow="Por que escolher a RedeSub?"
-        backHref="#plan-configurator"
-      />
 
       <section className="section section--muted">
         <div className="container container--narrow">
@@ -117,7 +88,7 @@ export default function PlansPage() {
         </div>
       </section>
 
-      <section className="plans-cta section" aria-labelledby="plans-cta-title">
+      <section className="plans-cta section" id="plans-cta" aria-labelledby="plans-cta-title">
         <div className="container">
           <Reveal>
             <div className="plans-cta__card">
@@ -142,6 +113,6 @@ export default function PlansPage() {
           </Reveal>
         </div>
       </section>
-    </>
+    </div>
   );
 }
