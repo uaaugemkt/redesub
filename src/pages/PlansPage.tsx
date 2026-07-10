@@ -1,6 +1,7 @@
+import { useLayoutEffect } from "react";
 import PlanConfigurator from "../components/PlanConfigurator";
 import FAQ from "../components/ui/FAQ";
-import InternalHero from "../components/layout/InternalHero";
+import InternalPageHero from "../components/layout/InternalPageHero";
 import Reveal from "../components/ui/Reveal";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { getAppDisplayName } from "../config/apps";
@@ -46,7 +47,21 @@ const PLANS_FAQ = [
 
 export default function PlansPage() {
   usePageMeta(PAGE_META.planos);
-  const { regionId, regionName, selectedPlanId, selectedAddonIds } = useSelection();
+  const {
+    regionId,
+    regionName,
+    selectedPlanId,
+    selectedAddonIds,
+    setRegionId,
+    setSelectedPlanId,
+    clearAddons,
+  } = useSelection();
+
+  useLayoutEffect(() => {
+    setRegionId(null);
+    setSelectedPlanId(null);
+    clearAddons();
+  }, [setRegionId, setSelectedPlanId, clearAddons]);
 
   const region = regionId ? getRegionById(regionId) : null;
   const plan = region?.plans.find((p) => p.id === selectedPlanId);
@@ -65,8 +80,7 @@ export default function PlansPage() {
 
   return (
     <div className="plans-page">
-      <InternalHero
-        variant="compact"
+      <InternalPageHero
         eyebrow="Planos de fibra"
         title="Escolha o plano certo para sua casa"
         breadcrumbs={[

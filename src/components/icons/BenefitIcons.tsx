@@ -76,6 +76,20 @@ export function MessageCircleIcon({ className }: BenefitIconProps) {
   );
 }
 
+export function PlusCircleIcon({ className }: BenefitIconProps) {
+  return (
+    <IconShell className={className}>
+      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.75" />
+      <path
+        d="M12 8v8M8 12h8"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+      />
+    </IconShell>
+  );
+}
+
 export function CalendarCheckIcon({ className }: BenefitIconProps) {
   return (
     <IconShell className={className}>

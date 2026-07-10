@@ -12,7 +12,7 @@ import {
   type AppCategory,
 } from "../config/apps";
 import { useSelection } from "../context/SelectionContext";
-import { DEFAULT_REGION_ID, getRegionById } from "../lib/plans";
+import { getRegionById } from "../lib/plans";
 import { scrollToElement } from "../lib/scroll";
 import { WHATSAPP_MESSAGES } from "../lib/whatsapp";
 
@@ -49,15 +49,17 @@ export default function PlanConfigurator() {
   const [addonsReady, setAddonsReady] = useState(false);
   const [hasReachedConfigurator, setHasReachedConfigurator] = useState(false);
   const [isFinalCtaVisible, setIsFinalCtaVisible] = useState(false);
+  const regionRef = useRef<HTMLElement>(null);
+  const plansRef = useRef<HTMLElement>(null);
   const addonsRef = useRef<HTMLElement>(null);
   const reviewRef = useRef<HTMLElement>(null);
   const configTopRef = useRef<HTMLDivElement>(null);
-  const prevRegionRef = useRef(regionId ?? DEFAULT_REGION_ID);
+  const prevRegionRef = useRef<string | null>(regionId);
 
-  const activeRegionId = regionId ?? DEFAULT_REGION_ID;
-  const region = getRegionById(activeRegionId);
+  const region = regionId ? getRegionById(regionId) : null;
   const plans = region?.plans ?? [];
-  const hasPlans = plans.length > 0;
+  const hasRegion = !!regionId;
+  const hasPlans = hasRegion && plans.length > 0;
   const selectedPlan = plans.find((p) => p.id === selectedPlanId) ?? null;
 
   const appConfig = selectedPlan
@@ -72,13 +74,16 @@ export default function PlanConfigurator() {
     : [];
 
   const optionalAddonIds =
-    appConfig?.additionalAppIds.filter((id) => !isNoneApp(id)) ?? [];
+    appConfig?.additionalAppIds.filter(
+      (id) => !isNoneApp(id) && !appConfig.includedAppIds.includes(id)
+    ) ?? [];
 
   const optionalApps = getAppsByIds(optionalAddonIds);
+  const hasIncludedApps = includedApps.length > 0;
 
   const addonNames = selectedAddonIds.map((id) => getAppDisplayName(id));
 
-  const maxReachableStep: ConfigStep = !hasPlans
+  const maxReachableStep: ConfigStep = !hasRegion || !hasPlans
     ? 1
     : !selectedPlan
       ? 2
@@ -86,8 +91,7 @@ export default function PlanConfigurator() {
         ? 3
         : 4;
 
-  const shouldShowFloatingSummary =
-    !!selectedPlan && hasReachedConfigurator && !isFinalCtaVisible;
+  const shouldShowFloatingSummary = hasReachedConfigurator && !isFinalCtaVisible;
 
   useEffect(() => {
     const configTop = configTopRef.current;
@@ -130,22 +134,27 @@ export default function PlanConfigurator() {
   }, []);
 
   useEffect(() => {
-    const reserveSpace = !!selectedPlan && hasReachedConfigurator;
-    document.body.classList.toggle("has-plans-summary", reserveSpace);
+    document.body.classList.toggle("has-plans-summary", hasReachedConfigurator);
     return () => document.body.classList.remove("has-plans-summary");
-  }, [selectedPlan, hasReachedConfigurator]);
+  }, [hasReachedConfigurator]);
 
   useEffect(() => {
     const prev = prevRegionRef.current;
-    if (prev !== activeRegionId) {
-      setSelectedPlanId(null);
-      clearAddons();
-      setAddonsReady(false);
-      const nextRegion = getRegionById(activeRegionId);
+    if (prev === regionId) return;
+
+    setSelectedPlanId(null);
+    clearAddons();
+    setAddonsReady(false);
+
+    if (regionId) {
+      const nextRegion = getRegionById(regionId);
       setActiveStep((nextRegion?.plans.length ?? 0) > 0 ? 2 : 1);
-      prevRegionRef.current = activeRegionId;
+    } else {
+      setActiveStep(1);
     }
-  }, [activeRegionId, setSelectedPlanId, clearAddons]);
+
+    prevRegionRef.current = regionId;
+  }, [regionId, setSelectedPlanId, clearAddons]);
 
   useEffect(() => {
     clearAddons();
@@ -235,6 +244,7 @@ export default function PlanConfigurator() {
 
             <div className="plans-configurator-steps">
               <section
+                ref={regionRef}
                 className={`${stepClass(1)} plan-step--region`}
                 id="plan-config-step-1"
                 aria-labelledby="plan-config-region-title"
@@ -251,10 +261,15 @@ export default function PlanConfigurator() {
                   hideEmptyOption
                   showHint={false}
                 />
+                {!hasRegion && (
+                  <p className="plan-step__status" role="status">
+                    Escolha sua região para visualizar os planos disponíveis.
+                  </p>
+                )}
                 <p className="plan-step__note">
                   Os preços e planos exibidos dependem da região selecionada.
                 </p>
-                {!hasPlans && (
+                {hasRegion && !hasPlans && (
                   <div className="plans__empty plans__empty--consult" role="status">
                     <p>
                       Os planos desta região são definidos conforme a disponibilidade
@@ -270,35 +285,46 @@ export default function PlanConfigurator() {
                 )}
               </section>
 
-              {hasPlans && (
-                <section
-                  className={`${stepClass(2)} plan-step--plans`}
-                  id="plan-config-step-2"
-                  aria-labelledby="plan-config-plans-title"
-                >
-                  <h3 className="plan-step__title" id="plan-config-plans-title">
-                    2. Escolha o plano ideal para sua rotina
-                  </h3>
-                  <p className="plan-step__desc">
-                    Compare velocidade, indicação de uso e benefícios antes de continuar.
+              <section
+                ref={plansRef}
+                className={`${stepClass(2)} plan-step--plans${!hasRegion ? " plan-step--locked" : ""}`}
+                id="plan-config-step-2"
+                aria-labelledby="plan-config-plans-title"
+              >
+                <h3 className="plan-step__title" id="plan-config-plans-title">
+                  2. Escolha o plano ideal para sua rotina
+                </h3>
+                <p className="plan-step__desc">
+                  Compare velocidade, indicação de uso e benefícios antes de continuar.
+                </p>
+                {!hasRegion ? (
+                  <p className="plan-step__status plan-step__status--locked" role="status">
+                    Escolha sua região para visualizar os planos disponíveis.
                   </p>
-                  {region?.areaLabel && (
-                    <p className="plans__region-note">
-                      Planos para <strong>{region.name}</strong> ({region.areaLabel})
-                    </p>
-                  )}
-                  {!selectedPlan && (
-                    <p className="plan-step__status" role="status">
-                      Escolha um plano para continuar.
-                    </p>
-                  )}
-                  <PlansCarousel
-                    plans={plans}
-                    selectedPlanId={selectedPlanId}
-                    onSelect={handleSelectPlan}
-                  />
-                </section>
-              )}
+                ) : !hasPlans ? (
+                  <p className="plan-step__status plan-step__status--locked" role="status">
+                    Consulte a equipe para verificar disponibilidade de planos nesta região.
+                  </p>
+                ) : (
+                  <>
+                    {region?.areaLabel && (
+                      <p className="plans__region-note">
+                        Planos para <strong>{region.name}</strong> ({region.areaLabel})
+                      </p>
+                    )}
+                    {!selectedPlan && (
+                      <p className="plan-step__status" role="status">
+                        Escolha um plano para continuar.
+                      </p>
+                    )}
+                    <PlansCarousel
+                      plans={plans}
+                      selectedPlanId={selectedPlanId}
+                      onSelect={handleSelectPlan}
+                    />
+                  </>
+                )}
+              </section>
 
               {hasPlans && selectedPlan && (
                 <section
@@ -308,37 +334,30 @@ export default function PlanConfigurator() {
                   aria-labelledby="plan-config-addons-title"
                 >
                   <h3 className="plan-step__title" id="plan-config-addons-title">
-                    3. Personalize seu plano
+                    3. Adicionais
                   </h3>
-                  <p className="plan-step__desc">
-                    Escolha serviços adicionais para montar uma opção mais adequada à sua
-                    rotina. Valores e disponibilidade são confirmados pela equipe.
-                  </p>
-                  <p className="plan-step__status plan-step__status--optional" role="status">
-                    Adicionais são opcionais.
+                  <p className="plan-step__desc plan-step__desc--compact">
+                    Escolha serviços extras para complementar seu plano.
                   </p>
 
-                  <div className="plan-config__included">
-                    <h4>Já incluído no plano</h4>
-                    <ul className="plan-config__included-list">
-                      {selectedPlan.features.map((feature) => (
-                        <li key={feature}>{feature}</li>
-                      ))}
-                    </ul>
-                    {includedApps.length > 0 && (
+                  {hasIncludedApps && (
+                    <div className="plan-config__included">
+                      <h4 className="plan-config__included-heading">Já incluído no plano</h4>
                       <ul className="plan-config__included-apps">
                         {includedApps.map((app) => (
-                          <li key={app.id}>
+                          <li key={app.id} className="plan-config__included-chip">
                             <AppIcon app={app} size="sm" />
-                            <span>{app.name}</span>
+                            <span className="plan-config__included-name">{app.name}</span>
+                            <span className="plan-config__included-badge">Incluído</span>
                           </li>
                         ))}
                       </ul>
-                    )}
-                  </div>
+                    </div>
+                  )}
 
-                  <div className="plan-config__addons">
-                    <h4>Disponível como adicional</h4>
+                  <div
+                    className={`plan-config__addons${hasIncludedApps ? "" : " plan-config__addons--primary"}`}
+                  >
                     {optionalApps.length === 0 ? (
                       <p className="plan-config__addons-empty">
                         Consulte adicionais disponíveis com a equipe pelo WhatsApp.
@@ -421,26 +440,32 @@ export default function PlanConfigurator() {
         </div>
       </section>
 
-      {selectedPlan && (
-        <PlanConfigFloatingBar
-          visible={shouldShowFloatingSummary}
-          regionName={regionName}
-          planName={selectedPlan.name}
-          speed={selectedPlan.speed}
-          price={selectedPlan.price}
-          addonNames={addonNames}
-          addonsReady={addonsReady}
-          whatsappMessage={whatsappMessage}
-          onContinue={() => {
-            setActiveStep(3);
-            scrollToElement(addonsRef.current);
-          }}
-          onReview={() => {
-            setActiveStep(4);
-            scrollToElement(reviewRef.current);
-          }}
-        />
-      )}
+      <PlanConfigFloatingBar
+        visible={shouldShowFloatingSummary}
+        regionName={regionName}
+        planName={selectedPlan?.name ?? null}
+        speed={selectedPlan?.speed ?? null}
+        price={selectedPlan?.price ?? null}
+        addonNames={addonNames}
+        addonsReady={addonsReady}
+        whatsappMessage={whatsappMessage}
+        onChooseRegion={() => {
+          setActiveStep(1);
+          scrollToElement(regionRef.current);
+        }}
+        onChoosePlan={() => {
+          setActiveStep(2);
+          scrollToElement(plansRef.current);
+        }}
+        onContinue={() => {
+          setActiveStep(3);
+          scrollToElement(addonsRef.current);
+        }}
+        onReview={() => {
+          setActiveStep(4);
+          scrollToElement(reviewRef.current);
+        }}
+      />
     </>
   );
 }

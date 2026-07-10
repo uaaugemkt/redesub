@@ -42,6 +42,9 @@ export const WHATSAPP_MESSAGES = {
 
   support: "Olá! Preciso falar com o atendimento da RedeSub.",
 
+  aboutIntro: () =>
+    "Olá! Gostaria de conhecer melhor a RedeSub e falar com a equipe.",
+
   stabilityDemo:
     "Olá! Vi no site da RedeSub a demonstração de estabilidade e gostaria de consultar os planos disponíveis para minha região.",
 
@@ -117,6 +120,9 @@ export const WHATSAPP_MESSAGES = {
   regionAvailability: (regionName: string) =>
     `Olá! Vim pelo site da RedeSub e gostaria de consultar disponibilidade na região ${regionName}.\n\nPoderiam me informar planos, cobertura e valores?`,
 
+  coverageRegionConsult: (regionName: string) =>
+    `Olá! Gostaria de consultar a disponibilidade da RedeSub em ${regionName}.`,
+
   businessInquiry: ({
     region,
     address,
@@ -137,6 +143,19 @@ export const WHATSAPP_MESSAGES = {
     lines.push("", "Podem me orientar sobre disponibilidade e condições?");
     return lines.join("\n");
   },
+
+  /** Modelo para o usuário preencher no WhatsApp — sem dados automáticos do site. */
+  businessSolutionConsult: () =>
+    [
+      "Olá! Gostaria de consultar uma solução de internet para o meu negócio.",
+      "",
+      "Região:",
+      "Endereço:",
+      "Tipo de negócio:",
+      "Quantidade aproximada de dispositivos:",
+      "",
+      "Podem me orientar sobre disponibilidade e condições?",
+    ].join("\n"),
 
   contractInquiry: ({
     region,

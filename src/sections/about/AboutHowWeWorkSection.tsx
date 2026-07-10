@@ -3,35 +3,38 @@ import Reveal from "../../components/ui/Reveal";
 const STEPS = [
   {
     id: "need",
-    title: "Entendemos sua necessidade",
-    text: "Casa, home office, estudos, entretenimento ou negócio.",
+    title: "Entendemos a sua necessidade",
+    text: "Conhecemos o endereço, a rotina e a forma como a internet será utilizada.",
   },
   {
     id: "availability",
-    title: "Verificamos a disponibilidade",
-    text: "A equipe consulta a viabilidade conforme sua região e endereço.",
+    title: "Consultamos a disponibilidade",
+    text: "Verificamos a viabilidade de atendimento para a região informada.",
   },
   {
     id: "plan",
-    title: "Indicamos o plano mais adequado",
-    text: "A escolha considera quantidade de dispositivos e forma de uso.",
+    title: "Orientamos a melhor alternativa",
+    text: "Apresentamos as possibilidades adequadas ao perfil e à necessidade do cliente.",
   },
   {
     id: "support",
-    title: "Mantemos o atendimento próximo",
-    text: "O contato continua disponível pelo WhatsApp e pelos canais da RedeSub.",
+    title: "Continuamos por perto",
+    text: "O atendimento regional permanece disponível para orientar e ajudar quando necessário.",
   },
 ] as const;
 
 export default function AboutHowWeWorkSection() {
   return (
-    <section className="section about-process" aria-labelledby="about-process-title">
+    <section
+      className="section section--muted about-process"
+      aria-labelledby="about-process-title"
+    >
       <div className="container">
         <Reveal>
           <header className="about-process__header">
-            <span className="eyebrow">Nosso processo</span>
+            <span className="eyebrow">Nosso jeito de atender</span>
             <h2 className="section__title" id="about-process-title">
-              Como a RedeSub trabalha
+              Proximidade do primeiro contato à conexão.
             </h2>
           </header>
         </Reveal>
@@ -39,8 +42,8 @@ export default function AboutHowWeWorkSection() {
         <ol className="about-process__steps">
           {STEPS.map((step, index) => (
             <li key={step.id}>
-              <Reveal delay={index * 70}>
-                <article className="about-process__card">
+              <Reveal delay={index * 60}>
+                <article className="about-process__step">
                   <span className="about-process__number" aria-hidden="true">
                     {index + 1}
                   </span>

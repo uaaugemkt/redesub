@@ -1,24 +1,59 @@
-import { useState } from "react";
+import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
+import {
+  MapPinIcon,
+  PlusCircleIcon,
+  WifiIcon,
+} from "./icons/BenefitIcons";
 import { buildWhatsAppLink } from "../lib/whatsapp";
 
 export function formatCompactAddons(addonNames: string[]): string {
-  if (addonNames.length === 0) return "Nenhum adicional selecionado";
-  if (addonNames.length <= 2) return addonNames.join(", ");
+  if (addonNames.length === 0) return "Nenhum selecionado";
+  if (addonNames.length === 1) return addonNames[0];
   return `${addonNames[0]} + ${addonNames.length - 1} adicionais`;
 }
 
 interface PlanConfigFloatingBarProps {
   visible: boolean;
   regionName: string | null;
-  planName: string;
-  speed: string;
-  price: string;
+  planName: string | null;
+  speed: string | null;
+  price: string | null;
   addonNames: string[];
   addonsReady: boolean;
   whatsappMessage: string;
+  onChooseRegion: () => void;
+  onChoosePlan: () => void;
   onContinue: () => void;
   onReview: () => void;
+}
+
+function SummaryItem({
+  icon,
+  label,
+  value,
+  empty,
+}: {
+  icon: ReactNode;
+  label: string;
+  value: string;
+  empty?: boolean;
+}) {
+  return (
+    <div className="floating-summary__item">
+      <span className="floating-summary__icon" aria-hidden="true">
+        {icon}
+      </span>
+      <div className="floating-summary__item-body">
+        <span className="floating-summary__label">{label}</span>
+        <span
+          className={`floating-summary__value${empty ? " floating-summary__value--empty" : ""}`}
+        >
+          {value}
+        </span>
+      </div>
+    </div>
+  );
 }
 
 export default function PlanConfigFloatingBar({
@@ -30,79 +65,69 @@ export default function PlanConfigFloatingBar({
   addonNames,
   addonsReady,
   whatsappMessage,
+  onChooseRegion,
+  onChoosePlan,
   onContinue,
   onReview,
 }: PlanConfigFloatingBarProps) {
-  const [expanded, setExpanded] = useState(false);
-
+  const hasRegion = !!regionName;
+  const hasPlan = !!planName;
   const addonsLabel = formatCompactAddons(addonNames);
-  const showWhatsApp = addonsReady;
+  const showWhatsApp = addonsReady && hasPlan && hasRegion;
 
   const actionLabel = showWhatsApp
     ? "Enviar pelo WhatsApp"
-    : addonsReady
-      ? "Revisar configuração"
-      : "Continuar configuração";
+    : !hasRegion
+      ? "Escolher região"
+      : !hasPlan
+        ? "Escolher plano"
+        : !addonsReady
+          ? "Continuar configuração"
+          : "Ir para revisão";
 
   const handleAction = () => {
     if (showWhatsApp) return;
-    if (addonsReady) onReview();
-    else onContinue();
+    if (!hasRegion) onChooseRegion();
+    else if (!hasPlan) onChoosePlan();
+    else if (!addonsReady) onContinue();
+    else onReview();
   };
+
+  const planLabel = hasPlan && speed ? `${planName} — ${speed}` : "Não selecionado";
+  const regionLabel = regionName ?? "Não selecionada";
+  const priceLabel = price ? `R$ ${price}/mês` : "—";
 
   const bar = (
     <div
       className={`floating-summary ${visible ? "is-visible" : ""}`}
-      aria-label="Sua escolha"
+      aria-label="Resumo da configuração"
       aria-hidden={!visible}
     >
       <div className="floating-summary__inner container">
-        <div className="floating-summary__summary" aria-live="polite">
-          <button
-            type="button"
-            className="floating-summary__toggle"
-            aria-expanded={expanded}
-            onClick={() => setExpanded((v) => !v)}
-          >
-            Ver escolha
-          </button>
-
-          <div
-            className={`floating-summary__mobile-details ${expanded ? "floating-summary__mobile-details--open" : ""}`}
-          >
-            <p className="floating-summary__line">
-              <strong>{regionName}</strong>
-              <span aria-hidden="true"> · </span>
-              {planName} — {speed}
-            </p>
-            <p className="floating-summary__line floating-summary__line--muted">
-              {addonsLabel}
-            </p>
-          </div>
-
-          <div className="floating-summary__desktop-details">
-            <p className="floating-summary__line">
-              <span className="floating-summary__label">Região</span>
-              {regionName}
-            </p>
-            <p className="floating-summary__line">
-              <span className="floating-summary__label">Plano</span>
-              {planName} — {speed}
-            </p>
-            <p className="floating-summary__line floating-summary__line--muted">
-              <span className="floating-summary__label">Adicionais</span>
-              {addonsLabel}
-            </p>
-          </div>
+        <div className="floating-summary__items" aria-live="polite">
+          <SummaryItem
+            icon={<MapPinIcon />}
+            label="Região"
+            value={regionLabel}
+            empty={!hasRegion}
+          />
+          <SummaryItem
+            icon={<WifiIcon />}
+            label="Plano"
+            value={planLabel}
+            empty={!hasPlan}
+          />
+          <SummaryItem
+            icon={<PlusCircleIcon />}
+            label="Adicionais"
+            value={addonsLabel}
+            empty={addonNames.length === 0}
+          />
         </div>
 
         <div className="floating-summary__pricing">
-          <p className="floating-summary__price">
-            Mensalidade do plano: <strong>R$ {price}/mês</strong>
-          </p>
-          <p className="floating-summary__note">
-            Adicionais e valor final confirmados pela equipe.
-          </p>
+          <p className="floating-summary__price-label">Mensalidade estimada</p>
+          <p className="floating-summary__price-value">{priceLabel}</p>
         </div>
 
         <div className="floating-summary__action">

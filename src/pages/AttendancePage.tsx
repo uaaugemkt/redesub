@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import ContactForm from "../components/ContactForm";
 import AttendanceRegionSection from "../components/AttendanceRegionSection";
-import InternalHero from "../components/layout/InternalHero";
+import InternalPageHero from "../components/layout/InternalPageHero";
 import Reveal from "../components/ui/Reveal";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { SUBSCRIBER_PORTAL_URL } from "../config/integrations";
@@ -51,27 +51,14 @@ export default function AttendancePage() {
 
   return (
     <>
-      <InternalHero
-        eyebrow="ATENDIMENTO REDESUB"
+      <InternalPageHero
+        eyebrow="Atendimento RedeSub"
         title="Como podemos ajudar você?"
-        description="Contratação, disponibilidade, suporte técnico e atendimento ao assinante em um só lugar."
         breadcrumbs={[
           { label: "Início", path: "/" },
           { label: "Atendimento" },
         ]}
-        highlights={[
-          "Atendimento regional",
-          "Suporte próximo",
-          "Contato direto pelo WhatsApp",
-        ]}
-      >
-        <Link to="/planos" className="btn btn--primary btn--lg btn--hero">
-          Consultar planos
-        </Link>
-        <Link to="/atendimento#suporte-rapido" className="btn btn--outline-light btn--lg">
-          Preciso de suporte
-        </Link>
-      </InternalHero>
+      />
 
       <section className="section section--soft attendance__paths">
         <div className="container">

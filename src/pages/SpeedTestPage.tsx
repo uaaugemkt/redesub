@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import InternalHero from "../components/layout/InternalHero";
+import InternalPageHero from "../components/layout/InternalPageHero";
 import Reveal from "../components/ui/Reveal";
 import { SPEED_TEST_EMBED_URL } from "../config/integrations";
 import { PAGE_META } from "../config/site";
@@ -16,15 +16,13 @@ export default function SpeedTestPage() {
 
   return (
     <>
-      <InternalHero
-        eyebrow="Ferramentas"
-        title="Teste de velocidade"
-        description="Meça a velocidade da sua conexão atual. O teste roda aqui no site, sem abrir nova aba."
+      <InternalPageHero
+        eyebrow="Teste sua conexão"
+        title="Confira a velocidade da sua internet"
         breadcrumbs={[
           { label: "Início", path: "/" },
           { label: "Teste de velocidade" },
         ]}
-        variant="compact"
       />
 
       <section className="section">
