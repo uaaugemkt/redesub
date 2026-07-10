@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import {
   APP_CATALOG,
   getAppsByCategory,
@@ -10,13 +11,17 @@ import { useSelection } from "../context/SelectionContext";
 import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "../lib/whatsapp";
 import AppIcon from "../components/AppIcon";
 
-/** Apps que podem ser contratados como adicional (sem preço exibido) */
 const ADDON_APP_IDS = APP_CATALOG.filter(
   (app) => app.id !== NONE_APP_ID && app.category === "entretenimento"
 ).map((app) => app.id);
 
-export default function AppsSection() {
+interface AppsSectionProps {
+  variant?: "preview" | "full";
+}
+
+export default function AppsSection({ variant = "full" }: AppsSectionProps) {
   const { regionName, selectedAddonIds, toggleAddon } = useSelection();
+  const isPreview = variant === "preview";
 
   const selectedNames = useMemo(
     () => selectedAddonIds.map((id) => getAppDisplayName(id)),
@@ -28,7 +33,7 @@ export default function AppsSection() {
   );
 
   return (
-    <section className="apps section" id="apps">
+    <section className="apps section section--alt" id="apps">
       <div className="container">
         <div className="section__header section__header--center">
           <span className="eyebrow">Muito além da conexão</span>
@@ -75,69 +80,80 @@ export default function AppsSection() {
           </div>
         </div>
 
-        <div className="apps-addons" aria-labelledby="apps-addons-title">
-          <div className="apps-addons__header">
-            <h3 id="apps-addons-title" className="apps-addons__title">
-              Adicionais opcionais
-            </h3>
-            <p className="apps-addons__subtitle">
-              Selecione os serviços de interesse. Valores e disponibilidade são
-              confirmados pelo atendimento — sem preços estimados no site.
+        {isPreview ? (
+          <div className="apps-addons apps-addons--preview">
+            <p>
+              HBO Max, Telecine e outros serviços podem ser consultados como
+              adicionais — sem preços estimados no site.
             </p>
+            <Link to="/planos#adicionais" className="btn btn--primary btn--md">
+              Escolher adicionais
+            </Link>
           </div>
+        ) : (
+          <div className="apps-addons" id="adicionais" aria-labelledby="apps-addons-title">
+            <div className="apps-addons__header">
+              <h3 id="apps-addons-title" className="apps-addons__title">
+                Monte seus adicionais
+              </h3>
+              <p className="apps-addons__subtitle">
+                Selecione os serviços de interesse. Valores e disponibilidade são
+                confirmados pelo atendimento — sem preços estimados no site.
+              </p>
+            </div>
 
-          <div className="apps-addons__legend">
-            <span className="apps-addons__legend-item apps-addons__legend-item--included">
-              Incluso no plano
-            </span>
-            <span className="apps-addons__legend-item apps-addons__legend-item--addon">
-              Disponível como adicional
-            </span>
+            <div className="apps-addons__legend">
+              <span className="apps-addons__legend-item apps-addons__legend-item--included">
+                Incluso no plano
+              </span>
+              <span className="apps-addons__legend-item apps-addons__legend-item--addon">
+                Disponível como adicional
+              </span>
+            </div>
+
+            <ul className="apps-addons__grid">
+              {ADDON_APP_IDS.map((appId) => {
+                const app = APP_CATALOG.find((a) => a.id === appId);
+                if (!app) return null;
+                const isSelected = selectedAddonIds.includes(appId);
+
+                return (
+                  <li key={appId}>
+                    <button
+                      type="button"
+                      className={`apps-addons__card ${isSelected ? "apps-addons__card--selected" : ""}`}
+                      aria-pressed={isSelected}
+                      onClick={() => toggleAddon(appId)}
+                    >
+                      <AppIcon app={app} size="md" />
+                      <span className="apps-addons__card-name">{app.name}</span>
+                      <span className="apps-addons__card-cta">
+                        {isSelected ? "Selecionado" : "Adicionar ao meu plano"}
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+
+            {selectedAddonIds.length > 0 && (
+              <p className="apps-addons__selected" role="status">
+                Selecionados: <strong>{selectedNames.join(", ")}</strong>
+              </p>
+            )}
+
+            <div className="apps-addons__footer">
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--primary btn--md"
+              >
+                Consultar valor pelo WhatsApp
+              </a>
+            </div>
           </div>
-
-          <ul className="apps-addons__grid">
-            {ADDON_APP_IDS.map((appId) => {
-              const app = APP_CATALOG.find((a) => a.id === appId);
-              if (!app) return null;
-              const isSelected = selectedAddonIds.includes(appId);
-
-              return (
-                <li key={appId}>
-                  <button
-                    type="button"
-                    className={`apps-addons__card ${isSelected ? "apps-addons__card--selected" : ""}`}
-                    aria-pressed={isSelected}
-                    onClick={() => toggleAddon(appId)}
-                  >
-                    <AppIcon app={app} size="md" />
-                    <span className="apps-addons__card-name">{app.name}</span>
-                    <span className="apps-addons__card-cta">
-                      {isSelected ? "Selecionado" : "Adicionar ao meu plano"}
-                    </span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-
-          {selectedAddonIds.length > 0 && (
-            <p className="apps-addons__selected" role="status">
-              Selecionados:{" "}
-              <strong>{selectedNames.join(", ")}</strong>
-            </p>
-          )}
-
-          <div className="apps-addons__footer">
-            <a
-              href={whatsappHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn--primary btn--md"
-            >
-              Consultar valor pelo WhatsApp
-            </a>
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );

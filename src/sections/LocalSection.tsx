@@ -1,10 +1,17 @@
 import { useSelection } from "../context/SelectionContext";
+import { Link } from "react-router-dom";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { ADDRESS, MAP } from "../lib/constants";
 import { WHATSAPP_MESSAGES } from "../lib/whatsapp";
 
-export default function LocalSection() {
+interface LocalSectionProps {
+  variant?: "preview" | "full";
+}
+
+export default function LocalSection({ variant = "full" }: LocalSectionProps) {
   const { regionName } = useSelection();
+
+  const isPreview = variant === "preview";
 
   return (
     <section className="local section">
@@ -55,6 +62,11 @@ export default function LocalSection() {
             size="lg"
             className="btn--hero"
           />
+          {isPreview && (
+            <Link to="/cobertura" className="btn btn--outline-light btn--md local__link-more">
+              Ver cobertura completa
+            </Link>
+          )}
         </div>
 
         <div className="local__map">

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { useSelection } from "../context/SelectionContext";
 import { GOOGLE_REVIEWS_URL, TESTIMONIALS } from "../lib/constants";
@@ -31,7 +32,7 @@ export default function TestimonialsSection() {
 
         <div className="testimonials__grid">
           {TESTIMONIALS.map((t) => (
-            <article key={t.name} className="testimonial-card">
+            <article key={t.name} className="testimonial-card testimonial-card--lg">
               <div className="testimonial-card__header">
                 <div className="testimonial-card__google">
                   <GoogleIcon />
@@ -79,9 +80,9 @@ export default function TestimonialsSection() {
               variant="secondary"
               size="md"
             />
-            <a href="#suporte" className="btn btn--outline btn--md">
+            <Link to="/suporte" className="btn btn--outline btn--md">
               Ver opções de suporte
-            </a>
+            </Link>
           </div>
         </div>
       </div>
