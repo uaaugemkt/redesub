@@ -1,4 +1,5 @@
 import { SUBSCRIBER_PORTAL_URL } from "../../config/integrations";
+import { HeadphonesIcon } from "../icons/BusinessImpactIcons";
 import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "../../lib/whatsapp";
 
 export default function SiteTopbar() {
@@ -19,8 +20,10 @@ export default function SiteTopbar() {
             href={supportHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="site-topbar__link"
+            className="site-topbar__link site-topbar__link--support"
+            aria-label="Falar com o suporte"
           >
+            <HeadphonesIcon className="site-topbar__icon" />
             <span className="site-topbar__link-label site-topbar__link-label--long">
               Falar com o suporte
             </span>
@@ -28,6 +31,7 @@ export default function SiteTopbar() {
               Suporte
             </span>
           </a>
+          <span className="site-topbar__divider" aria-hidden="true" />
           {SUBSCRIBER_PORTAL_URL ? (
             <a
               href={SUBSCRIBER_PORTAL_URL}
@@ -43,7 +47,7 @@ export default function SiteTopbar() {
               </span>
             </a>
           ) : (
-            <span className="site-topbar__muted" aria-hidden="false">
+            <span className="site-topbar__muted">
               Central do Assinante em breve
             </span>
           )}

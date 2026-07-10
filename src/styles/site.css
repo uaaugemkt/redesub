@@ -99,6 +99,26 @@
   margin-left: auto;
 }
 
+.site-topbar__icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.site-topbar__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.site-topbar__divider {
+  flex-shrink: 0;
+  align-self: center;
+  width: 1px;
+  height: 20px;
+  background: currentColor;
+  opacity: 0.25;
+}
+
 .site-topbar__link-label--short {
   display: none;
 }
@@ -114,9 +134,15 @@
   text-decoration: none;
   white-space: nowrap;
   transition: color var(--transition);
-  min-height: 44px;
   display: inline-flex;
   align-items: center;
+  gap: 6px;
+}
+
+@media (min-width: 768px) {
+  .site-topbar__link {
+    min-height: 44px;
+  }
 }
 
 .site-topbar__link:hover {
@@ -130,16 +156,14 @@
 }
 
 .site-topbar__link--portal {
-  padding-left: 10px;
-  border-left: 1px solid rgba(249, 250, 250, 0.18);
+  padding-left: 0;
 }
 
 .site-topbar__muted {
   color: rgba(249, 250, 250, 0.45);
   font-size: 0.75rem;
   white-space: nowrap;
-  padding-left: 10px;
-  border-left: 1px solid rgba(249, 250, 250, 0.18);
+  line-height: 1;
 }
 
 /* Header institucional */
@@ -4662,6 +4686,18 @@
 }
 
 @media (max-width: 768px) {
+  .site-topbar {
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+
+  .site-topbar__inner {
+    justify-content: center;
+    padding-block: 0;
+    min-height: var(--topbar-h);
+    padding-inline: clamp(12px, 4vw, 16px);
+  }
+
   .site-topbar__tagline {
     display: none;
   }
@@ -4670,8 +4706,33 @@
     display: none;
   }
 
-  .site-topbar__inner {
-    justify-content: flex-end;
+  .site-topbar__actions {
+    margin-left: 0;
+    justify-content: center;
+    gap: clamp(10px, 3vw, 14px);
+    width: 100%;
+  }
+
+  .site-topbar__link {
+    padding-block: 8px;
+  }
+
+  .site-topbar__link-label--long {
+    display: none;
+  }
+
+  .site-topbar__link-label--short {
+    display: inline;
+  }
+
+  .site-topbar__muted {
+    font-size: 0.75rem;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .site-topbar__divider {
+    height: 18px;
   }
 
   .hero--home__ctas {
@@ -4684,23 +4745,20 @@
   }
 }
 
+@media (max-width: 320px) {
+  .site-topbar__inner {
+    padding-inline: 12px;
+  }
+
+  .site-topbar__actions {
+    gap: 10px;
+  }
+
+  .site-topbar__divider {
+    height: 18px;
+  }
+}
 @media (max-width: 480px) {
-  .site-topbar__link-label--long {
-    display: none;
-  }
-
-  .site-topbar__link-label--short {
-    display: inline;
-  }
-
-  .site-topbar__muted {
-    font-size: 0.6875rem;
-    max-width: 9.5rem;
-    white-space: normal;
-    line-height: 1.25;
-    text-align: right;
-  }
-
   .site-header__logo .logo-img {
     width: 120px;
   }
