@@ -21,19 +21,31 @@ export default function SiteTopbar() {
             rel="noopener noreferrer"
             className="site-topbar__link"
           >
-            Falar com o suporte
+            <span className="site-topbar__link-label site-topbar__link-label--long">
+              Falar com o suporte
+            </span>
+            <span className="site-topbar__link-label site-topbar__link-label--short">
+              Suporte
+            </span>
           </a>
           {SUBSCRIBER_PORTAL_URL ? (
             <a
               href={SUBSCRIBER_PORTAL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="site-topbar__link"
+              className="site-topbar__link site-topbar__link--portal"
             >
-              Central do Assinante
+              <span className="site-topbar__link-label site-topbar__link-label--long">
+                Central do Assinante
+              </span>
+              <span className="site-topbar__link-label site-topbar__link-label--short">
+                Central
+              </span>
             </a>
           ) : (
-            <span className="site-topbar__muted">Central do Assinante em breve</span>
+            <span className="site-topbar__muted" aria-hidden="false">
+              Central do Assinante em breve
+            </span>
           )}
         </div>
       </div>

@@ -1,14 +1,14 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import ScrollToTop from "./components/layout/ScrollToTop";
 import SiteLayout from "./components/layout/SiteLayout";
 import { SelectionProvider } from "./context/SelectionContext";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const PlansPage = lazy(() => import("./pages/PlansPage"));
 const CoveragePage = lazy(() => import("./pages/CoveragePage"));
-const SupportPage = lazy(() => import("./pages/SupportPage"));
+const AttendancePage = lazy(() => import("./pages/AttendancePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
-const ContactPage = lazy(() => import("./pages/ContactPage"));
 const BusinessPage = lazy(() => import("./pages/BusinessPage"));
 const SpeedTestPage = lazy(() => import("./pages/SpeedTestPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
@@ -50,26 +50,23 @@ function AppRoutes() {
           }
         />
         <Route
-          path="/suporte"
+          path="/atendimento"
           element={
             <SiteLayout>
-              <SupportPage />
+              <AttendancePage />
             </SiteLayout>
           }
+        />
+        <Route path="/contato" element={<Navigate to="/atendimento" replace />} />
+        <Route
+          path="/suporte"
+          element={<Navigate to="/atendimento#suporte-rapido" replace />}
         />
         <Route
           path="/sobre"
           element={
             <SiteLayout>
               <AboutPage />
-            </SiteLayout>
-          }
-        />
-        <Route
-          path="/contato"
-          element={
-            <SiteLayout>
-              <ContactPage />
             </SiteLayout>
           }
         />
@@ -99,6 +96,7 @@ function AppRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <SelectionProvider>
         <AppRoutes />
       </SelectionProvider>

@@ -105,6 +105,9 @@ export const REGIONS: readonly Region[] = [
 
 export const REGION_STORAGE_KEY = "redesub-selected-region";
 
+/** Região padrão quando não há seleção salva (planos de Oteiro cadastrados). */
+export const DEFAULT_REGION_ID = "oteiro";
+
 export function getRegionById(id: string | null | undefined): Region | undefined {
   if (!id) return undefined;
   return REGIONS.find((r) => r.id === id);

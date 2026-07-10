@@ -80,8 +80,8 @@ export default function TestimonialsSection() {
               variant="secondary"
               size="md"
             />
-            <Link to="/suporte" className="btn btn--outline btn--md">
-              Ver opções de suporte
+            <Link to="/atendimento#suporte-rapido" className="btn btn--outline btn--md">
+              Ver opções de atendimento
             </Link>
           </div>
         </div>

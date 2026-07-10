@@ -17,11 +17,17 @@ const ADDON_APP_IDS = APP_CATALOG.filter(
 
 interface AppsSectionProps {
   variant?: "preview" | "full";
+  /** Apenas vitrine informativa — sem seleção de adicionais */
+  informativeOnly?: boolean;
 }
 
-export default function AppsSection({ variant = "full" }: AppsSectionProps) {
+export default function AppsSection({
+  variant = "full",
+  informativeOnly = false,
+}: AppsSectionProps) {
   const { regionName, selectedAddonIds, toggleAddon } = useSelection();
   const isPreview = variant === "preview";
+  const showSelector = !isPreview && !informativeOnly;
 
   const selectedNames = useMemo(
     () => selectedAddonIds.map((id) => getAppDisplayName(id)),
@@ -36,11 +42,18 @@ export default function AppsSection({ variant = "full" }: AppsSectionProps) {
     <section className="apps section section--alt" id="apps">
       <div className="container">
         <div className="section__header section__header--center">
-          <span className="eyebrow">Muito além da conexão</span>
-          <h2 className="section__title">Seu plano pode ir além da internet.</h2>
+          <span className="eyebrow">
+            {informativeOnly ? "Conheça os benefícios" : "Muito além da conexão"}
+          </span>
+          <h2 className="section__title">
+            {informativeOnly
+              ? "Mais serviços para sua rotina"
+              : "Seu plano pode ir além da internet."}
+          </h2>
           <p className="section__desc">
-            Além da fibra, você pode personalizar seu plano com serviços de
-            entretenimento, segurança, educação, saúde e vantagens.
+            {informativeOnly
+              ? "Conheça opções de entretenimento, educação, equipamentos e outros recursos disponíveis conforme o plano e a região."
+              : "Além da fibra, você pode personalizar seu plano com serviços de entretenimento, segurança, educação, saúde e vantagens."}
           </p>
         </div>
 
@@ -90,7 +103,7 @@ export default function AppsSection({ variant = "full" }: AppsSectionProps) {
               Escolher adicionais
             </Link>
           </div>
-        ) : (
+        ) : showSelector ? (
           <div className="apps-addons" id="adicionais" aria-labelledby="apps-addons-title">
             <div className="apps-addons__header">
               <h3 id="apps-addons-title" className="apps-addons__title">
@@ -153,7 +166,7 @@ export default function AppsSection({ variant = "full" }: AppsSectionProps) {
               </a>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
     </section>
   );

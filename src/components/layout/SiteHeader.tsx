@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { SUBSCRIBER_PORTAL_URL } from "../../config/integrations";
 import { MAIN_NAV } from "../../config/site";
 import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "../../lib/whatsapp";
 import Logo from "../Logo";
@@ -44,8 +43,6 @@ export default function SiteHeader() {
     };
   }, [open, closeMenu]);
 
-  const portalHref = SUBSCRIBER_PORTAL_URL || undefined;
-
   return (
     <header
       className={`site-header ${scrolled ? "site-header--scrolled" : ""}`}
@@ -72,20 +69,6 @@ export default function SiteHeader() {
         </nav>
 
         <div className="site-header__actions">
-          {portalHref ? (
-            <a
-              href={portalHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="site-header__portal"
-            >
-              Central do Assinante
-            </a>
-          ) : (
-            <span className="site-header__portal site-header__portal--muted">
-              Central do Assinante
-            </span>
-          )}
           <a
             href={buildWhatsAppLink(WHATSAPP_MESSAGES.contract)}
             target="_blank"
@@ -132,20 +115,6 @@ export default function SiteHeader() {
           ))}
         </nav>
         <div className="site-header__drawer-actions">
-          {portalHref ? (
-            <a
-              href={portalHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn--outline btn--md"
-            >
-              Central do Assinante
-            </a>
-          ) : (
-            <span className="site-header__portal site-header__portal--muted">
-              Central do Assinante em breve
-            </span>
-          )}
           <a
             href={buildWhatsAppLink(WHATSAPP_MESSAGES.contract)}
             target="_blank"

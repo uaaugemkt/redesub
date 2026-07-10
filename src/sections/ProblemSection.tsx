@@ -1,5 +1,4 @@
-import AutoCompareTimelineItem from "../components/AutoCompareTimelineItem";
-import { PROBLEM_TIMELINE } from "../lib/constants";
+import ConnectionDiagnosticCard from "../components/ConnectionDiagnosticCard";
 
 export default function ProblemSection() {
   return (
@@ -15,11 +14,7 @@ export default function ProblemSection() {
           </h2>
         </div>
 
-        <div className="problem__timeline">
-          {PROBLEM_TIMELINE.map((item, index) => (
-            <AutoCompareTimelineItem key={item.time} item={item} index={index} />
-          ))}
-        </div>
+        <ConnectionDiagnosticCard />
 
         <div className="problem__closing">
           <p>

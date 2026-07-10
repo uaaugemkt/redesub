@@ -18,6 +18,13 @@ export interface SupportInquiryParams {
   region?: string | null;
 }
 
+export interface BusinessInquiryParams {
+  region?: string | null;
+  address?: string | null;
+  businessType?: string | null;
+  devices?: string | null;
+}
+
 function formatAddonList(additionalApps?: string[]): string {
   if (!additionalApps || additionalApps.length === 0) {
     return "nenhum selecionado";
@@ -35,8 +42,101 @@ export const WHATSAPP_MESSAGES = {
 
   support: "Olá! Preciso falar com o atendimento da RedeSub.",
 
+  stabilityDemo:
+    "Olá! Vi no site da RedeSub a demonstração de estabilidade e gostaria de consultar os planos disponíveis para minha região.",
+
+  stabilityCompare: (region?: string | null) => {
+    const lines = [
+      "Olá! Vi no site da RedeSub a comparação de estabilidade e gostaria de consultar os planos disponíveis para minha região.",
+    ];
+    if (region?.trim()) {
+      lines.push("", `Região: ${region.trim()}`);
+    }
+    return lines.join("\n");
+  },
+
+  plansConsult: (region?: string | null) => {
+    const lines = [
+      "Olá! Vim pelo site da RedeSub e gostaria de consultar os planos disponíveis para minha região.",
+    ];
+    if (region?.trim()) {
+      lines.push("", `Região: ${region.trim()}`);
+    }
+    lines.push(
+      "",
+      "Poderiam me informar as opções e a disponibilidade para o meu endereço?"
+    );
+    return lines.join("\n");
+  },
+
+  coverageConsult: (region?: string | null) => {
+    const lines = [
+      "Olá! Vim pelo site da RedeSub e gostaria de consultar a cobertura no meu endereço.",
+    ];
+    if (region?.trim()) {
+      lines.push("", `Região: ${region.trim()}`);
+    }
+    lines.push("", "Podem verificar a disponibilidade para mim?");
+    return lines.join("\n");
+  },
+
+  planConfiguration: ({
+    region,
+    planName,
+    speed,
+    monthlyPrice,
+    addonNames,
+  }: {
+    region?: string | null;
+    planName: string;
+    speed: string;
+    monthlyPrice: string;
+    addonNames?: string[];
+  }) => {
+    const lines = [
+      "Olá! Vim pelo site da RedeSub e gostaria de consultar esta configuração.",
+      "",
+      `Região: ${region?.trim() || "não informada"}`,
+      `Plano: ${planName}`,
+      `Velocidade: ${speed}`,
+      `Mensalidade exibida: R$ ${monthlyPrice}/mês`,
+    ];
+
+    const addons =
+      addonNames && addonNames.length > 0
+        ? addonNames.join(", ")
+        : "Nenhum adicional selecionado";
+    lines.push(`Adicionais: ${addons}`);
+    lines.push(
+      "",
+      "Poderiam confirmar a disponibilidade e o valor final para meu endereço?"
+    );
+    return lines.join("\n");
+  },
+
   regionAvailability: (regionName: string) =>
     `Olá! Vim pelo site da RedeSub e gostaria de consultar disponibilidade na região ${regionName}.\n\nPoderiam me informar planos, cobertura e valores?`,
+
+  businessInquiry: ({
+    region,
+    address,
+    businessType,
+    devices,
+  }: BusinessInquiryParams = {}) => {
+    const lines = [
+      "Olá! Gostaria de consultar uma solução de internet para minha empresa.",
+    ];
+
+    if (region?.trim()) lines.push("", `Região: ${region.trim()}`);
+    if (address?.trim()) lines.push(`Endereço: ${address.trim()}`);
+    if (businessType?.trim()) lines.push(`Tipo de negócio: ${businessType.trim()}`);
+    if (devices?.trim()) {
+      lines.push(`Quantidade aproximada de dispositivos: ${devices.trim()}`);
+    }
+
+    lines.push("", "Podem me orientar sobre disponibilidade e condições?");
+    return lines.join("\n");
+  },
 
   contractInquiry: ({
     region,

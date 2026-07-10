@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { MEDIA } from "../config/media";
 import Reveal from "../components/ui/Reveal";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { GOOGLE_REVIEWS_URL } from "../lib/constants";
 import { getHeroFeaturedPlan, parsePlanSpeed } from "../lib/plans";
+
+const HERO_IMAGE_SRC = "/media/herobanner-mulher.webp";
 
 const HERO_BENEFITS = [
   "Wi-Fi para a casa toda",
@@ -104,10 +105,10 @@ export default function HeroSection() {
         <Reveal delay={200} className="hero--home__visual">
           <div className="hero--home__image-wrap">
             <img
-              src={MEDIA.heroMain()}
-              alt="Família usando internet em casa com conforto e estabilidade"
-              width={520}
-              height={640}
+              src={HERO_IMAGE_SRC}
+              alt="Mulher utilizando o celular, representando uma experiência de internet conectada"
+              width={720}
+              height={760}
               loading="eager"
               decoding="async"
               className="hero--home__image"

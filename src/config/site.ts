@@ -11,23 +11,22 @@ export const MAIN_NAV = [
   { label: "Planos", path: "/planos" },
   { label: "Cobertura", path: "/cobertura" },
   { label: "Para empresas", path: "/para-empresas" },
-  { label: "Suporte", path: "/suporte" },
+  { label: "Atendimento", path: "/atendimento" },
   { label: "Sobre a RedeSub", path: "/sobre" },
-  { label: "Contato", path: "/contato" },
 ] as const;
 
 export const FOOTER_NAV = {
   institucional: [
     { label: "Sobre a RedeSub", path: "/sobre" },
     { label: "Cobertura", path: "/cobertura" },
-    { label: "Contato", path: "/contato" },
     { label: "Para empresas", path: "/para-empresas" },
+    { label: "Atendimento", path: "/atendimento" },
   ],
   servicos: [
     { label: "Planos", path: "/planos" },
-    { label: "Suporte", path: "/suporte" },
+    { label: "Suporte técnico", path: "/atendimento#suporte-rapido" },
     { label: "Teste de velocidade", path: "/teste-de-velocidade" },
-    { label: "Central do Assinante", path: "/suporte#central-assinante" },
+    { label: "Central do Assinante", path: "/atendimento#central-assinante" },
   ],
 } as const;
 
@@ -50,28 +49,34 @@ export const PAGE_META: Record<string, PageMeta> = {
       "Consulte as regiões atendidas pela RedeSub e verifique disponibilidade no seu endereço com nossa equipe local.",
     path: "/cobertura",
   },
-  suporte: {
-    title: `Suporte técnico | ${SITE_NAME}`,
+  atendimento: {
+    title: `Atendimento e Suporte | ${SITE_NAME}`,
     description:
-      "Suporte técnico rápido pelo WhatsApp, orientações iniciais e acesso à Central do Assinante.",
-    path: "/suporte",
+      "Fale com a RedeSub para consultar planos, disponibilidade, suporte técnico e atendimento ao assinante.",
+    path: "/atendimento",
+  },
+  suporte: {
+    title: `Atendimento e Suporte | ${SITE_NAME}`,
+    description:
+      "Fale com a RedeSub para consultar planos, disponibilidade, suporte técnico e atendimento ao assinante.",
+    path: "/atendimento",
   },
   sobre: {
-    title: `Sobre a RedeSub | ${SITE_NAME}`,
+    title: "Sobre a RedeSub | Internet de Fibra e Atendimento Regional",
     description:
-      "Conheça a RedeSub: internet de fibra com atendimento regional, proximidade e suporte humano.",
+      "Conheça a RedeSub, sua atuação regional, valores e compromisso com internet de fibra e atendimento próximo.",
     path: "/sobre",
   },
   contato: {
-    title: `Contato | ${SITE_NAME}`,
+    title: `Atendimento e Suporte | ${SITE_NAME}`,
     description:
-      "Fale com a RedeSub pelo WhatsApp, consulte disponibilidade e encontre nosso endereço de atendimento.",
-    path: "/contato",
+      "Fale com a RedeSub para consultar planos, disponibilidade, suporte técnico e atendimento ao assinante.",
+    path: "/atendimento",
   },
   empresas: {
-    title: `Internet para empresas | ${SITE_NAME}`,
+    title: "Internet para Empresas | RedeSub",
     description:
-      "Soluções de internet para pequenos negócios com atendimento local. Consulte viabilidade com a equipe RedeSub.",
+      "Consulte soluções de internet para pequenos negócios, escritórios e operações que dependem de conectividade.",
     path: "/para-empresas",
   },
   velocidade: {

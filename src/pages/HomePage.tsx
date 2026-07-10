@@ -8,7 +8,6 @@ import CompareSection from "../sections/CompareSection";
 import UseCasesSection from "../sections/UseCasesSection";
 import AppsSection from "../sections/AppsSection";
 import LocalSection from "../sections/LocalSection";
-import SupportSection from "../sections/SupportSection";
 import TestimonialsSection from "../sections/TestimonialsSection";
 import ReferralSection from "../sections/ReferralSection";
 import FinalCTASection from "../sections/FinalCTASection";
@@ -26,7 +25,6 @@ export default function HomePage() {
       <UseCasesSection />
       <AppsSection variant="preview" />
       <LocalSection variant="preview" />
-      <SupportSection variant="preview" />
       <TestimonialsSection />
       <ReferralSection />
       <FinalCTASection />

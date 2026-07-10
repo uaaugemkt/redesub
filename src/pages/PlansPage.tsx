@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
-import ComboSummary from "../components/ComboSummary";
-import Breadcrumbs from "../components/ui/Breadcrumbs";
+import PlanConfigurator from "../components/PlanConfigurator";
 import FAQ from "../components/ui/FAQ";
 import InternalHero from "../components/layout/InternalHero";
-import PageContainer from "../components/layout/PageContainer";
-import { getMediaAlt, MEDIA } from "../config/media";
+import Reveal from "../components/ui/Reveal";
+import WhatsAppButton from "../components/WhatsAppButton";
+import { getAppDisplayName } from "../config/apps";
 import { PAGE_META } from "../config/site";
+import { useSelection } from "../context/SelectionContext";
 import { usePageMeta } from "../hooks/usePageMeta";
+import { getRegionById } from "../lib/plans";
+import { WHATSAPP_MESSAGES } from "../lib/whatsapp";
 import AppsSection from "../sections/AppsSection";
 import CompareSection from "../sections/CompareSection";
-import PlansSection from "../sections/PlansSection";
-import WhatsAppButton from "../components/WhatsAppButton";
-import Reveal from "../components/ui/Reveal";
 
 const PLANS_FAQ = [
   {
@@ -48,65 +48,98 @@ const PLANS_FAQ = [
 
 export default function PlansPage() {
   usePageMeta(PAGE_META.planos);
+  const { regionId, regionName, selectedPlanId, selectedAddonIds } = useSelection();
+
+  const region = regionId ? getRegionById(regionId) : null;
+  const plan = region?.plans.find((p) => p.id === selectedPlanId);
+  const addonNames = selectedAddonIds.map((id) => getAppDisplayName(id));
+
+  const finalMessage =
+    plan && regionName
+      ? WHATSAPP_MESSAGES.planConfiguration({
+          region: regionName,
+          planName: plan.name,
+          speed: plan.speed,
+          monthlyPrice: plan.price,
+          addonNames,
+        })
+      : WHATSAPP_MESSAGES.plansConsult(regionName);
 
   return (
     <>
       <InternalHero
         eyebrow="Planos de fibra"
         title="Escolha o plano certo para sua casa"
-        description="Filtre por região, compare opções, personalize com adicionais e fale com a equipe RedeSub para confirmar disponibilidade e valor final."
-        imageSrc={MEDIA.familyConnected()}
-        imageAlt={getMediaAlt("family-connected", "Família conectada em casa")}
+        description="Configure região, plano e adicionais em um único fluxo e envie sua escolha para a equipe RedeSub confirmar disponibilidade e valor final."
+        breadcrumbs={[
+          { label: "Início", path: "/" },
+          { label: "Planos" },
+        ]}
       >
-        <WhatsAppButton size="lg" className="btn--hero" />
-        <Link to="/cobertura" className="btn btn--outline btn--lg">
+        <a href="#plan-configurator" className="btn btn--primary btn--lg btn--hero">
+          Começar configuração
+        </a>
+        <Link to="/cobertura" className="btn btn--outline-light btn--lg">
           Ver cobertura
         </Link>
       </InternalHero>
 
-      <PageContainer>
-        <Breadcrumbs
-          items={[
-            { label: "Início", path: "/" },
-            { label: "Planos" },
-          ]}
-        />
-      </PageContainer>
+      <PlanConfigurator />
 
-      <PlansSection variant="full" showHeading={false} />
+      <section className="plans-info-divider section">
+        <div className="container">
+          <div className="plans-info-divider__inner">
+            <span className="eyebrow">Conheça os benefícios</span>
+            <h2 className="section__title">
+              Tudo o que pode fazer parte da sua experiência RedeSub
+            </h2>
+            <p className="section__desc">
+              Veja serviços, recursos e informações que ajudam você a entender
+              melhor os planos.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <AppsSection variant="full" informativeOnly />
+
+      <CompareSection
+        eyebrow="Por que escolher a RedeSub?"
+        backHref="#plan-configurator"
+      />
 
       <section className="section section--muted">
-        <div className="container plans-page__combo">
-          <Reveal>
-            <h2 className="section__title">Monte seu combo</h2>
-            <p className="section__desc">
-              Escolha um plano, selecione adicionais opcionais e envie o resumo
-              pelo WhatsApp para confirmar valores.
-            </p>
-          </Reveal>
-          <ComboSummary />
-        </div>
-      </section>
-
-      <div id="adicionais">
-        <AppsSection variant="full" />
-      </div>
-
-      <CompareSection />
-
-      <section className="section">
         <div className="container container--narrow">
           <Reveal>
-            <FAQ items={PLANS_FAQ} />
+            <p className="plans-faq__intro">Ainda tem dúvidas?</p>
+            <FAQ items={PLANS_FAQ} title="Perguntas frequentes sobre planos" />
           </Reveal>
         </div>
       </section>
 
-      <section className="section section--navy cta-band">
-        <div className="container cta-band__inner">
-          <h2>Pronto para contratar?</h2>
-          <p>Fale com a equipe e confirme disponibilidade na sua região.</p>
-          <WhatsAppButton size="lg" className="btn--hero" />
+      <section className="plans-cta section" aria-labelledby="plans-cta-title">
+        <div className="container">
+          <Reveal>
+            <div className="plans-cta__card">
+              <h2 className="plans-cta__title" id="plans-cta-title">
+                Já sabe qual plano combina com sua rotina?
+              </h2>
+              <p className="plans-cta__text">
+                Envie sua escolha para a RedeSub e confirme disponibilidade e
+                condições.
+              </p>
+              <WhatsAppButton
+                message={finalMessage}
+                label="Falar com a RedeSub pelo WhatsApp"
+                variant="primary"
+                size="lg"
+                className="plans-cta__btn"
+              />
+              <p className="plans-cta__back">
+                <a href="#plan-configurator">Voltar ao configurador</a>
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
     </>

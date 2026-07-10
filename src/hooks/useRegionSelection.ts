@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import {
+  DEFAULT_REGION_ID,
   getRegionById,
   isValidRegionId,
   REGION_STORAGE_KEY,
   type Region,
 } from "../lib/plans";
 
-export function readStoredRegionId(): string | null {
-  if (typeof window === "undefined") return null;
+export function readStoredRegionId(): string {
+  if (typeof window === "undefined") return DEFAULT_REGION_ID;
   try {
     const stored = localStorage.getItem(REGION_STORAGE_KEY);
     if (stored && isValidRegionId(stored)) return stored;
@@ -15,13 +16,11 @@ export function readStoredRegionId(): string | null {
   } catch {
     /* localStorage indisponível */
   }
-  return null;
+  return DEFAULT_REGION_ID;
 }
 
 export function useRegionSelection() {
-  const [regionId, setRegionIdState] = useState<string | null>(() =>
-    readStoredRegionId()
-  );
+  const [regionId, setRegionIdState] = useState<string | null>(() => readStoredRegionId());
 
   const setRegionId = useCallback((id: string | null) => {
     if (id !== null && !isValidRegionId(id)) return;
@@ -44,14 +43,14 @@ export function useRegionSelection() {
       if (next && isValidRegionId(next)) {
         setRegionIdState(next);
       } else if (!next) {
-        setRegionIdState(null);
+        setRegionIdState(DEFAULT_REGION_ID);
       }
     };
     window.addEventListener("storage", onStorage);
     return () => window.removeEventListener("storage", onStorage);
   }, []);
 
-  const region: Region | null = regionId ? getRegionById(regionId) ?? null : null;
+  const region: Region | null = getRegionById(regionId) ?? null;
 
   return { regionId, region, setRegionId };
 }

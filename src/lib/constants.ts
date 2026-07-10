@@ -113,27 +113,72 @@ export const PROBLEM_TIMELINE = [
   },
 ] as const;
 
+export interface CompareProblem {
+  id: string;
+  text: string;
+  relatedBenefitId: string;
+}
+
+export interface CompareBenefit {
+  id: string;
+  text: string;
+  featured: boolean;
+}
+
 export const COMPARE = {
   bad: {
     title: "Internet que dá dor de cabeça",
+    status: "Instável",
     items: [
-      "Trava quando a casa toda conecta",
-      "Suporte difícil de alcançar",
-      "Roteador mal posicionado",
-      "Instabilidade em horários de pico",
-      "Você só lembra dela quando dá problema",
-    ],
+      {
+        id: "freeze",
+        text: "Trava quando a casa toda conecta",
+        relatedBenefitId: "wifi",
+      },
+      {
+        id: "support",
+        text: "Suporte difícil de alcançar",
+        relatedBenefitId: "support",
+      },
+      {
+        id: "router",
+        text: "Roteador mal posicionado",
+        relatedBenefitId: "wifi",
+      },
+      {
+        id: "peak",
+        text: "Instabilidade em horários de pico",
+        relatedBenefitId: "fiber",
+      },
+      {
+        id: "remember",
+        text: "Você só lembra dela quando dá problema",
+        relatedBenefitId: "local",
+      },
+    ] satisfies readonly CompareProblem[],
   },
   good: {
     title: "RedeSub funcionando do seu jeito",
     items: [
-      "100% fibra óptica",
-      "Wi-Fi pensado para a casa toda",
-      "Suporte 7 dias por semana",
-      "Planos com apps e recursos extras",
-      "Controle pelo app do assinante",
-      "Atendimento local de verdade",
-    ],
+      { id: "fiber", text: "100% fibra óptica", featured: true },
+      { id: "wifi", text: "Wi-Fi pensado para a casa toda", featured: false },
+      { id: "support", text: "Suporte 7 dias por semana", featured: true },
+      {
+        id: "apps",
+        text: "Planos com apps e recursos extras",
+        featured: false,
+      },
+      {
+        id: "app",
+        text: "Controle pelo app do assinante",
+        featured: false,
+      },
+      {
+        id: "local",
+        text: "Atendimento local de verdade",
+        featured: true,
+      },
+    ] satisfies readonly CompareBenefit[],
   },
 } as const;
 
@@ -163,9 +208,9 @@ export const TESTIMONIALS = [
 ] as const;
 
 export const NAV_LINKS = [
-  { label: "Planos", href: "#planos" },
-  { label: "Benefícios", href: "#beneficios" },
-  { label: "Suporte", href: "#suporte" },
-  { label: "Depoimentos", href: "#depoimentos" },
-  { label: "Contato", href: "#contato" },
+  { label: "Planos", href: "/#planos" },
+  { label: "Benefícios", href: "/#beneficios" },
+  { label: "Suporte", href: "/atendimento#suporte-rapido" },
+  { label: "Depoimentos", href: "/#depoimentos" },
+  { label: "Contato", href: "/#contato" },
 ] as const;

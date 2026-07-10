@@ -23,8 +23,8 @@ export default function NotFoundPage() {
           <Link to="/planos" className="btn btn--outline btn--md">
             Ver planos
           </Link>
-          <Link to="/contato" className="btn btn--outline btn--md">
-            Contato
+          <Link to="/atendimento" className="btn btn--outline btn--md">
+            Atendimento
           </Link>
         </div>
       </div>

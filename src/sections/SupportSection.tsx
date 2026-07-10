@@ -26,8 +26,8 @@ export default function SupportSection({ variant = "full" }: SupportSectionProps
                 nossa equipe pelo WhatsApp — sem formulários complicados.
               </p>
               {isPreview && (
-                <Link to="/suporte" className="btn btn--outline btn--md">
-                  Ver página de suporte
+                <Link to="/atendimento#suporte-rapido" className="btn btn--outline btn--md">
+                  Ver opções de atendimento
                 </Link>
               )}
             </div>

@@ -4,6 +4,7 @@ import RegionFilter from "../components/RegionFilter";
 import Reveal from "../components/ui/Reveal";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { useSelection } from "../context/SelectionContext";
+import { DEFAULT_REGION_ID, getRegionById } from "../lib/plans";
 import { WHATSAPP_MESSAGES } from "../lib/whatsapp";
 
 interface PlansSectionProps {
@@ -15,11 +16,12 @@ export default function PlansSection({
   variant = "preview",
   showHeading = true,
 }: PlansSectionProps) {
-  const { regionId, region, regionName } = useSelection();
-  const plans = region?.plans ?? [];
-  const hasRegion = regionId !== null;
-  const hasPlans = plans.length > 0;
+  const { regionId, regionName } = useSelection();
   const isPreview = variant === "preview";
+  const activeRegionId = regionId ?? DEFAULT_REGION_ID;
+  const region = getRegionById(activeRegionId);
+  const plans = region?.plans ?? [];
+  const hasPlans = plans.length > 0;
 
   return (
     <section
@@ -42,37 +44,14 @@ export default function PlansSection({
           </Reveal>
         )}
 
-        <RegionFilter id="plans-region-filter" className="plans__region-filter" />
+        <RegionFilter
+          id="plans-region-filter"
+          className="plans__region-filter"
+          hideEmptyOption
+          showHint={false}
+        />
 
-        {!hasRegion && (
-          <Reveal>
-            <div className="plans__empty-state" role="status">
-              <div className="plans__empty-visual" aria-hidden="true">
-                <svg viewBox="0 0 120 120" width="120" height="120">
-                  <circle cx="60" cy="60" r="54" fill="var(--brand-blue-soft)" />
-                  <path
-                    d="M60 28c-14 0-26 10-26 24 0 16 26 36 26 36s26-20 26-36c0-14-12-24-26-24z"
-                    fill="var(--brand-blue)"
-                    opacity="0.85"
-                  />
-                  <circle cx="60" cy="52" r="8" fill="var(--brand-white)" />
-                </svg>
-              </div>
-              <h3 className="plans__empty-title">Comece pela sua região</h3>
-              <p>
-                Os planos e valores podem variar conforme a localidade. Selecione
-                sua região acima para ver as opções disponíveis na sua área.
-              </p>
-              {isPreview && (
-                <Link to="/planos" className="btn btn--outline btn--md">
-                  Ver página completa de planos
-                </Link>
-              )}
-            </div>
-          </Reveal>
-        )}
-
-        {hasRegion && !hasPlans && (
+        {!hasPlans && (
           <Reveal>
             <div className="plans__empty plans__empty--consult" role="status">
               <p>
@@ -89,7 +68,7 @@ export default function PlansSection({
           </Reveal>
         )}
 
-        {hasRegion && hasPlans && (
+        {hasPlans && (
           <div className="plans__results">
             {region?.areaLabel && (
               <p className="plans__region-note">
@@ -98,7 +77,7 @@ export default function PlansSection({
             )}
             <div className={`plans__grid ${!isPreview ? "plans__grid--large" : ""}`}>
               {plans.map((plan, index) => (
-                <Reveal key={plan.id} delay={index * 80}>
+                <Reveal key={plan.id} delay={index * 80} className="plans__grid-cell">
                   <PlanCard plan={plan} large={!isPreview} />
                 </Reveal>
               ))}
