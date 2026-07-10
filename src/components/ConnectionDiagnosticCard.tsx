@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import ConnectionDiagnosticMobileCarousel from "./ConnectionDiagnosticMobileCarousel";
 import { PROBLEM_TIMELINE } from "../lib/constants";
 import {
   DIAGNOSTIC_ITEM_COUNT,
@@ -28,6 +29,28 @@ function clearTimers(timers: number[]) {
 }
 
 export default function ConnectionDiagnosticCard() {
+  const [isCompactLayout, setIsCompactLayout] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(max-width: 1023px)").matches
+      : false
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 1023px)");
+    const update = () => setIsCompactLayout(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  if (isCompactLayout) {
+    return <ConnectionDiagnosticMobileCarousel />;
+  }
+
+  return <ConnectionDiagnosticDesktop />;
+}
+
+function ConnectionDiagnosticDesktop() {
   const rootRef = useRef<HTMLElement>(null);
   const timersRef = useRef<number[]>([]);
   const mountedRef = useRef(true);

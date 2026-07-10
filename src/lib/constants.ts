@@ -42,6 +42,7 @@ export const PROBLEM_TIMELINE = [
   {
     time: "08:00",
     icon: "video",
+    category: "Trabalho",
     bad: {
       title: "Chamada de trabalho travando",
       description:
@@ -50,9 +51,9 @@ export const PROBLEM_TIMELINE = [
       badgeKey: "trava",
     },
     good: {
-      title: "Reunião fluindo com estabilidade",
+      title: "Reunião fluindo melhor",
       description:
-        "Com a RedeSub, vídeo e áudio seguem estáveis para você trabalhar sem interrupções.",
+        "Mais estabilidade para trabalhar e participar de chamadas sem tantas interrupções.",
       badge: "ESTÁVEL",
       badgeKey: "estavel",
     },
@@ -60,6 +61,7 @@ export const PROBLEM_TIMELINE = [
   {
     time: "14:00",
     icon: "school",
+    category: "Estudos",
     bad: {
       title: "Vídeo carregando na aula",
       description:
@@ -78,6 +80,7 @@ export const PROBLEM_TIMELINE = [
   {
     time: "20:00",
     icon: "tv",
+    category: "Streaming",
     bad: {
       title: "Filme travando na TV",
       description:
@@ -96,6 +99,7 @@ export const PROBLEM_TIMELINE = [
   {
     time: "22:00",
     icon: "game",
+    category: "Jogos",
     bad: {
       title: "Jogo online com ping alto",
       description:
@@ -107,8 +111,8 @@ export const PROBLEM_TIMELINE = [
       title: "Mais estabilidade para jogar",
       description:
         "Com a RedeSub, sua conexão responde melhor para jogar com mais tranquilidade.",
-      badge: "BAIXA LATÊNCIA",
-      badgeKey: "baixa-latencia",
+      badge: "MAIS ESTÁVEL",
+      badgeKey: "mais-estavel",
     },
   },
 ] as const;

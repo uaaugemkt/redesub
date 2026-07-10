@@ -214,7 +214,7 @@ export default function PlanConfigurator() {
               </p>
             </header>
 
-            <nav className="plans-configurator-stepper" aria-label="Etapas da configuração">
+            <nav className="plans-configurator-stepper" aria-label="Etapas da contratação">
               <ol className="plans-configurator-stepper__list">
                 {STEPS.map((step) => {
                   const isComplete = step.id < maxReachableStep || (step.id === 4 && addonsReady);
@@ -442,6 +442,7 @@ export default function PlanConfigurator() {
 
       <PlanConfigFloatingBar
         visible={shouldShowFloatingSummary}
+        activeStep={activeStep}
         regionName={regionName}
         planName={selectedPlan?.name ?? null}
         speed={selectedPlan?.speed ?? null}

@@ -1,86 +1,46 @@
-import { useCallback, useEffect, useRef, useState } from "react";
 import type { Plan } from "../lib/plans";
+import { useSnapCarousel } from "../hooks/useSnapCarousel";
 import PlanCard from "./PlanCard";
 
 interface PlansCarouselProps {
   plans: readonly Plan[];
-  selectedPlanId: string | null;
-  onSelect: (planId: string) => void;
+  selectedPlanId?: string | null;
+  onSelect?: (planId: string) => void;
+  /** Home preview: cards are not selectable. */
+  browseOnly?: boolean;
 }
 
 export default function PlansCarousel({
   plans,
-  selectedPlanId,
+  selectedPlanId = null,
   onSelect,
+  browseOnly = false,
 }: PlansCarouselProps) {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const syncIndex =
+    selectedPlanId != null
+      ? plans.findIndex((plan) => plan.id === selectedPlanId)
+      : null;
 
-  const canPrev = activeIndex > 0;
-  const canNext = activeIndex < plans.length - 1;
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track || plans.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting || entry.intersectionRatio < 0.5) return;
-          const idx = Number((entry.target as HTMLElement).dataset.index);
-          if (!Number.isNaN(idx)) setActiveIndex(idx);
-        });
-      },
-      { root: track, threshold: [0.5, 0.75] }
-    );
-
-    slideRefs.current.forEach((slide) => {
-      if (slide) observer.observe(slide);
-    });
-
-    return () => observer.disconnect();
-  }, [plans]);
-
-  const scrollToIndex = useCallback((index: number) => {
-    const slide = slideRefs.current[index];
-    if (!slide) return;
-    const reduced =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    slide.scrollIntoView({
-      behavior: reduced ? "auto" : "smooth",
-      inline: "center",
-      block: "nearest",
-    });
-    setActiveIndex(index);
-  }, []);
-
-  useEffect(() => {
-    const idx = plans.findIndex((p) => p.id === selectedPlanId);
-    if (idx >= 0) scrollToIndex(idx);
-  }, [selectedPlanId, plans, scrollToIndex]);
-
-  const scrollByStep = (direction: -1 | 1) => {
-    const next = Math.min(Math.max(activeIndex + direction, 0), plans.length - 1);
-    scrollToIndex(next);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      scrollByStep(-1);
-    } else if (e.key === "ArrowRight") {
-      e.preventDefault();
-      scrollByStep(1);
-    }
-  };
+  const {
+    trackRef,
+    setSlideRef,
+    activeIndex,
+    canPrev,
+    canNext,
+    goToSlide,
+    goPrev,
+    goNext,
+    handleTrackKeyDown,
+  } = useSnapCarousel({
+    slideCount: plans.length,
+    syncIndex: syncIndex != null && syncIndex >= 0 ? syncIndex : null,
+  });
 
   if (plans.length === 0) return null;
 
   return (
     <div
-      className="plans-carousel"
+      className={`plans-carousel${browseOnly ? " plans-carousel--browse" : ""}`}
       role="region"
       aria-roledescription="carrossel"
       aria-label="Planos disponíveis"
@@ -88,9 +48,9 @@ export default function PlansCarousel({
       <button
         type="button"
         className="plans-carousel__arrow plans-carousel__arrow--prev"
-        aria-label="Plano anterior"
+        aria-label="Ver plano anterior"
         disabled={!canPrev}
-        onClick={() => scrollByStep(-1)}
+        onClick={goPrev}
       >
         <ChevronIcon direction="left" />
       </button>
@@ -100,23 +60,21 @@ export default function PlansCarousel({
           ref={trackRef}
           className="plans-carousel__track"
           tabIndex={0}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleTrackKeyDown}
         >
           {plans.map((plan, index) => (
             <div
               key={plan.id}
-              ref={(el) => {
-                slideRefs.current[index] = el;
-              }}
+              ref={(node) => setSlideRef(index, node)}
               className={`plans-carousel__slide ${activeIndex === index ? "plans-carousel__slide--active" : ""} ${selectedPlanId === plan.id ? "plans-carousel__slide--selected" : ""}`}
               data-index={index}
             >
               <PlanCard
                 plan={plan}
                 large
-                selectable
+                selectable={!browseOnly}
                 selected={selectedPlanId === plan.id}
-                onSelect={onSelect}
+                onSelect={browseOnly ? undefined : onSelect}
               />
             </div>
           ))}
@@ -126,9 +84,9 @@ export default function PlansCarousel({
       <button
         type="button"
         className="plans-carousel__arrow plans-carousel__arrow--next"
-        aria-label="Próximo plano"
+        aria-label="Ver próximo plano"
         disabled={!canNext}
-        onClick={() => scrollByStep(1)}
+        onClick={goNext}
       >
         <ChevronIcon direction="right" />
       </button>
@@ -142,7 +100,7 @@ export default function PlansCarousel({
             className={`plans-carousel__dot ${index === activeIndex ? "plans-carousel__dot--active" : ""}`}
             aria-selected={index === activeIndex}
             aria-label={`Plano ${plan.name}`}
-            onClick={() => scrollToIndex(index)}
+            onClick={() => goToSlide(index)}
           />
         ))}
       </div>

@@ -485,3 +485,273 @@
     transform: none;
   }
 }
+
+/* ─── Mobile / tablet: carrossel antes e depois (<1024px) ─── */
+.connection-diagnostic-mobile {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.connection-diagnostic-mobile__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.connection-diagnostic-mobile__nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--brand-white);
+  color: var(--brand-navy);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    border-color var(--transition),
+    background var(--transition),
+    color var(--transition);
+}
+
+.connection-diagnostic-mobile__nav-btn:hover:not(:disabled) {
+  border-color: rgba(var(--brand-blue-rgb), 0.35);
+  color: var(--brand-blue);
+}
+
+.connection-diagnostic-mobile__nav-btn:focus-visible {
+  outline: 3px solid rgba(var(--brand-blue-rgb), 0.35);
+  outline-offset: 2px;
+}
+
+.connection-diagnostic-mobile__nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.connection-diagnostic-mobile__status {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.connection-diagnostic-mobile__track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  padding-bottom: 4px;
+  margin: 0 -2px;
+}
+
+.connection-diagnostic-mobile__track:focus-visible {
+  outline: 3px solid rgba(var(--brand-blue-rgb), 0.35);
+  outline-offset: 4px;
+  border-radius: var(--radius-md);
+}
+
+.connection-diagnostic-mobile__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  min-width: 0;
+  padding: clamp(18px, 4vw, 22px);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(var(--brand-blue-rgb), 0.14);
+  background: var(--brand-white);
+  box-shadow: var(--shadow-md);
+}
+
+.connection-diagnostic-mobile__slide-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(var(--brand-blue-rgb), 0.1);
+}
+
+.connection-diagnostic-mobile__time {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--brand-orange);
+}
+
+.connection-diagnostic-mobile__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  color: var(--brand-blue);
+  background: rgba(var(--brand-blue-rgb), 0.1);
+}
+
+.connection-diagnostic-mobile__category {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--brand-navy);
+}
+
+.connection-diagnostic-mobile__compare {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.connection-diagnostic-mobile__block {
+  padding: 14px 0;
+}
+
+.connection-diagnostic-mobile__block--before {
+  padding-top: 0;
+}
+
+.connection-diagnostic-mobile__block--after {
+  padding-bottom: 0;
+}
+
+.connection-diagnostic-mobile__label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.connection-diagnostic-mobile__block--before .connection-diagnostic-mobile__label {
+  color: #b45309;
+}
+
+.connection-diagnostic-mobile__block--after .connection-diagnostic-mobile__label {
+  color: var(--brand-blue);
+}
+
+.connection-diagnostic-mobile__block h3 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--brand-navy);
+}
+
+.connection-diagnostic-mobile__block p {
+  margin: 0 0 10px;
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.connection-diagnostic-mobile__block--before {
+  background: linear-gradient(180deg, #fff7f5 0%, #fffdfb 100%);
+  border-radius: var(--radius-md);
+  padding: 14px 14px 12px;
+  border-left: 3px solid #f0a8a0;
+}
+
+.connection-diagnostic-mobile__block--after {
+  background: linear-gradient(180deg, rgba(var(--brand-blue-rgb), 0.06) 0%, #fff 100%);
+  border-radius: var(--radius-md);
+  padding: 14px 14px 12px;
+  border-left: 3px solid var(--brand-blue);
+}
+
+.connection-diagnostic-mobile__divider {
+  height: 1px;
+  background: rgba(var(--brand-blue-rgb), 0.12);
+  margin: 4px 0;
+}
+
+.connection-diagnostic-mobile__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 100px;
+}
+
+.connection-diagnostic-mobile__badge--bad {
+  color: #b91c1c;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+}
+
+.connection-diagnostic-mobile__badge--ok {
+  color: var(--brand-navy);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(var(--brand-blue-rgb), 0.18);
+}
+
+.connection-diagnostic-mobile__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.connection-diagnostic-mobile__dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(var(--brand-blue-rgb), 0.2);
+  cursor: pointer;
+}
+
+.connection-diagnostic-mobile__dot--active {
+  background: var(--brand-blue);
+  transform: scale(1.15);
+}
+
+.connection-diagnostic-mobile__dot:focus-visible {
+  outline: 2px solid var(--brand-blue);
+  outline-offset: 3px;
+}
+
+.connection-diagnostic-mobile__hint {
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.connection-diagnostic-mobile__cta {
+  width: 100%;
+  margin-top: 16px;
+}
+
+@media (max-width: 1023px) {
+  .connection-diagnostic-mobile__track {
+    scrollbar-width: none;
+  }
+
+  .connection-diagnostic-mobile__track::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connection-diagnostic-mobile__track {
+    scroll-behavior: auto;
+  }
+
+  .connection-diagnostic-mobile__nav-btn,
+  .connection-diagnostic-mobile__dot {
+    transition: none;
+  }
+}

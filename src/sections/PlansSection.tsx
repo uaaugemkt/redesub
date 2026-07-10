@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PlanCard from "../components/PlanCard";
+import PlansCarousel from "../components/PlansCarousel";
 import RegionFilter from "../components/RegionFilter";
 import Reveal from "../components/ui/Reveal";
 import WhatsAppButton from "../components/WhatsAppButton";
@@ -12,6 +14,8 @@ interface PlansSectionProps {
   showHeading?: boolean;
 }
 
+const COMPACT_LAYOUT_QUERY = "(max-width: 767px)";
+
 export default function PlansSection({
   variant = "preview",
   showHeading = true,
@@ -22,6 +26,20 @@ export default function PlansSection({
   const region = getRegionById(activeRegionId);
   const plans = region?.plans ?? [];
   const hasPlans = plans.length > 0;
+
+  const [useCarousel, setUseCarousel] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia(COMPACT_LAYOUT_QUERY).matches
+      : false
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia(COMPACT_LAYOUT_QUERY);
+    const update = () => setUseCarousel(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   return (
     <section
@@ -75,13 +93,19 @@ export default function PlansSection({
                 Planos para <strong>{region.name}</strong> ({region.areaLabel})
               </p>
             )}
-            <div className={`plans__grid ${!isPreview ? "plans__grid--large" : ""}`}>
-              {plans.map((plan, index) => (
-                <Reveal key={plan.id} delay={index * 80} className="plans__grid-cell">
-                  <PlanCard plan={plan} large={!isPreview} />
-                </Reveal>
-              ))}
-            </div>
+
+            {useCarousel ? (
+              <PlansCarousel plans={plans} browseOnly />
+            ) : (
+              <div className={`plans__grid ${!isPreview ? "plans__grid--large" : ""}`}>
+                {plans.map((plan, index) => (
+                  <Reveal key={plan.id} delay={index * 80} className="plans__grid-cell">
+                    <PlanCard plan={plan} large={!isPreview} />
+                  </Reveal>
+                ))}
+              </div>
+            )}
+
             {isPreview && (
               <div className="plans__more">
                 <Link to="/planos" className="btn btn--primary btn--md">
