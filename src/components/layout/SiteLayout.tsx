@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 import DesktopWhatsAppFab from "../DesktopWhatsAppFab";
 import MobileWhatsAppBar from "../MobileWhatsAppBar";
+import SiteTopbar from "./SiteTopbar";
 import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
 import SkipLink from "./SkipLink";
@@ -17,6 +18,7 @@ export default function SiteLayout({
   return (
     <>
       <SkipLink />
+      <SiteTopbar />
       <SiteHeader />
       <main id="conteudo-principal">{children}</main>
       <SiteFooter />

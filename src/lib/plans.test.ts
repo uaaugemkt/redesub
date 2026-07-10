@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { isValidRegionId, getRegionById, REGIONS } from "./plans";
+import {
+  isValidRegionId,
+  getRegionById,
+  REGIONS,
+  getHeroFeaturedPlan,
+  parsePlanSpeed,
+} from "./plans";
 import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "./whatsapp";
 
 describe("plans regions", () => {
@@ -21,6 +27,17 @@ describe("plans regions", () => {
     expect(names).toContain("Oteiro");
     expect(names).toContain("Coraci");
     expect(names).toContain("Águas Negras");
+  });
+
+  it("returns Evolução as hero featured plan", () => {
+    const plan = getHeroFeaturedPlan();
+    expect(plan.id).toBe("evolucao");
+    expect(plan.speed).toBe("850 Mega");
+    expect(plan.price).toBe("205,90");
+  });
+
+  it("parses plan speed for display", () => {
+    expect(parsePlanSpeed("850 Mega")).toEqual({ value: "850", unit: "Mega" });
   });
 });
 

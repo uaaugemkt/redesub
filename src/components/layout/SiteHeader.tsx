@@ -8,7 +8,6 @@ import Logo from "../Logo";
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
   const burgerRef = useRef<HTMLButtonElement>(null);
   const location = useLocation();
 
@@ -22,7 +21,7 @@ export default function SiteHeader() {
   }, [location.pathname]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -45,55 +44,56 @@ export default function SiteHeader() {
     };
   }, [open, closeMenu]);
 
-  const portalHref = SUBSCRIBER_PORTAL_URL || "/suporte#central-assinante";
+  const portalHref = SUBSCRIBER_PORTAL_URL || undefined;
 
   return (
-    <header className={`site-header ${scrolled ? "site-header--scrolled" : ""}`}>
+    <header
+      className={`site-header ${scrolled ? "site-header--scrolled" : ""}`}
+    >
       <div className="container site-header__inner">
         <Link to="/" className="site-header__logo" aria-label="RedeSub — início">
           <Logo />
         </Link>
 
-        <div
-          ref={menuRef}
-          className={`site-header__panel ${open ? "site-header__panel--open" : ""}`}
-          id="site-nav-panel"
-        >
-          <nav className="site-header__nav" aria-label="Principal">
-            {MAIN_NAV.map((link) => (
-              <NavLink
-                key={link.path}
-                to={link.path}
-                className={({ isActive }) =>
-                  `site-header__link ${isActive ? "site-header__link--active" : ""}`
-                }
-                onClick={closeMenu}
-                end={link.path === "/"}
-              >
-                {link.label}
-              </NavLink>
-            ))}
-          </nav>
+        <nav className="site-header__nav" aria-label="Principal">
+          {MAIN_NAV.map((link) => (
+            <NavLink
+              key={link.path}
+              to={link.path}
+              className={({ isActive }) =>
+                `site-header__link ${isActive ? "site-header__link--active" : ""}`
+              }
+              onClick={closeMenu}
+              end={link.path === "/"}
+            >
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
 
-          <div className="site-header__actions">
+        <div className="site-header__actions">
+          {portalHref ? (
             <a
               href={portalHref}
-              className="btn btn--ghost btn--sm site-header__portal"
-              {...(SUBSCRIBER_PORTAL_URL
-                ? { target: "_blank", rel: "noopener noreferrer" }
-                : {})}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="site-header__portal"
             >
               Central do Assinante
             </a>
-            <a
-              href={buildWhatsAppLink(WHATSAPP_MESSAGES.contract)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn--primary btn--sm"
-            >
-              Contratar pelo WhatsApp
-            </a>
-          </div>
+          ) : (
+            <span className="site-header__portal site-header__portal--muted">
+              Central do Assinante
+            </span>
+          )}
+          <a
+            href={buildWhatsAppLink(WHATSAPP_MESSAGES.contract)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn--primary btn--sm site-header__cta"
+          >
+            Contratar pelo WhatsApp
+          </a>
         </div>
 
         <button
@@ -109,6 +109,52 @@ export default function SiteHeader() {
           <span />
           <span />
         </button>
+      </div>
+
+      <div
+        id="site-nav-panel"
+        className={`site-header__drawer ${open ? "site-header__drawer--open" : ""}`}
+        hidden={!open}
+      >
+        <nav className="site-header__drawer-nav" aria-label="Menu mobile">
+          {MAIN_NAV.map((link) => (
+            <NavLink
+              key={link.path}
+              to={link.path}
+              className={({ isActive }) =>
+                `site-header__drawer-link ${isActive ? "site-header__drawer-link--active" : ""}`
+              }
+              onClick={closeMenu}
+              end={link.path === "/"}
+            >
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
+        <div className="site-header__drawer-actions">
+          {portalHref ? (
+            <a
+              href={portalHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn--outline btn--md"
+            >
+              Central do Assinante
+            </a>
+          ) : (
+            <span className="site-header__portal site-header__portal--muted">
+              Central do Assinante em breve
+            </span>
+          )}
+          <a
+            href={buildWhatsAppLink(WHATSAPP_MESSAGES.contract)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn--primary btn--md"
+          >
+            Contratar pelo WhatsApp
+          </a>
+        </div>
       </div>
 
       {open && (

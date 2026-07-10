@@ -120,3 +120,17 @@ export function getRegionDisplayName(id: string | null | undefined): string | nu
 
 /** Mantém compatibilidade com imports legados de PLANS (região Oteiro). */
 export const PLANS = OTEIRO_PLANS;
+
+/** Plano em destaque no hero da home (maior velocidade cadastrada — região Oteiro). */
+export function getHeroFeaturedPlan(): Plan {
+  const featured = OTEIRO_PLANS.find((p) => p.id === "evolucao");
+  return featured ?? OTEIRO_PLANS[OTEIRO_PLANS.length - 1];
+}
+
+export function parsePlanSpeed(speed: string): { value: string; unit: string } {
+  const match = speed.trim().match(/^(\d+)\s+(.+)$/);
+  return {
+    value: match?.[1] ?? speed,
+    unit: match?.[2] ?? "Mega",
+  };
+}
