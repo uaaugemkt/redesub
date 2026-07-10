@@ -1,8 +1,11 @@
+import { useSelection } from "../context/SelectionContext";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { ADDRESS, MAP } from "../lib/constants";
 import { WHATSAPP_MESSAGES } from "../lib/whatsapp";
 
 export default function LocalSection() {
+  const { regionName } = useSelection();
+
   return (
     <section className="local section">
       <div className="container local__grid">
@@ -43,7 +46,10 @@ export default function LocalSection() {
           </p>
 
           <WhatsAppButton
-            message={WHATSAPP_MESSAGES.availability}
+            message={WHATSAPP_MESSAGES.contractInquiry({
+              region: regionName,
+              coverageInterest: true,
+            })}
             label="Consultar disponibilidade no meu endereço"
             variant="primary"
             size="lg"

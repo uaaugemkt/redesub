@@ -1,12 +1,18 @@
 import { useState } from "react";
-import { NONE_APP_ID, PLAN_APP_CONFIG, getAppDisplayName, isNoneApp } from "../config/apps";
-import { PLANS } from "../lib/constants";
+import { NONE_APP_ID, PLAN_APP_CONFIG, isNoneApp } from "../config/apps";
+import { useSelection } from "../context/SelectionContext";
+import type { Plan } from "../lib/plans";
 import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "../lib/whatsapp";
 import PlanAppSelector from "../components/PlanAppSelector";
-
-type Plan = (typeof PLANS)[number];
+import RegionFilter from "../components/RegionFilter";
+import WhatsAppButton from "../components/WhatsAppButton";
 
 export default function PlansSection() {
+  const { regionId, region, regionName } = useSelection();
+  const plans = region?.plans ?? [];
+  const hasRegion = regionId !== null;
+  const hasPlans = plans.length > 0;
+
   return (
     <section className="plans section" id="planos">
       <div className="container">
@@ -19,17 +25,50 @@ export default function PlansSection() {
           </p>
         </div>
 
-        <div className="plans__grid">
-          {PLANS.map((plan) => (
-            <PlanCard key={plan.id} plan={plan} />
-          ))}
-        </div>
+        <RegionFilter id="plans-region-filter" className="plans__region-filter" />
+
+        {!hasRegion && (
+          <div className="plans__empty" role="status">
+            <p>Selecione sua região acima para ver os planos disponíveis.</p>
+          </div>
+        )}
+
+        {hasRegion && !hasPlans && (
+          <div className="plans__empty plans__empty--consult" role="status">
+            <p>
+              Ainda não temos planos cadastrados para <strong>{regionName}</strong>{" "}
+              no site. Consulte disponibilidade e valores com nossa equipe.
+            </p>
+            <WhatsAppButton
+              message={WHATSAPP_MESSAGES.regionAvailability(regionName ?? "")}
+              label="Consultar disponibilidade"
+              variant="primary"
+              size="md"
+            />
+          </div>
+        )}
+
+        {hasRegion && hasPlans && (
+          <>
+            {region?.areaLabel && (
+              <p className="plans__region-note">
+                Planos para <strong>{region.name}</strong> ({region.areaLabel})
+              </p>
+            )}
+            <div className="plans__grid">
+              {plans.map((plan) => (
+                <PlanCard key={plan.id} plan={plan} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
 }
 
 function PlanCard({ plan }: { plan: Plan }) {
+  const { regionName, setSelectedPlanId } = useSelection();
   const [selectedAppId, setSelectedAppId] = useState(NONE_APP_ID);
   const [selectorOpen, setSelectorOpen] = useState(false);
   const appConfig = PLAN_APP_CONFIG[plan.id] ?? {
@@ -37,12 +76,15 @@ function PlanCard({ plan }: { plan: Plan }) {
     additionalAppIds: [NONE_APP_ID],
   };
 
-  const additionalAppName = isNoneApp(selectedAppId)
-    ? null
-    : getAppDisplayName(selectedAppId);
+  const additionalAppIds = isNoneApp(selectedAppId) ? [] : [selectedAppId];
 
   const whatsappHref = buildWhatsAppLink(
-    WHATSAPP_MESSAGES.planWithApp(plan.speed, additionalAppName)
+    WHATSAPP_MESSAGES.planWithApp(
+      plan.speed,
+      plan.name,
+      additionalAppIds,
+      regionName
+    )
   );
 
   return (
@@ -91,6 +133,7 @@ function PlanCard({ plan }: { plan: Plan }) {
         target="_blank"
         rel="noopener noreferrer"
         className={`btn ${plan.recommended ? "btn--primary" : "btn--secondary"} btn--md plan-card__cta`}
+        onClick={() => setSelectedPlanId(plan.id)}
       >
         Quero esse plano
       </a>

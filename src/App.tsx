@@ -1,33 +1,22 @@
-import Header from "./components/Header";
-import MobileWhatsAppBar from "./components/MobileWhatsAppBar";
-import DesktopWhatsAppFab from "./components/DesktopWhatsAppFab";
-import HeroSection from "./sections/HeroSection";
-import ProblemSection from "./sections/ProblemSection";
-import PlansSection from "./sections/PlansSection";
-import CompareSection from "./sections/CompareSection";
-import AppsSection from "./sections/AppsSection";
-import LocalSection from "./sections/LocalSection";
-import TestimonialsSection from "./sections/TestimonialsSection";
-import ReferralSection from "./sections/ReferralSection";
-import FinalCTASection from "./sections/FinalCTASection";
+import { SelectionProvider } from "./context/SelectionContext";
+import HomePage from "./HomePage";
+import SpeedTestPage from "./pages/SpeedTestPage";
+
+function getRoute(): string {
+  const path = window.location.pathname.replace(/\/$/, "") || "/";
+  return path;
+}
 
 export default function App() {
+  const route = getRoute();
+
+  if (route === "/teste-de-velocidade") {
+    return <SpeedTestPage />;
+  }
+
   return (
-    <>
-      <Header />
-      <main>
-        <HeroSection />
-        <ProblemSection />
-        <PlansSection />
-        <CompareSection />
-        <AppsSection />
-        <LocalSection />
-        <TestimonialsSection />
-        <ReferralSection />
-        <FinalCTASection />
-      </main>
-      <MobileWhatsAppBar />
-      <DesktopWhatsAppFab />
-    </>
+    <SelectionProvider>
+      <HomePage />
+    </SelectionProvider>
   );
 }

@@ -1,4 +1,6 @@
 import { useState, type FormEvent } from "react";
+import { useSelection } from "../context/SelectionContext";
+import { REGIONS } from "../lib/plans";
 import { formatPhoneBR, phoneDigits } from "../lib/phone";
 import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "../lib/whatsapp";
 
@@ -20,6 +22,7 @@ const INITIAL = {
 };
 
 export default function ContactForm({ className = "" }: { className?: string }) {
+  const { regionId, setRegionId, regionName } = useSelection();
   const [form, setForm] = useState(INITIAL);
   const [errors, setErrors] = useState<Partial<Record<FieldKey, string>>>({});
 
@@ -54,6 +57,7 @@ export default function ContactForm({ className = "" }: { className?: string }) 
       phone: form.phone.trim(),
       address: form.address.trim(),
       plan: form.plan,
+      region: regionName,
       message: form.message,
     });
 
@@ -69,7 +73,9 @@ export default function ContactForm({ className = "" }: { className?: string }) 
       <header className="contact-form__header">
         <h3 className="contact-form__title">Consulte disponibilidade</h3>
         <p className="contact-form__subtitle">
-          Preencha e fale direto com a equipe pelo WhatsApp.
+          Preencha os dados abaixo. Ao enviar, você será direcionado ao WhatsApp
+          com uma mensagem pronta — a disponibilidade será confirmada pelo
+          atendimento.
         </p>
       </header>
 
@@ -117,6 +123,25 @@ export default function ContactForm({ className = "" }: { className?: string }) 
               {errors.phone}
             </span>
           )}
+        </div>
+
+        <div className="contact-form__field">
+          <label className="contact-form__label" htmlFor="contact-region">
+            Região
+          </label>
+          <select
+            id="contact-region"
+            className="contact-form__input contact-form__select"
+            value={regionId ?? ""}
+            onChange={(e) => setRegionId(e.target.value || null)}
+          >
+            <option value="">Selecione sua região</option>
+            {REGIONS.map((region) => (
+              <option key={region.id} value={region.id}>
+                {region.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="contact-form__field">

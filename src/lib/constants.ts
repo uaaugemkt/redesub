@@ -36,60 +36,7 @@ export const MAP = {
     "https://www.google.com/maps/search/?api=1&query=Av.+Nossa+Sra.+da+Conceição,+31,+São+João+do+Outeiro,+Belém,+PA,+Brasil",
 };
 
-export const PLANS = [
-  {
-    id: "basico",
-    name: "Básico",
-    speed: "450 Mega",
-    price: "115,90",
-    profile:
-      "Casa conectada, redes sociais, vídeos e trabalho leve.",
-    features: [
-      "Wi-Fi na casa toda",
-      "100% fibra óptica",
-      "Roteador inteligente em comodato",
-      "Velocidade simétrica",
-      "Suporte 7 dias por semana",
-      "Apps inclusos",
-    ],
-    recommended: false,
-    badge: null as string | null,
-  },
-  {
-    id: "seguranca",
-    name: "Segurança",
-    speed: "650 Mega",
-    price: "175,90",
-    profile:
-      "Famílias, vários dispositivos, home office e câmera IP.",
-    features: [
-      "Tudo do plano Básico",
-      "Câmera IP Full HD em comodato",
-      "Cartão de memória incluso",
-      "Ideal para famílias conectadas",
-      "Apps inclusos",
-    ],
-    recommended: true,
-    badge: "Melhor escolha para famílias",
-  },
-  {
-    id: "evolucao",
-    name: "Evolução",
-    speed: "850 Mega",
-    price: "205,90",
-    profile:
-      "Máxima performance, jogos, streaming pesado e IP fixo.",
-    features: [
-      "Tudo do plano Segurança",
-      "IP fixo incluso",
-      "Máxima performance",
-      "Streaming em alta qualidade",
-      "Apps inclusos",
-    ],
-    recommended: false,
-    badge: null as string | null,
-  },
-] as const;
+export { PLANS } from "./plans";
 
 export const PROBLEM_TIMELINE = [
   {
@@ -218,6 +165,7 @@ export const TESTIMONIALS = [
 export const NAV_LINKS = [
   { label: "Planos", href: "#planos" },
   { label: "Benefícios", href: "#beneficios" },
+  { label: "Suporte", href: "#suporte" },
   { label: "Depoimentos", href: "#depoimentos" },
   { label: "Contato", href: "#contato" },
 ] as const;

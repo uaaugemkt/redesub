@@ -1,4 +1,5 @@
 import WhatsAppButton from "../components/WhatsAppButton";
+import { useSelection } from "../context/SelectionContext";
 import { GOOGLE_REVIEWS_URL, TESTIMONIALS } from "../lib/constants";
 import { WHATSAPP_MESSAGES } from "../lib/whatsapp";
 
@@ -14,6 +15,8 @@ function GoogleIcon() {
 }
 
 export default function TestimonialsSection() {
+  const { regionName } = useSelection();
+
   return (
     <section className="testimonials section" id="depoimentos">
       <div className="container">
@@ -68,11 +71,17 @@ export default function TestimonialsSection() {
               Ver avaliações no Google
             </a>
             <WhatsAppButton
-              message={WHATSAPP_MESSAGES.support}
-              label="Falar com atendimento"
-              variant="primary"
+              message={WHATSAPP_MESSAGES.supportIssue({
+                reason: "Falar com o suporte",
+                region: regionName,
+              })}
+              label="Preciso de suporte"
+              variant="secondary"
               size="md"
             />
+            <a href="#suporte" className="btn btn--outline btn--md">
+              Ver opções de suporte
+            </a>
           </div>
         </div>
       </div>

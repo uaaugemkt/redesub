@@ -1,4 +1,5 @@
 import WhatsAppButton from "../components/WhatsAppButton";
+import HeroMedia from "../components/HeroMedia";
 import { GOOGLE_REVIEWS_URL } from "../lib/constants";
 
 const HERO_BENEFITS = [
@@ -89,6 +90,7 @@ export default function HeroSection() {
         </div>
 
         <div className="hero__visual">
+          <HeroMedia />
           <div className="hero-panel">
             <div className="hero-panel__badges" aria-hidden="true">
               {HERO_BADGES.map((badge) => (

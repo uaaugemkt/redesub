@@ -51,6 +51,10 @@ export default function FinalCTASection() {
           <p className="site-footer__tagline">
             Atendimento local para resolver de verdade.
           </p>
+          <nav className="site-footer__links" aria-label="Links úteis">
+            <a href="/teste-de-velocidade">Teste de velocidade</a>
+            <a href="#suporte">Suporte técnico</a>
+          </nav>
         </footer>
       </div>
     </section>
