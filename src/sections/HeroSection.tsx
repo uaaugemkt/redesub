@@ -25,7 +25,7 @@ export default function HeroSection() {
         <div className="hero__waves hero__waves--top" aria-hidden="true">
           <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
             <path
-              fill="rgba(0,161,253,0.06)"
+              fill="rgba(3, 161, 253, 0.06)"
               d="M0,100 C240,20 480,180 720,100 C960,20 1200,160 1440,80 L1440,0 L0,0 Z"
             />
           </svg>

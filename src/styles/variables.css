@@ -1,22 +1,31 @@
 :root {
-  /* Cores oficiais RedeSub */
-  --brand-blue: #00a1fd;
-  --brand-orange: #ff8300;
-  --brand-black: #000000;
-  --brand-white: #ffffff;
+  /* Cores oficiais RedeSub (logo) */
+  --brand-blue: #03a1fd;
+  --brand-orange: #ff8505;
+  --brand-black: #010101;
+  --brand-white: #f9fafa;
 
-  /* Profundidade premium (azul escuro) */
-  --blue: #0a2d6b;
-  --blue-light: #1a4fa0;
-  --blue-dark: #061d47;
+  /* RGB — uso em rgba() */
+  --brand-blue-rgb: 3, 161, 253;
+  --brand-orange-rgb: 255, 133, 5;
+  --blue-dark-rgb: 1, 40, 64;
+  --blue-rgb: 3, 78, 122;
+
+  /* Profundidade premium (derivados do azul oficial — fundos escuros) */
+  --blue-dark: #012840;
+  --blue-mid: #023a5e;
+  --blue: #034e7a;
+  --blue-deep: #035a8f;
+  --blue-light: #0280c7;
 
   /* CTAs e destaques */
-  --orange: #ff8300;
-  --orange-hover: #e67500;
-  --orange-light: #fff4e8;
+  --orange: #ff8505;
+  --orange-hover: #e67704;
+  --orange-light: #fff5e8;
+  --orange-gradient-end: #ffa033;
 
-  --sky: #e6f7ff;
-  --white: #ffffff;
+  --sky: #e8f7fe;
+  --white: #f9fafa;
   --gray-50: #f8fafc;
   --gray-100: #f1f5f9;
   --gray-200: #e2e8f0;
@@ -29,11 +38,11 @@
   --radius-md: 16px;
   --radius-lg: 24px;
   --radius-xl: 32px;
-  --shadow-sm: 0 2px 8px rgba(10, 45, 107, 0.08);
-  --shadow-md: 0 8px 32px rgba(10, 45, 107, 0.12);
-  --shadow-lg: 0 16px 48px rgba(10, 45, 107, 0.18);
-  --shadow-orange: 0 8px 28px rgba(255, 131, 0, 0.4);
-  --shadow-brand: 0 8px 32px rgba(0, 161, 253, 0.25);
+  --shadow-sm: 0 2px 8px rgba(var(--blue-dark-rgb), 0.08);
+  --shadow-md: 0 8px 32px rgba(var(--blue-dark-rgb), 0.12);
+  --shadow-lg: 0 16px 48px rgba(var(--blue-dark-rgb), 0.18);
+  --shadow-orange: 0 8px 28px rgba(var(--brand-orange-rgb), 0.4);
+  --shadow-brand: 0 8px 32px rgba(var(--brand-blue-rgb), 0.25);
   --font: "Plus Jakarta Sans", system-ui, sans-serif;
   --header-h: 88px;
   --container: 1200px;
