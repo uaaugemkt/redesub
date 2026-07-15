@@ -520,96 +520,41 @@
   text-align: center;
 }
 
-/* Hero home */
+/* Hero home — pre-composed banner (1920x800) as the full visual.
+   Mobile-first: navy content + banner rendered in flow below the CTAs. */
 .hero.hero--home {
   position: relative;
   min-height: auto;
-  padding: clamp(40px, 5.5vw, 72px) 0 clamp(48px, 7vw, 88px);
-  background: linear-gradient(
-    128deg,
-    var(--brand-navy-deep) 0%,
-    #011a2e 42%,
-    var(--brand-navy) 100%
-  );
+  padding: 0;
+  background-color: #011a2e;
   overflow: hidden;
+  isolation: isolate;
   display: block;
   color: var(--brand-white);
 }
 
-.hero--home__bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.hero--home__glow {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-}
-
-.hero--home__glow--blue {
-  width: min(480px, 55vw);
-  height: min(480px, 55vw);
-  background: rgba(var(--brand-blue-rgb), 0.14);
-  top: 8%;
-  right: 2%;
-  animation: hero-glow-breathe 7s ease-in-out infinite;
-}
-
-.hero--home__glow--orange {
-  width: min(200px, 30vw);
-  height: min(200px, 30vw);
-  background: rgba(var(--brand-orange-rgb), 0.1);
-  bottom: 18%;
-  left: 38%;
-  animation: hero-glow-breathe 9s ease-in-out infinite reverse;
-}
-
-@keyframes hero-glow-breathe {
-  0%, 100% { opacity: 0.7; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.06); }
-}
-
-.hero--home__signal {
-  position: absolute;
-  width: min(280px, 40vw);
-  height: min(280px, 40vw);
-  right: 8%;
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 0.85;
-}
-
-.hero--home__fiber {
-  position: absolute;
-  left: -10%;
-  bottom: 12%;
-  width: 55%;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(var(--brand-blue-rgb), 0.35),
-    rgba(var(--brand-orange-rgb), 0.25),
-    transparent
-  );
-  transform: rotate(-8deg);
-  opacity: 0.5;
-}
-
-.hero--home__grid {
+.hero--home__inner {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
-  gap: clamp(32px, 5vw, 56px);
-  align-items: center;
+  padding-block: clamp(40px, 7vw, 64px);
+}
+
+.hero--home__banner {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.hero--home__banner-img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .hero--home__content {
-  max-width: 58ch;
+  position: relative;
+  z-index: 2;
+  max-width: none;
 }
 
 .hero--home__eyebrow {
@@ -872,41 +817,60 @@
   color: var(--brand-white);
 }
 
-.hero--home__visual {
-  position: relative;
-}
+/* Desktop (>=1280px): the banner is the full hero background and touches the
+   top, bottom and right edges. The in-flow banner image is hidden. */
+@media (min-width: 1280px) {
+  .hero.hero--home {
+    min-height: clamp(600px, 41.67vw, 800px);
+    background-image: url("/media/herobanner-redsub2.webp");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
 
-.hero--home__image-wrap {
-  position: relative;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  aspect-ratio: 4 / 5;
-  max-height: min(640px, 72vh);
-  box-shadow: 0 24px 64px rgba(1, 15, 26, 0.45);
-}
+  /* Legibility overlay: one single wide navy gradient behind the whole content
+     block. Solid at the left edge, strong through the text, then a soft, long
+     fade to fully transparent (~70%) before the main family area — no vertical
+     band, no seam, no uniform darkening of the photo. */
+  .hero.hero--home::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      rgba(1, 18, 31, 1) 0%,
+      rgba(1, 18, 31, 1) 24%,
+      rgba(1, 18, 31, 0.97) 36%,
+      rgba(1, 18, 31, 0.88) 46%,
+      rgba(1, 18, 31, 0.58) 56%,
+      rgba(1, 18, 31, 0.18) 66%,
+      rgba(1, 18, 31, 0) 74%
+    );
+  }
 
-.hero--home__image-wrap::before {
-  content: "";
-  position: absolute;
-  inset: -20%;
-  background: radial-gradient(
-    circle at 60% 40%,
-    rgba(var(--brand-blue-rgb), 0.22),
-    transparent 65%
-  );
-  z-index: 0;
-  pointer-events: none;
-}
+  .hero--home__inner {
+    min-height: inherit;
+    display: flex;
+    align-items: center;
+    padding-block: clamp(56px, 6vw, 88px);
+  }
 
-.hero--home__image {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 20%;
-  display: block;
-  border-radius: var(--radius-xl);
+  .hero--home__content {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 560px);
+    max-width: none;
+  }
+
+  .hero--home__subtitle {
+    max-width: 540px;
+  }
+
+  .hero--home__banner {
+    display: none;
+  }
 }
 
 /* Trust proof — faixa premium abaixo do hero */
@@ -919,8 +883,8 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(241, 246, 250, 0.55) 18%,
-    var(--surface-muted) 42%
+    rgba(255, 255, 255, 0.6) 18%,
+    #ffffff 42%
   );
 }
 
@@ -2203,11 +2167,6 @@
     opacity: 1;
     transform: none;
     transition: none;
-  }
-
-  .hero--home__glow--blue,
-  .hero--home__glow--orange {
-    animation: none !important;
   }
 
   .hero--home__ctas .btn--hero {
@@ -4657,28 +4616,6 @@
   .business-plans__grid,
   .attendance__paths-grid {
     grid-template-columns: 1fr;
-  }
-
-  .hero--home__grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero--home__visual {
-    order: 2;
-  }
-
-  .hero--home__content {
-    order: 1;
-    max-width: none;
-  }
-
-  .hero--home__image-wrap {
-    max-height: 420px;
-    aspect-ratio: 16 / 11;
-  }
-
-  .hero--home__image {
-    object-position: center 25%;
   }
 
   .use-cases__card--work,

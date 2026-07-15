@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import Reveal from "../components/ui/Reveal";
 import WhatsAppButton from "../components/WhatsAppButton";
-import { GOOGLE_REVIEWS_URL } from "../lib/constants";
 import { getHeroFeaturedPlan, parsePlanSpeed } from "../lib/plans";
 
-const HERO_IMAGE_SRC = "/media/familia-redesub.webp";
+const HERO_BANNER_SRC = "/media/herobanner-redsub2.webp";
 
 const HERO_BENEFITS = [
   "Wi-Fi para a casa toda",
@@ -18,18 +17,7 @@ export default function HeroSection() {
 
   return (
     <section className="hero hero--home" id="inicio">
-      <div className="hero--home__bg" aria-hidden="true">
-        <div className="hero--home__glow hero--home__glow--blue" />
-        <div className="hero--home__glow hero--home__glow--orange" />
-        <svg className="hero--home__signal" viewBox="0 0 200 200" aria-hidden="true">
-          <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(3,161,253,0.12)" strokeWidth="2" />
-          <circle cx="100" cy="100" r="64" fill="none" stroke="rgba(3,161,253,0.18)" strokeWidth="2" />
-          <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255,133,5,0.2)" strokeWidth="2" />
-        </svg>
-        <div className="hero--home__fiber" />
-      </div>
-
-      <div className="container hero--home__grid">
+      <div className="hero--home__inner container">
         <div className="hero--home__content">
           <Reveal delay={0}>
             <span className="hero--home__eyebrow">Fibra óptica com atendimento regional</span>
@@ -78,43 +66,20 @@ export default function HeroSection() {
                 Ver planos
               </Link>
             </div>
-            <p className="hero--home__notice">
-              Consulte disponibilidade para sua região.
-            </p>
-          </Reveal>
-
-          <Reveal delay={400}>
-            <div className="hero--home__social">
-              <div className="hero--home__stars" aria-label="5 estrelas">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} width="16" height="16" viewBox="0 0 20 20" fill="var(--brand-orange)" aria-hidden="true">
-                    <path d="M10 1l2.39 4.84L18 6.68l-4 3.9.94 5.5L10 13.77l-4.94 2.6.94-5.5-4-3.9 5.61-.84z" />
-                  </svg>
-                ))}
-              </div>
-              <p>
-                Clientes reais avaliando a RedeSub no{" "}
-                <a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer">
-                  Google
-                </a>
-              </p>
-            </div>
           </Reveal>
         </div>
+      </div>
 
-        <Reveal delay={200} className="hero--home__visual">
-          <div className="hero--home__image-wrap">
-            <img
-              src={HERO_IMAGE_SRC}
-              alt="Família conectada aproveitando a internet da RedeSub em casa"
-              width={720}
-              height={760}
-              loading="eager"
-              decoding="async"
-              className="hero--home__image"
-            />
-          </div>
-        </Reveal>
+      <div className="hero--home__banner">
+        <img
+          src={HERO_BANNER_SRC}
+          alt=""
+          width={1920}
+          height={800}
+          loading="eager"
+          decoding="async"
+          className="hero--home__banner-img"
+        />
       </div>
     </section>
   );
