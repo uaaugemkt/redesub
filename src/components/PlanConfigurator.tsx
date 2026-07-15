@@ -10,7 +10,6 @@ import {
   getAppsByIds,
   isNoneApp,
   PLAN_APP_CONFIG,
-  type AppCategory,
 } from "../config/apps";
 import { useSelection } from "../context/SelectionContext";
 import { getRegionById } from "../lib/plans";
@@ -25,15 +24,6 @@ const STEPS = [
 ] as const;
 
 type ConfigStep = (typeof STEPS)[number]["id"];
-
-const ADDON_CATEGORY_LABEL: Record<AppCategory, string> = {
-  entretenimento: "Entretenimento",
-  seguranca: "Segurança",
-  educacao: "Educação",
-  saude: "Saúde",
-  vantagens: "Vantagens",
-  nenhum: "",
-};
 
 export default function PlanConfigurator() {
   const {
@@ -386,12 +376,6 @@ export default function PlanConfigurator() {
                               >
                                 <AppIcon app={app} size="md" />
                                 <span className="apps-addons__card-name">{app.name}</span>
-                                <span className="apps-addons__card-desc">
-                                  {ADDON_CATEGORY_LABEL[app.category]}
-                                </span>
-                                <span className="apps-addons__card-cta">
-                                  {isSelected ? "Selecionado" : "Consulte valor"}
-                                </span>
                               </button>
                             </li>
                           );

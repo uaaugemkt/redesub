@@ -3029,6 +3029,12 @@ ul {
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 
+.plan-config__addons-grid .apps-addons__card {
+  min-height: auto;
+  justify-content: center;
+  gap: 10px;
+}
+
 .apps-addons__card:hover {
   border-color: var(--brand-blue);
 }
