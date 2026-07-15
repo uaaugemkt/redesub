@@ -30,7 +30,7 @@ export default function MediaImage({
       />
       {isPlaceholder && (
         <figcaption className="media-image__caption">
-          Ilustração temporária — substituir por foto oficial
+          Ilustração temporária (substituir por foto oficial)
         </figcaption>
       )}
     </figure>

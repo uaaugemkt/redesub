@@ -72,7 +72,7 @@ export default function UseCasesSection() {
             <span className="eyebrow">Vida conectada</span>
             <h2 className="section__title">Internet que acompanha sua rotina</h2>
             <p className="section__desc">
-              Da sala ao escritório, da aula ao streaming — conexão pensada para
+              Da sala ao escritório, da aula ao streaming: conexão pensada para
               o jeito real de usar internet no dia a dia.
             </p>
           </div>

@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { Link } from "react-router-dom";
 import {
   APP_CATALOG,
   getAppsByCategory,
@@ -59,8 +58,9 @@ export default function AppsSection({
 
         <div className="apps-showcase">
           <p className="apps-showcase__lead">
-            Seu plano não é só internet — traz entretenimento, segurança, estudo,
-            saúde e benefícios extras para o dia a dia da sua família.
+            Seu plano não é só internet. Ele também traz entretenimento,
+            segurança, estudo, saúde e benefícios extras para o dia a dia da sua
+            família.
           </p>
 
           <div className="apps-showcase__body">
@@ -93,17 +93,7 @@ export default function AppsSection({
           </div>
         </div>
 
-        {isPreview ? (
-          <div className="apps-addons apps-addons--preview">
-            <p>
-              HBO Max, Telecine e outros serviços podem ser consultados como
-              adicionais — sem preços estimados no site.
-            </p>
-            <Link to="/planos#adicionais" className="btn btn--primary btn--md">
-              Escolher adicionais
-            </Link>
-          </div>
-        ) : showSelector ? (
+        {showSelector ? (
           <div className="apps-addons" id="adicionais" aria-labelledby="apps-addons-title">
             <div className="apps-addons__header">
               <h3 id="apps-addons-title" className="apps-addons__title">
@@ -111,7 +101,7 @@ export default function AppsSection({
               </h3>
               <p className="apps-addons__subtitle">
                 Selecione os serviços de interesse. Valores e disponibilidade são
-                confirmados pelo atendimento — sem preços estimados no site.
+                confirmados pelo atendimento, sem preços estimados no site.
               </p>
             </div>
 

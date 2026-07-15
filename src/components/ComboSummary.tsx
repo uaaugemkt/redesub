@@ -29,7 +29,7 @@ export default function ComboSummary() {
         </div>
         <div>
           <dt>Plano</dt>
-          <dd>{plan ? `${plan.name} — ${plan.speed}` : "Selecione um plano acima"}</dd>
+          <dd>{plan ? `${plan.name} | ${plan.speed}` : "Selecione um plano acima"}</dd>
         </div>
         <div>
           <dt>Adicionais</dt>

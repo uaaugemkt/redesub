@@ -115,7 +115,7 @@ export default function LocalSection({ variant = "full" }: LocalSectionProps) {
         <div className="local__location">
           <article className="local__location-card">
             <iframe
-              title="Localização RedeSub — São João do Outeiro, Belém/PA"
+              title="Localização RedeSub: São João do Outeiro, Belém/PA"
               src={MAP.embedUrl}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

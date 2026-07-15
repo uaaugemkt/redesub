@@ -502,12 +502,12 @@ function PlanConfigSummary({
       <dl className="plan-config__summary-list">
         <div>
           <dt>Região</dt>
-          <dd>{regionName ?? "—"}</dd>
+          <dd>{regionName ?? "Não selecionada"}</dd>
         </div>
         <div>
           <dt>Plano</dt>
           <dd>
-            {plan.name} — {plan.speed}
+            {plan.name} | {plan.speed}
           </dd>
         </div>
         <div>

@@ -35,7 +35,7 @@ export default function AboutClosingSection() {
                 </p>
                 <p className="about-closing__text about-closing__text--closing">
                   Seguimos construindo uma rede que cresce junto com as comunidades que
-                  confiam em nosso trabalho — com responsabilidade, clareza e vontade de
+                  confiam em nosso trabalho, com responsabilidade, clareza e vontade de
                   fazer cada conexão valer a pena.
                 </p>
               </div>

@@ -53,7 +53,7 @@ export const ATTENDANCE_SERVICE_REGIONS: readonly AttendanceServiceRegion[] =
         ? {
             mapEmbedUrl: MAP.embedUrl,
             mapOpenUrl: MAP.openUrl,
-            mapTitle: "Localização RedeSub — São João do Outeiro, Belém/PA",
+            mapTitle: "Localização RedeSub: São João do Outeiro, Belém/PA",
             address: ADDRESS.full,
           }
         : {}),

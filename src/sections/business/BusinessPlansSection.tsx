@@ -41,7 +41,7 @@ export default function BusinessPlansSection() {
                 )}
                 {SHOW_BUSINESS_PLAN_EXAMPLES && (
                   <span className="business-plans__badge business-plans__badge--example">
-                    Exemplo de apresentação — valor não oficial
+                    Exemplo de apresentação (valor não oficial)
                   </span>
                 )}
 

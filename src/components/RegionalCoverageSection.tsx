@@ -191,7 +191,7 @@ function RegionMap({ region }: { region: AttendanceServiceRegion }) {
     <article className="attendance-region__location-card">
       <iframe
         key={region.id}
-        title={region.mapTitle ?? `Mapa — ${region.name}`}
+        title={region.mapTitle ?? `Mapa de ${region.name}`}
         src={region.mapEmbedUrl}
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"

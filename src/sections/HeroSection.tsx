@@ -4,7 +4,7 @@ import WhatsAppButton from "../components/WhatsAppButton";
 import { GOOGLE_REVIEWS_URL } from "../lib/constants";
 import { getHeroFeaturedPlan, parsePlanSpeed } from "../lib/plans";
 
-const HERO_IMAGE_SRC = "/media/herobanner-mulher.webp";
+const HERO_IMAGE_SRC = "/media/familia-redesub.webp";
 
 const HERO_BENEFITS = [
   "Wi-Fi para a casa toda",
@@ -106,7 +106,7 @@ export default function HeroSection() {
           <div className="hero--home__image-wrap">
             <img
               src={HERO_IMAGE_SRC}
-              alt="Mulher utilizando o celular, representando uma experiência de internet conectada"
+              alt="Família conectada aproveitando a internet da RedeSub em casa"
               width={720}
               height={760}
               loading="eager"

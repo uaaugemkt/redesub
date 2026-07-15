@@ -122,7 +122,7 @@ function CoverageRegionPanel({ region }: { region: AttendanceServiceRegion }) {
         <div className="coverage-region-content__map-wrap">
           <iframe
             key={region.id}
-            title={region.mapTitle ?? `Mapa — ${region.name}`}
+            title={region.mapTitle ?? `Mapa de ${region.name}`}
             src={region.mapEmbedUrl}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"

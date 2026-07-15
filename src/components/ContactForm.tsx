@@ -74,7 +74,7 @@ export default function ContactForm({ className = "" }: { className?: string }) 
         <h3 className="contact-form__title">Consulte disponibilidade</h3>
         <p className="contact-form__subtitle">
           Preencha os dados abaixo. Ao enviar, você será direcionado ao WhatsApp
-          com uma mensagem pronta — a disponibilidade será confirmada pelo
+          com uma mensagem pronta. A disponibilidade será confirmada pelo
           atendimento.
         </p>
       </header>

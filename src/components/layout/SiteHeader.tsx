@@ -48,7 +48,7 @@ export default function SiteHeader() {
       className={`site-header ${scrolled ? "site-header--scrolled" : ""}`}
     >
       <div className="container site-header__inner">
-        <Link to="/" className="site-header__logo" aria-label="RedeSub — início">
+        <Link to="/" className="site-header__logo" aria-label="Página inicial da RedeSub">
           <Logo />
         </Link>
 

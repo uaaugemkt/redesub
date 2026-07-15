@@ -14,6 +14,11 @@ import {
   WHATSAPP_MESSAGES,
 } from "../lib/whatsapp";
 import { useSelection } from "../context/SelectionContext";
+import {
+  CircleCheckIcon,
+  MapPinIcon,
+  MessageCircleIcon,
+} from "../components/icons/BenefitIcons";
 
 const ATTENDANCE_PATHS = [
   {
@@ -40,9 +45,9 @@ const ATTENDANCE_PATHS = [
 ] as const;
 
 const FORM_BENEFITS = [
-  "Atendimento regional com equipe acessível.",
-  "Resposta pelo WhatsApp com mensagem pronta.",
-  "Confirmação de disponibilidade pelo atendimento.",
+  { icon: MapPinIcon, text: "Atendimento regional com equipe acessível." },
+  { icon: MessageCircleIcon, text: "Resposta pelo WhatsApp com mensagem pronta." },
+  { icon: CircleCheckIcon, text: "Confirmação de disponibilidade pelo atendimento." },
 ] as const;
 
 export default function AttendancePage() {
@@ -134,13 +139,18 @@ export default function AttendancePage() {
                 <h2 className="section__title">Consulta de planos e disponibilidade</h2>
                 <p className="section__desc">
                   Preencha os dados ao lado. Ao enviar, você será direcionado ao
-                  WhatsApp com uma mensagem pronta — a disponibilidade será
+                  WhatsApp com uma mensagem pronta. A disponibilidade será
                   confirmada pelo atendimento.
                 </p>
 
                 <ul className="attendance__benefits">
-                  {FORM_BENEFITS.map((item) => (
-                    <li key={item}>{item}</li>
+                  {FORM_BENEFITS.map(({ icon: Icon, text }) => (
+                    <li key={text}>
+                      <span className="attendance__benefit-icon" aria-hidden="true">
+                        <Icon />
+                      </span>
+                      <span>{text}</span>
+                    </li>
                   ))}
                 </ul>
 

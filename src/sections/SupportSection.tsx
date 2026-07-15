@@ -23,7 +23,7 @@ export default function SupportSection({ variant = "full" }: SupportSectionProps
               <h2 className="section__title">Suporte técnico com atendimento humano</h2>
               <p className="section__desc support__desc">
                 Cliente RedeSub? Escolha o motivo do contato e fale direto com
-                nossa equipe pelo WhatsApp — sem formulários complicados.
+                nossa equipe pelo WhatsApp, sem formulários complicados.
               </p>
               {isPreview && (
                 <Link to="/atendimento#suporte-rapido" className="btn btn--outline btn--md">
@@ -65,7 +65,7 @@ export default function SupportSection({ variant = "full" }: SupportSectionProps
               </h3>
               <p className="support__portal-text">
                 Acesse faturas, segunda via e serviços da sua conta no ambiente
-                oficial do assinante — separado do suporte pelo WhatsApp.
+                oficial do assinante, separado do suporte pelo WhatsApp.
               </p>
               {SUBSCRIBER_PORTAL_URL ? (
                 <a

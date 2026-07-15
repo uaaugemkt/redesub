@@ -4044,10 +4044,37 @@
 }
 
 .attendance__benefits {
+  list-style: none;
   margin: 20px 0 24px;
-  padding-left: 1.2rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.attendance__benefits li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--brand-navy);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.attendance__benefit-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--brand-blue-soft);
+  color: var(--brand-blue);
+}
+
+.attendance__benefit-icon svg {
+  width: 18px;
+  height: 18px;
 }
 
 .attendance__channels {
@@ -4501,20 +4528,6 @@
 
 .support__issues--page {
   grid-template-columns: repeat(3, 1fr);
-}
-
-.apps-addons--preview {
-  text-align: center;
-  padding: 32px;
-  background: var(--brand-white);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  margin-top: 32px;
-}
-
-.apps-addons--preview p {
-  margin-bottom: 16px;
-  color: var(--text-secondary);
 }
 
 .plans-page__combo {

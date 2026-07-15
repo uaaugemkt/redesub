@@ -96,9 +96,9 @@ export default function PlanConfigFloatingBar({
     else onReview();
   };
 
-  const planLabel = hasPlan && speed ? `${planName} — ${speed}` : "Não selecionado";
+  const planLabel = hasPlan && speed ? `${planName} | ${speed}` : "Não selecionado";
   const regionLabel = regionName ?? "Não selecionada";
-  const priceLabel = price ? `R$ ${price}/mês` : "—";
+  const priceLabel = price ? `R$ ${price}/mês` : "A definir";
   const ctaDisabled = !hasRegion || (hasRegion && !hasPlan && !showWhatsApp);
 
   if (!isDesktop || !visible) {

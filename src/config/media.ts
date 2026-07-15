@@ -16,7 +16,7 @@ export function getMediaSrc(id: MediaId): string {
 export function getMediaAlt(id: MediaId, contextAlt: string): string {
   const item = byId[id];
   if (!item || item.status === "placeholder") {
-    return `${contextAlt} (ilustração temporária — aguardando foto oficial da RedeSub)`;
+    return `${contextAlt} (ilustração temporária, aguardando foto oficial da RedeSub)`;
   }
   return contextAlt;
 }
