@@ -464,13 +464,10 @@ export default function PlanConfigurator() {
           setActiveStep(2);
           scrollToElement(plansRef.current);
         }}
-        onContinue={() => {
-          setActiveStep(3);
-          scrollToElement(addonsRef.current);
-        }}
+        onContinue={handleContinueAddons}
         onReview={() => {
           setActiveStep(4);
-          scrollToElement(reviewRef.current);
+          requestAnimationFrame(() => scrollToElement(reviewRef.current));
         }}
       />
     </>
