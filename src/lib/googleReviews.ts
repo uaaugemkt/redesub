@@ -1,12 +1,13 @@
 /**
- * Google Reviews / prova social — fonte de dados e tipos.
+ * Google Reviews / prova social — fonte de dados e tipos (frontend).
  *
- * Fonte preferencial: GET /api/google-reviews (Cloudflare Pages Function),
- * com GOOGLE_PLACES_API_KEY + GOOGLE_PLACE_ID apenas no server.
+ * Consome GET /api/google-reviews (Cloudflare Pages Function).
+ * Place ID e GOOGLE_PLACES_API_KEY ficam apenas no server (`functions/`).
+ *
+ * URL pública do perfil Google (CTA): `GOOGLE_REVIEWS_URL` em constants.
+ * Não confundir com Place ID.
  *
  * `reviews` só recebe avaliações reais. Nunca inventar avaliações, notas ou autores.
- *
- * URL do perfil: `GOOGLE_REVIEWS_URL` em constants / integrations.
  */
 
 export type GoogleReview = {

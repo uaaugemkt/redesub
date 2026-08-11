@@ -132,11 +132,11 @@ export default function TestimonialsSection() {
             <h2 className="section__title" id="depoimentos-title">
               A experiência de quem escolhe a RedeSub
             </h2>
-            <p className="section__desc">
-              {showReviews
-                ? "Avaliações reais de clientes no Google."
-                : "Confira as avaliações da RedeSub no Google."}
-            </p>
+            {showReviews ? (
+              <p className="section__desc">
+                Avaliações reais de clientes no Google.
+              </p>
+            ) : null}
           </div>
         </Reveal>
 
@@ -185,7 +185,7 @@ export default function TestimonialsSection() {
                   rel="noopener noreferrer"
                   className="btn btn--outline btn--md"
                 >
-                  Ver todas as avaliações no Google
+                  Ver avaliações no Google
                 </a>
               </div>
             </div>

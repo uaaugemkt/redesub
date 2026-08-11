@@ -1,34 +1,53 @@
 /**
  * Cloudflare Pages Function — GET /api/google-reviews
  *
- * Secrets (Cloudflare Pages → Settings → Environment variables):
- * - GOOGLE_PLACES_API_KEY  (server-side only; nunca VITE_*)
- * - GOOGLE_PLACE_ID        (Place ID oficial da unidade RedeSub no Google)
+ * Place ID: centralizado em functions/config/google-places.ts
+ * Secret Cloudflare (server-side only): GOOGLE_PLACES_API_KEY
  *
- * Place ID ainda não está no repositório — forneça o valor verificável
- * (Google Business Profile / Place Details / URL completa do Maps com place_id=).
+ * Nunca expor a API key no frontend / VITE_*.
  */
+
+import {
+  GOOGLE_PLACE_ID,
+  GOOGLE_PLACES_API_KEY_ENV,
+  GOOGLE_PLACES_FIELD_MASK,
+} from "../config/google-places";
 
 type Env = {
   GOOGLE_PLACES_API_KEY?: string;
+  /** Opcional: sobrescreve o Place ID centralizado (não obrigatório). */
   GOOGLE_PLACE_ID?: string;
 };
 
-type GooglePlacesReview = {
-  author_name?: string;
-  rating?: number;
+type PlacesText = {
   text?: string;
-  relative_time_description?: string;
-  profile_photo_url?: string;
+  languageCode?: string;
 };
 
-type PlaceDetailsResponse = {
-  status?: string;
-  error_message?: string;
-  result?: {
-    rating?: number;
-    user_ratings_total?: number;
-    reviews?: GooglePlacesReview[];
+type PlacesAuthorAttribution = {
+  displayName?: string;
+  uri?: string;
+  photoUri?: string;
+};
+
+type PlacesReview = {
+  rating?: number;
+  text?: PlacesText;
+  originalText?: PlacesText;
+  relativePublishTimeDescription?: string;
+  authorAttribution?: PlacesAuthorAttribution;
+};
+
+type PlaceDetailsNewResponse = {
+  displayName?: PlacesText;
+  rating?: number;
+  userRatingCount?: number;
+  reviews?: PlacesReview[];
+  googleMapsUri?: string;
+  error?: {
+    code?: number;
+    message?: string;
+    status?: string;
   };
 };
 
@@ -84,13 +103,24 @@ function emptyPayload(
   );
 }
 
-function normalizeReviews(raw: GooglePlacesReview[] | undefined): NormalizedReview[] {
+function resolvePlaceId(env: Env): string {
+  const fromEnv = env.GOOGLE_PLACE_ID?.trim() ?? "";
+  return fromEnv || GOOGLE_PLACE_ID;
+}
+
+function reviewText(item: PlacesReview): string {
+  const primary = item.text?.text?.trim() ?? "";
+  if (primary) return primary;
+  return item.originalText?.text?.trim() ?? "";
+}
+
+function normalizeReviews(raw: PlacesReview[] | undefined): NormalizedReview[] {
   if (!Array.isArray(raw)) return [];
 
   return raw
     .map((item) => {
-      const authorName = item.author_name?.trim() ?? "";
-      const text = item.text?.trim() ?? "";
+      const authorName = item.authorAttribution?.displayName?.trim() ?? "";
+      const text = reviewText(item);
       const rating =
         typeof item.rating === "number" && Number.isFinite(item.rating)
           ? item.rating
@@ -98,8 +128,9 @@ function normalizeReviews(raw: GooglePlacesReview[] | undefined): NormalizedRevi
 
       if (!authorName || !text || rating === null) return null;
 
-      const relativeTime = item.relative_time_description?.trim() || undefined;
-      const authorPhoto = item.profile_photo_url?.trim() || undefined;
+      const relativeTime =
+        item.relativePublishTimeDescription?.trim() || undefined;
+      const authorPhoto = item.authorAttribution?.photoUri?.trim() || undefined;
 
       return {
         authorName,
@@ -118,60 +149,62 @@ export const onRequestOptions: PagesFunction = async () =>
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   const apiKey = context.env.GOOGLE_PLACES_API_KEY?.trim() ?? "";
-  const placeId = context.env.GOOGLE_PLACE_ID?.trim() ?? "";
-  const missing: string[] = [];
+  const placeId = resolvePlaceId(context.env);
 
-  if (!apiKey) missing.push("GOOGLE_PLACES_API_KEY");
-  if (!placeId) missing.push("GOOGLE_PLACE_ID");
-
-  if (missing.length > 0) {
+  if (!apiKey) {
     return emptyPayload(
-      missing,
-      "Configure GOOGLE_PLACES_API_KEY e GOOGLE_PLACE_ID nas Environment Variables do Cloudflare Pages (escopo server-side / Functions)."
+      [GOOGLE_PLACES_API_KEY_ENV],
+      "Configure GOOGLE_PLACES_API_KEY nas Environment Variables do Cloudflare Pages (Functions / server-side)."
     );
   }
 
-  const url = new URL("https://maps.googleapis.com/maps/api/place/details/json");
-  url.searchParams.set("place_id", placeId);
-  url.searchParams.set(
-    "fields",
-    "name,rating,user_ratings_total,reviews"
-  );
-  url.searchParams.set("language", "pt-BR");
-  url.searchParams.set("reviews_sort", "most_relevant");
-  url.searchParams.set("key", apiKey);
+  if (!placeId) {
+    return emptyPayload(
+      ["GOOGLE_PLACE_ID"],
+      "Place ID não configurado no servidor."
+    );
+  }
+
+  const url = `https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}?languageCode=pt-BR`;
 
   try {
-    const upstream = await fetch(url.toString());
+    const upstream = await fetch(url, {
+      method: "GET",
+      headers: {
+        "X-Goog-Api-Key": apiKey,
+        "X-Goog-FieldMask": GOOGLE_PLACES_FIELD_MASK,
+        Accept: "application/json",
+        "Accept-Language": "pt-BR",
+      },
+    });
+
+    const data = (await upstream.json()) as PlaceDetailsNewResponse;
+
     if (!upstream.ok) {
       return emptyPayload(
         [],
-        `Falha ao consultar Google Places (HTTP ${upstream.status}).`,
-        502
+        "Não foi possível carregar as avaliações no momento.",
+        upstream.status >= 500 ? 502 : 503
       );
     }
 
-    const data = (await upstream.json()) as PlaceDetailsResponse;
-
-    if (data.status !== "OK" && data.status !== "ZERO_RESULTS") {
+    if (data.error) {
       return emptyPayload(
         [],
-        data.error_message ||
-          `Google Places retornou status ${data.status ?? "desconhecido"}.`,
+        "Não foi possível carregar as avaliações no momento.",
         502
       );
     }
 
-    const result = data.result ?? {};
-    const reviews = normalizeReviews(result.reviews);
+    const reviews = normalizeReviews(data.reviews);
     const averageRating =
-      typeof result.rating === "number" && Number.isFinite(result.rating)
-        ? result.rating
+      typeof data.rating === "number" && Number.isFinite(data.rating)
+        ? data.rating
         : null;
     const totalReviews =
-      typeof result.user_ratings_total === "number" &&
-      Number.isFinite(result.user_ratings_total)
-        ? result.user_ratings_total
+      typeof data.userRatingCount === "number" &&
+      Number.isFinite(data.userRatingCount)
+        ? data.userRatingCount
         : null;
 
     return json({
@@ -180,10 +213,14 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       reviews,
       meta: {
         configured: true,
-        source: "google-places-details",
+        source: "google-places-api-new",
       },
     });
   } catch {
-    return emptyPayload([], "Erro de rede ao consultar Google Places.", 502);
+    return emptyPayload(
+      [],
+      "Não foi possível carregar as avaliações no momento.",
+      502
+    );
   }
 };
