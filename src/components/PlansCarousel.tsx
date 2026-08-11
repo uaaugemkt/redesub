@@ -4,23 +4,9 @@ import PlanCard from "./PlanCard";
 
 interface PlansCarouselProps {
   plans: readonly Plan[];
-  selectedPlanId?: string | null;
-  onSelect?: (planId: string) => void;
-  /** Home preview: cards are not selectable. */
-  browseOnly?: boolean;
 }
 
-export default function PlansCarousel({
-  plans,
-  selectedPlanId = null,
-  onSelect,
-  browseOnly = false,
-}: PlansCarouselProps) {
-  const syncIndex =
-    selectedPlanId != null
-      ? plans.findIndex((plan) => plan.id === selectedPlanId)
-      : null;
-
+export default function PlansCarousel({ plans }: PlansCarouselProps) {
   const {
     trackRef,
     setSlideRef,
@@ -33,14 +19,13 @@ export default function PlansCarousel({
     handleTrackKeyDown,
   } = useSnapCarousel({
     slideCount: plans.length,
-    syncIndex: syncIndex != null && syncIndex >= 0 ? syncIndex : null,
   });
 
   if (plans.length === 0) return null;
 
   return (
     <div
-      className={`plans-carousel${browseOnly ? " plans-carousel--browse" : ""}`}
+      className="plans-carousel plans-carousel--browse"
       role="region"
       aria-roledescription="carrossel"
       aria-label="Planos disponíveis"
@@ -66,16 +51,10 @@ export default function PlansCarousel({
             <div
               key={plan.id}
               ref={(node) => setSlideRef(index, node)}
-              className={`plans-carousel__slide ${activeIndex === index ? "plans-carousel__slide--active" : ""} ${selectedPlanId === plan.id ? "plans-carousel__slide--selected" : ""}`}
+              className={`plans-carousel__slide ${activeIndex === index ? "plans-carousel__slide--active" : ""}`}
               data-index={index}
             >
-              <PlanCard
-                plan={plan}
-                large
-                selectable={!browseOnly}
-                selected={selectedPlanId === plan.id}
-                onSelect={browseOnly ? undefined : onSelect}
-              />
+              <PlanCard plan={plan} large />
             </div>
           ))}
         </div>

@@ -5,7 +5,7 @@ import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "../lib/whatsapp";
 import "../styles/compare-section.css";
 
 export default function CompareSection({
-  eyebrow = "A diferença real",
+  eyebrow = "Antes × Depois",
   backHref,
   backLabel = "Voltar ao configurador",
 }: {
@@ -70,28 +70,31 @@ export default function CompareSection({
       </div>
 
       <div className="container">
-        <header className="compare__header section__header">
+        <header className="compare__header section__header section__header--center">
           <span className="eyebrow">{eyebrow}</span>
-          <h2 className="section__title" id="compare-title">
-            A diferença entre ter internet e ter tranquilidade
+          <h2 className="section__title compare__title" id="compare-title">
+            Veja a diferença de uma conexão estável
           </h2>
-          <p className="section__desc">
-            Internet rápida é bom. Internet estável é melhor ainda.
+          <p className="section__desc compare__desc">
+            Compare uma internet instável com a experiência de conexão da RedeSub.
           </p>
         </header>
 
         <div className="compare__stage">
           <article
             className="compare__problem"
-            aria-label={COMPARE.bad.title}
+            aria-label={`Antes: ${COMPARE.bad.title}`}
           >
             <div className="compare__problem-noise" aria-hidden="true" />
             <div className="compare__problem-topline" aria-hidden="true" />
 
             <div className="compare__problem-head">
-              <div className="compare__problem-status">
-                <WeakSignalIcon />
-                <span>{COMPARE.bad.status}</span>
+              <div className="compare__side-tags">
+                <span className="compare__side-pill compare__side-pill--before">Antes</span>
+                <span className="compare__side-hint compare__side-hint--before">
+                  <WeakSignalIcon />
+                  Conexão instável
+                </span>
               </div>
               <h3 className="compare__problem-title">{COMPARE.bad.title}</h3>
             </div>
@@ -131,21 +134,25 @@ export default function CompareSection({
 
           <div className="compare__bridge" aria-hidden="true">
             <TransformBridge active={inView} />
-            <p className="compare__bridge-label">com a RedeSub</p>
           </div>
 
           <article
             className="compare__solution"
-            aria-label={COMPARE.good.title}
+            aria-label={`Com a RedeSub: ${COMPARE.good.title}`}
           >
             <div className="compare__solution-accent" aria-hidden="true" />
             <div className="compare__solution-glow" aria-hidden="true" />
             <FiberPattern />
 
             <div className="compare__solution-head">
-              <div className="compare__solution-badge">
-                <StableSignalIcon />
-                <span>Conexão estabilizada</span>
+              <div className="compare__side-tags">
+                <span className="compare__side-pill compare__side-pill--after">
+                  Com a RedeSub
+                </span>
+                <span className="compare__side-hint compare__side-hint--after">
+                  <StableSignalIcon />
+                  Conexão estável
+                </span>
               </div>
               <h3 className="compare__solution-title">{COMPARE.good.title}</h3>
             </div>
@@ -207,45 +214,19 @@ export default function CompareSection({
 
 function TransformBridge({ active }: { active: boolean }) {
   return (
-    <svg
-      className={`compare__bridge-svg ${active ? "compare__bridge-svg--active" : ""}`}
-      viewBox="0 0 88 320"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        className="compare__bridge-line compare__bridge-line--broken"
-        d="M12 160 C28 120, 36 200, 44 160 C52 120, 60 200, 76 160"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeDasharray="6 8"
-      />
-      <path
-        className="compare__bridge-line compare__bridge-line--stable"
-        d="M12 160 C28 140, 36 180, 44 160 C52 140, 60 180, 76 160"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-      />
-      <circle className="compare__bridge-node compare__bridge-node--start" cx="12" cy="160" r="5" />
-      <circle className="compare__bridge-node compare__bridge-node--mid" cx="44" cy="160" r="6" />
-      <circle className="compare__bridge-node compare__bridge-node--end" cx="76" cy="160" r="5" />
-      <path
-        className="compare__bridge-pulse"
-        d="M12 160 L76 160"
-        stroke="url(#comparePulse)"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-      <defs>
-        <linearGradient id="comparePulse" x1="12" y1="160" x2="76" y2="160" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#fecaca" />
-          <stop offset="0.45" stopColor="#03A1FD" />
-          <stop offset="1" stopColor="#FF8505" />
-        </linearGradient>
-      </defs>
-    </svg>
+    <div className={`compare__bridge-core ${active ? "compare__bridge-core--active" : ""}`}>
+      <span className="compare__bridge-tag compare__bridge-tag--before">Antes</span>
+      <div className="compare__bridge-track">
+        <span className="compare__bridge-dot" />
+        <span className="compare__bridge-line" />
+        <span className="compare__bridge-mid">A diferença</span>
+        <span className="compare__bridge-line" />
+        <span className="compare__bridge-arrow" aria-hidden="true">
+          →
+        </span>
+      </div>
+      <span className="compare__bridge-tag compare__bridge-tag--after">Com a RedeSub</span>
+    </div>
   );
 }
 
@@ -289,7 +270,7 @@ function FiberPattern() {
 
 function WeakSignalIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+    <svg width="14" height="14" viewBox="0 0 18 18" fill="none" aria-hidden="true">
       <rect x="1" y="12" width="3" height="5" rx="1" fill="currentColor" opacity="0.35" />
       <rect x="6" y="9" width="3" height="8" rx="1" fill="currentColor" opacity="0.5" />
       <rect x="11" y="6" width="3" height="11" rx="1" fill="currentColor" opacity="0.25" />
@@ -300,7 +281,7 @@ function WeakSignalIcon() {
 
 function StableSignalIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+    <svg width="14" height="14" viewBox="0 0 18 18" fill="none" aria-hidden="true">
       <rect x="1" y="12" width="3" height="5" rx="1" fill="currentColor" />
       <rect x="6" y="9" width="3" height="8" rx="1" fill="currentColor" />
       <rect x="11" y="5" width="3" height="12" rx="1" fill="currentColor" />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { MapPinIcon } from "../components/icons/BenefitIcons";
 import Reveal from "../components/ui/Reveal";
 import WhatsAppButton from "../components/WhatsAppButton";
@@ -11,6 +11,10 @@ import {
 } from "../lib/attendanceRegions";
 import { DEFAULT_REGION_ID } from "../lib/plans";
 import { WHATSAPP_MESSAGES } from "../lib/whatsapp";
+
+const CoverageInfrastructureMap = lazy(
+  () => import("../components/coverage/CoverageInfrastructureMap")
+);
 
 export default function CoverageRegionSection() {
   const [activeId, setActiveId] = useState(DEFAULT_REGION_ID);
@@ -27,13 +31,13 @@ export default function CoverageRegionSection() {
       <div className="container">
         <Reveal>
           <header className="coverage-section-heading">
-            <span className="eyebrow">Selecione sua região</span>
+            <span className="eyebrow">Cobertura</span>
             <h2 className="coverage-section-heading__title" id="cobertura-regional-title">
-              Escolha uma região para continuar.
+              Consulte a disponibilidade na sua região
             </h2>
             <p className="coverage-section-heading__desc">
-              Veja as informações locais e consulte a disponibilidade para o seu
-              endereço.
+              Confira nossa área de atendimento e fale com a RedeSub para verificar
+              a disponibilidade no seu endereço.
             </p>
           </header>
         </Reveal>
@@ -120,16 +124,9 @@ function CoverageRegionPanel({ region }: { region: AttendanceServiceRegion }) {
         </header>
 
         <div className="coverage-region-content__map-wrap">
-          <iframe
-            key={region.id}
-            title={region.mapTitle ?? `Mapa de ${region.name}`}
-            src={region.mapEmbedUrl}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-            className="coverage-region-content__map"
-            tabIndex={-1}
-          />
+          <Suspense fallback={<CoverageMapFallback />}>
+            <CoverageInfrastructureMap regionName={region.name} />
+          </Suspense>
         </div>
 
         {region.mapOpenUrl ? (
@@ -147,7 +144,7 @@ function CoverageRegionPanel({ region }: { region: AttendanceServiceRegion }) {
         <div className="coverage-region-content__cta">
           <WhatsAppButton
             message={WHATSAPP_MESSAGES.coverageRegionConsult(region.name)}
-            label="Consultar pelo WhatsApp"
+            label="Consultar disponibilidade"
             variant="primary"
             size="md"
           />
@@ -170,10 +167,25 @@ function CoverageRegionPanel({ region }: { region: AttendanceServiceRegion }) {
       </p>
       <WhatsAppButton
         message={WHATSAPP_MESSAGES.coverageRegionConsult(region.name)}
-        label="Consultar pelo WhatsApp"
+        label="Consultar disponibilidade"
         variant="primary"
         size="md"
       />
+    </div>
+  );
+}
+
+function CoverageMapFallback() {
+  return (
+    <div className="coverage-infra">
+      <div
+        className="coverage-infra__map coverage-infra__map--status"
+        role="status"
+        aria-live="polite"
+      >
+        <span className="coverage-infra__spinner" aria-hidden="true" />
+        <p>Carregando mapa da região...</p>
+      </div>
     </div>
   );
 }

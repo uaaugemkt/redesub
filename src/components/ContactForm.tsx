@@ -6,9 +6,10 @@ import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "../lib/whatsapp";
 
 const PLAN_OPTIONS = [
   { value: "Ainda não sei", label: "Ainda não sei" },
-  { value: "450 Mega", label: "450 Mega" },
-  { value: "650 Mega", label: "650 Mega" },
-  { value: "850 Mega", label: "850 Mega" },
+  { value: "Novo Básico 400 Mega", label: "Novo Básico — 400 Mega" },
+  { value: "Liberdade 400 Mega", label: "Liberdade — 400 Mega" },
+  { value: "+ Segurança 500 Mega", label: "+ Segurança — 500 Mega" },
+  { value: "New Evolução Turbo 800 Mega", label: "New Evolução Turbo — 800 Mega" },
 ] as const;
 
 type FieldKey = "name" | "phone" | "address";

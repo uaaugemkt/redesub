@@ -11,7 +11,14 @@ export function readStoredRegionId(): string {
   if (typeof window === "undefined") return DEFAULT_REGION_ID;
   try {
     const stored = localStorage.getItem(REGION_STORAGE_KEY);
-    if (stored && isValidRegionId(stored)) return stored;
+    if (stored && isValidRegionId(stored)) {
+      const region = getRegionById(stored);
+      const id = region?.id ?? DEFAULT_REGION_ID;
+      if (stored !== id) {
+        localStorage.setItem(REGION_STORAGE_KEY, id);
+      }
+      return id;
+    }
     if (stored) localStorage.removeItem(REGION_STORAGE_KEY);
   } catch {
     /* localStorage indisponível */
@@ -24,12 +31,13 @@ export function useRegionSelection() {
 
   const setRegionId = useCallback((id: string | null) => {
     if (id !== null && !isValidRegionId(id)) return;
-    setRegionIdState(id);
+    const normalized = id === null ? null : getRegionById(id)?.id ?? id;
+    setRegionIdState(normalized);
     try {
-      if (id === null) {
+      if (normalized === null) {
         localStorage.removeItem(REGION_STORAGE_KEY);
       } else {
-        localStorage.setItem(REGION_STORAGE_KEY, id);
+        localStorage.setItem(REGION_STORAGE_KEY, normalized);
       }
     } catch {
       /* ignore */
@@ -41,7 +49,7 @@ export function useRegionSelection() {
       if (e.key !== REGION_STORAGE_KEY) return;
       const next = e.newValue;
       if (next && isValidRegionId(next)) {
-        setRegionIdState(next);
+        setRegionIdState(getRegionById(next)?.id ?? DEFAULT_REGION_ID);
       } else if (!next) {
         setRegionIdState(DEFAULT_REGION_ID);
       }

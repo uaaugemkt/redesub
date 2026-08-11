@@ -48,24 +48,15 @@ export default function ProblemSection() {
     <section ref={sectionRef} className="problem section" id="rotina-conectada">
       <div className="container">
         <header className="problem__header problem__header--desktop section__header section__header--center">
-          <span className="eyebrow">O dia a dia conectado</span>
-          <h2 className="section__title">
-            O problema não é o seu celular.{" "}
-            <span className="text-muted">
-              É a internet que não acompanha sua rotina.
-            </span>
+          <h2 className="section__title problem__title">
+            Mais estabilidade para sua rotina
           </h2>
         </header>
 
         <header className="problem__header problem__header--mobile">
-          <span className="eyebrow">Antes e depois</span>
           <h2 className="problem__mobile-title">
-            Uma conexão mais estável muda toda a rotina.
+            Mais estabilidade para sua rotina
           </h2>
-          <p className="problem__mobile-desc">
-            Veja como trabalho, estudos e entretenimento podem fluir melhor com a
-            RedeSub.
-          </p>
         </header>
 
         <ConnectionDiagnosticCard />

@@ -1,23 +1,21 @@
 /**
- * Planos e regiões — fonte única de dados comerciais.
+ * Planos residenciais oficiais RedeSub — fonte única de dados comerciais.
  *
- * Regiões citadas em reunião: Oteiro, Coraci, Águas Negras.
- * No código anterior apareciam "Ilha de Outeiro" e "São João do Outeiro"
- * (bairros de Belém/PA) — mapeados à região "Oteiro" abaixo.
- *
- * Coraci e Águas Negras não possuem preços/velocidades cadastrados:
- * exibem apenas consulta via WhatsApp (sem dados inventados).
+ * Região pública nesta versão: Outeiro.
  */
 
 export interface Plan {
   id: string;
   name: string;
+  /** Ex.: "400 Mega" — parseado para valor + unidade na UI */
   speed: string;
-  price: string;
-  profile: string;
   features: readonly string[];
-  recommended: boolean;
+  /** Tag/diferencial confirmado (ex.: Sem fidelidade) */
   badge: string | null;
+  /** Destaque visual opcional do card */
+  featured?: boolean;
+  /** Mensagem WhatsApp específica do plano */
+  whatsappMessage: string;
 }
 
 export interface Region {
@@ -29,105 +27,119 @@ export interface Region {
   plans: readonly Plan[];
 }
 
-const OTEIRO_PLANS: readonly Plan[] = [
+const RESIDENTIAL_PLANS: readonly Plan[] = [
   {
-    id: "basico",
-    name: "Básico",
-    speed: "450 Mega",
-    price: "115,90",
-    profile:
-      "Casa conectada, redes sociais, vídeos e trabalho leve.",
+    id: "novo-basico",
+    name: "Novo Básico",
+    speed: "400 Mega",
     features: [
-      "Wi-Fi na casa toda",
-      "100% fibra óptica",
-      "Roteador inteligente em comodato",
+      "Lê Aí e Historinhas",
+      "Roteador 5G em comodato",
       "Velocidade simétrica",
-      "Suporte 7 dias por semana",
-      "Apps inclusos",
+      "Suporte rápido",
     ],
-    recommended: false,
     badge: null,
+    whatsappMessage:
+      "Olá! Tenho interesse no plano Novo Básico 400 Mega da RedeSub.",
   },
   {
-    id: "seguranca",
-    name: "Segurança",
-    speed: "650 Mega",
-    price: "175,90",
-    profile:
-      "Famílias, vários dispositivos, home office e câmera IP.",
+    id: "liberdade",
+    name: "Liberdade",
+    speed: "400 Mega",
     features: [
-      "Tudo do plano Básico",
-      "Câmera IP Full HD em comodato",
-      "Cartão de memória incluso",
-      "Ideal para famílias conectadas",
-      "Apps inclusos",
+      "Lê Aí e Historinhas",
+      "Roteador 5G em comodato",
+      "Velocidade simétrica",
+      "Suporte rápido",
     ],
-    recommended: true,
-    badge: "Melhor escolha para famílias",
+    badge: "Sem fidelidade",
+    featured: true,
+    whatsappMessage:
+      "Olá! Tenho interesse no plano Liberdade 400 Mega da RedeSub.",
   },
   {
-    id: "evolucao",
-    name: "Evolução",
-    speed: "850 Mega",
-    price: "205,90",
-    profile:
-      "Máxima performance, jogos, streaming pesado e IP fixo.",
+    id: "mais-seguranca",
+    name: "+ Segurança",
+    speed: "500 Mega",
     features: [
-      "Tudo do plano Segurança",
-      "IP fixo incluso",
-      "Máxima performance",
-      "Streaming em alta qualidade",
-      "Apps inclusos",
+      "Câmera IP Full HD com cartão de memória em comodato",
+      "Lê Aí e Historinhas",
+      "Plataforma de filmes e séries",
+      "Roteador 5G em comodato",
+      "Velocidade simétrica",
+      "Suporte rápido",
     ],
-    recommended: false,
     badge: null,
+    whatsappMessage:
+      "Olá! Tenho interesse no plano + Segurança 500 Mega da RedeSub.",
   },
-];
+  {
+    id: "new-evolucao-turbo",
+    name: "New Evolução Turbo",
+    speed: "800 Mega",
+    features: [
+      "Lê Aí e Historinhas",
+      "Plataforma de filmes e séries",
+      "Instalação em até 24 horas",
+      "Roteador 5G em comodato",
+      "Velocidade simétrica",
+      "Suporte rápido",
+    ],
+    badge: null,
+    whatsappMessage:
+      "Olá! Tenho interesse no plano New Evolução Turbo 800 Mega da RedeSub.",
+  },
+] as const;
 
 export const REGIONS: readonly Region[] = [
   {
-    id: "oteiro",
-    name: "Oteiro",
+    id: "outeiro",
+    name: "Outeiro",
     areaLabel: "Ilha de Outeiro · São João do Outeiro",
-    plans: OTEIRO_PLANS,
-  },
-  {
-    id: "coraci",
-    name: "Coraci",
-    plans: [],
-  },
-  {
-    id: "aguas-negras",
-    name: "Águas Negras",
-    plans: [],
+    plans: RESIDENTIAL_PLANS,
   },
 ] as const;
 
 export const REGION_STORAGE_KEY = "redesub-selected-region";
 
-/** Região padrão quando não há seleção salva (planos de Oteiro cadastrados). */
-export const DEFAULT_REGION_ID = "oteiro";
+/** Região padrão quando não há seleção salva (planos de Outeiro cadastrados). */
+export const DEFAULT_REGION_ID = "outeiro";
+
+/** IDs legados persistidos em localStorage / links antigos. */
+const LEGACY_REGION_IDS: Record<string, string> = {
+  oteiro: "outeiro",
+};
+
+export function normalizeRegionId(id: string): string {
+  return LEGACY_REGION_IDS[id] ?? id;
+}
 
 export function getRegionById(id: string | null | undefined): Region | undefined {
   if (!id) return undefined;
-  return REGIONS.find((r) => r.id === id);
+  const normalized = normalizeRegionId(id);
+  return REGIONS.find((r) => r.id === normalized);
 }
 
 export function isValidRegionId(id: string): boolean {
-  return REGIONS.some((r) => r.id === id);
+  return REGIONS.some((r) => r.id === normalizeRegionId(id));
 }
 
 export function getRegionDisplayName(id: string | null | undefined): string | null {
   return getRegionById(id)?.name ?? null;
 }
 
-/** Mantém compatibilidade com imports legados de PLANS (região Oteiro). */
-export const PLANS = OTEIRO_PLANS;
+/** Fonte única dos planos residenciais (região Oteiro). */
+export const PLANS = RESIDENTIAL_PLANS;
 
-/** Plano em destaque no hero da home (maior velocidade cadastrada — região Oteiro). */
+export function getPlanById(id: string | null | undefined): Plan | undefined {
+  if (!id) return undefined;
+  return PLANS.find((plan) => plan.id === id);
+}
+
+/** Plano de maior velocidade cadastrada (compatibilidade / destaques). */
 export function getHeroFeaturedPlan(): Plan {
-  const featured = OTEIRO_PLANS.find((p) => p.id === "evolucao");
-  return featured ?? OTEIRO_PLANS[OTEIRO_PLANS.length - 1];
+  const featured = PLANS.find((p) => p.id === "new-evolucao-turbo");
+  return featured ?? PLANS[PLANS.length - 1];
 }
 
 export function parsePlanSpeed(speed: string): { value: string; unit: string } {

@@ -1,5 +1,4 @@
 import { WHATSAPP_NUMBER } from "./constants";
-import { getAppDisplayName } from "../config/apps";
 
 export function buildWhatsAppLink(message: string): string {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -29,16 +28,16 @@ function formatAddonList(additionalApps?: string[]): string {
   if (!additionalApps || additionalApps.length === 0) {
     return "nenhum selecionado";
   }
-  return additionalApps.map((id) => getAppDisplayName(id)).join(", ");
+  return additionalApps.join(", ");
 }
 
 export const WHATSAPP_MESSAGES = {
   contract: "Olá! Quero contratar internet da RedeSub. Pode me ajudar?",
 
   availability:
-    "Olá, quero consultar a disponibilidade da RedeSub no meu endereço.",
+    "Olá! Gostaria de consultar a disponibilidade da RedeSub para o meu endereço.",
 
-  referral: "Olá! Quero indicar um amigo para a RedeSub e ganhar desconto.",
+  referral: "Olá! Quero participar da campanha Indique e Ganhe da RedeSub.",
 
   support: "Olá! Preciso falar com o atendimento da RedeSub.",
 
@@ -87,13 +86,11 @@ export const WHATSAPP_MESSAGES = {
     region,
     planName,
     speed,
-    monthlyPrice,
     addonNames,
   }: {
     region?: string | null;
     planName: string;
     speed: string;
-    monthlyPrice: string;
     addonNames?: string[];
   }) => {
     const lines = [
@@ -102,7 +99,6 @@ export const WHATSAPP_MESSAGES = {
       `Região: ${region?.trim() || "não informada"}`,
       `Plano: ${planName}`,
       `Velocidade: ${speed}`,
-      `Mensalidade exibida: R$ ${monthlyPrice}/mês`,
     ];
 
     const addons =
@@ -112,7 +108,7 @@ export const WHATSAPP_MESSAGES = {
     lines.push(`Adicionais: ${addons}`);
     lines.push(
       "",
-      "Poderiam confirmar a disponibilidade e o valor final para meu endereço?"
+      "Poderiam confirmar a disponibilidade e as condições para meu endereço?"
     );
     return lines.join("\n");
   },

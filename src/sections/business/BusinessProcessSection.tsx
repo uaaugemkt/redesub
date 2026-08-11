@@ -1,56 +1,85 @@
+import { MessageCircleIcon } from "../../components/icons/BenefitIcons";
+import {
+  BuildingIcon,
+  HeadphonesIcon,
+} from "../../components/icons/BusinessImpactIcons";
 import Reveal from "../../components/ui/Reveal";
+import WhatsAppButton from "../../components/WhatsAppButton";
+import { WHATSAPP_MESSAGES } from "../../lib/whatsapp";
 
-const STEPS = [
+const POINTS = [
   {
-    id: "business",
-    title: "Conte sobre seu negócio",
-    text: "Explique como sua operação utiliza a internet no dia a dia.",
+    id: "rapido",
+    title: "Atendimento rápido e eficiente",
+    icon: <MessageCircleIcon />,
   },
   {
-    id: "address",
-    title: "Informe o endereço",
-    text: "Envie bairro, rua ou ponto de referência do estabelecimento.",
+    id: "especializado",
+    title: "Suporte especializado",
+    icon: <HeadphonesIcon />,
   },
   {
-    id: "analysis",
-    title: "Receba a análise de viabilidade",
-    text: "A equipe verifica disponibilidade conforme região e local.",
-  },
-  {
-    id: "solution",
-    title: "Conheça a solução indicada",
-    text: "Orientação sobre plano e condições adequadas ao seu perfil.",
+    id: "solucoes",
+    title: "Soluções para empresas",
+    icon: <BuildingIcon />,
   },
 ] as const;
 
+const OFFICE_PHOTO = "/media/beneficios/Trabalhar-sem-interrupcoes.png";
+
+/** Atendimento empresarial — único CTA intermediário da página. */
 export default function BusinessProcessSection() {
   return (
-    <section className="section business-process" aria-labelledby="business-process-title">
+    <section
+      className="biz-support section"
+      aria-labelledby="business-process-title"
+    >
       <div className="container">
-        <Reveal>
-          <header className="business-process__header">
-            <span className="eyebrow">Como funciona</span>
-            <h2 className="section__title" id="business-process-title">
-              Processo de contratação
+        <div className="biz-support__layout">
+          <Reveal className="biz-support__copy">
+            <span className="eyebrow">Atendimento</span>
+            <h2 className="biz-support__title" id="business-process-title">
+              Atendimento para sua empresa
             </h2>
-          </header>
-        </Reveal>
+            <p className="biz-support__desc">
+              Fale com a RedeSub para consultar disponibilidade e encontrar a
+              opção mais adequada para o seu negócio.
+            </p>
 
-        <ol className="business-process__steps">
-          {STEPS.map((step, index) => (
-            <li key={step.id}>
-              <Reveal delay={index * 70}>
-                <article className="business-process__card">
-                  <span className="business-process__number" aria-hidden="true">
-                    {index + 1}
+            <ul className="biz-support__list">
+              {POINTS.map((item) => (
+                <li key={item.id}>
+                  <span className="biz-support__icon" aria-hidden="true">
+                    {item.icon}
                   </span>
-                  <h3>{step.title}</h3>
-                  <p>{step.text}</p>
-                </article>
-              </Reveal>
-            </li>
-          ))}
-        </ol>
+                  <span>{item.title}</span>
+                </li>
+              ))}
+            </ul>
+
+            <WhatsAppButton
+              message={WHATSAPP_MESSAGES.businessInquiry()}
+              label="Falar com atendimento"
+              variant="primary"
+              size="lg"
+              className="biz-support__cta"
+            />
+          </Reveal>
+
+          <Reveal className="biz-support__media" delay={80}>
+            <figure className="biz-support__figure">
+              <img
+                src={OFFICE_PHOTO}
+                alt="Atendimento RedeSub para empresas"
+                className="biz-support__image"
+                width={900}
+                height={700}
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

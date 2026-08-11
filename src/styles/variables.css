@@ -1,40 +1,45 @@
 :root {
-  /* Cores oficiais RedeSub (logo) */
-  --brand-blue: #03a1fd;
-  --brand-orange: #ff8505;
+  /* Paleta oficial RedeSub (provisória — ajuste centralizado aqui) */
+  --brand-orange: #ff5a00;
+  --brand-orange-light: #ff7a00;
+  --brand-navy: #071a35;
+  --brand-blue: #0867c9;
+  --brand-cyan: #17b8f2;
+  --brand-white: #ffffff;
   --brand-black: #010101;
-  --brand-white: #f9fafa;
 
-  --brand-blue-hover: #0288d4;
-  --brand-blue-light: #4dbfff;
-  --brand-blue-soft: #e8f7fe;
-  --brand-navy: #012840;
-  --brand-navy-deep: #010f1a;
-  --brand-orange-hover: #e67704;
-  --brand-orange-soft: #fff5e8;
+  --brand-orange-hover: #e04f00;
+  --brand-orange-soft: #fff3eb;
+  --brand-blue-hover: #0655a8;
+  --brand-blue-light: #3d8fd9;
+  --brand-blue-soft: #e8f1fb;
+  --brand-navy-deep: #041022;
+  --brand-cyan-soft: #e6f8fe;
 
-  --surface: #f9fafa;
-  --surface-muted: #f1f6fa;
-  --text-primary: #010101;
+  --surface: #ffffff;
+  --surface-muted: #f4f7fb;
+  --text-primary: var(--brand-navy);
   --text-secondary: #475569;
   --border: #e2e8f0;
 
   /* RGB — uso em rgba() */
-  --brand-blue-rgb: 3, 161, 253;
-  --brand-orange-rgb: 255, 133, 5;
-  --blue-dark-rgb: 1, 40, 64;
-  --blue-rgb: 3, 78, 122;
+  --brand-orange-rgb: 255, 90, 0;
+  --brand-blue-rgb: 8, 103, 201;
+  --brand-cyan-rgb: 23, 184, 242;
+  --brand-navy-rgb: 7, 26, 53;
+  --blue-dark-rgb: 7, 26, 53;
+  --blue-rgb: 8, 103, 201;
 
   /* Aliases legados */
   --blue-dark: var(--brand-navy);
-  --blue-mid: #023a5e;
-  --blue: #034e7a;
-  --blue-deep: #035a8f;
-  --blue-light: #0280c7;
+  --blue-mid: #0a2748;
+  --blue: var(--brand-navy);
+  --blue-deep: #0c335c;
+  --blue-light: var(--brand-blue);
   --orange: var(--brand-orange);
   --orange-hover: var(--brand-orange-hover);
   --orange-light: var(--brand-orange-soft);
-  --orange-gradient-end: #ffa033;
+  --orange-gradient-end: var(--brand-orange-light);
   --sky: var(--brand-blue-soft);
   --white: var(--brand-white);
 
@@ -51,11 +56,11 @@
   --radius-md: 16px;
   --radius-lg: 24px;
   --radius-xl: 32px;
-  --shadow-sm: 0 2px 8px rgba(var(--blue-dark-rgb), 0.08);
-  --shadow-md: 0 8px 32px rgba(var(--blue-dark-rgb), 0.12);
-  --shadow-lg: 0 16px 48px rgba(var(--blue-dark-rgb), 0.18);
+  --shadow-sm: 0 2px 8px rgba(var(--brand-navy-rgb), 0.08);
+  --shadow-md: 0 8px 32px rgba(var(--brand-navy-rgb), 0.12);
+  --shadow-lg: 0 16px 48px rgba(var(--brand-navy-rgb), 0.18);
   --shadow-orange: 0 8px 28px rgba(var(--brand-orange-rgb), 0.4);
-  --shadow-brand: 0 8px 32px rgba(var(--brand-blue-rgb), 0.25);
+  --shadow-brand: 0 8px 32px rgba(var(--brand-orange-rgb), 0.28);
   --font: "Plus Jakarta Sans", system-ui, sans-serif;
   --topbar-h: 38px;
   --header-h: 76px;

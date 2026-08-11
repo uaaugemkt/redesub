@@ -10,13 +10,24 @@ export const LOGO_SRC = "/logo-redesub.webp";
 
 /**
  * WhatsApp para contratação (formato internacional, sem + ou espaços).
- * Se o número de WhatsApp for diferente do telefone fixo, altere apenas aqui.
+ * Se o número de WhatsApp for diferente do telefone exibido, altere apenas aqui.
  */
-export const WHATSAPP_NUMBER = "559129920014";
+export const WHATSAPP_NUMBER = "5591993100223";
 
 /** Telefone/WhatsApp exibido na página */
-export const PHONE_DISPLAY = "(91) 2992-0014";
-export const WHATSAPP_DISPLAY = "(91) 2992-0014";
+export const PHONE_DISPLAY = "91 99310-0223";
+export const WHATSAPP_DISPLAY = "91 99310-0223";
+
+/**
+ * URLs externas oficiais — fonte única para links comerciais e de assinante.
+ * Env vars em integrations.ts podem sobrescrever quando existirem.
+ */
+export const REFERRAL_URL = "https://redesub.conecte.ai/indique";
+
+export const SUBSCRIBER_PORTAL_URL =
+  "https://sgp.redesub.com/accounts/central/login?_gl=1*1x07x3b*_ga*MTE4MzUwNDcyOS4xNzIyNjIxODQ1*_ga_M3Z9MC0V4N*MTcyODA3MzkxMi42LjEuMTcyODA3Mzk1Mi4wLjAuMA..*_gcl_au*MTM1MjQ5NTUxMC4xNzIyNjIxODQ0";
+
+export const SPEED_TEST_URL = "https://velocimetro.redesub.com";
 
 export const ADDRESS = {
   street: "Av. Nossa Sra. da Conceição, 31",
@@ -25,7 +36,13 @@ export const ADDRESS = {
   full: "Av. Nossa Sra. da Conceição, 31, São João do Outeiro, Belém/PA",
 };
 
-export const GOOGLE_REVIEWS_URL = "https://g.page/r/redesub/review"; // TODO: URL real do Google
+export const GOOGLE_REVIEWS_URL =
+  "https://g.page/r/CSMU0CwoaFW0EAs/review";
+
+export {
+  INSTAGRAM_HANDLE,
+  INSTAGRAM_PROFILE_URL,
+} from "./instagram";
 
 /** Mapa e localização — altere aqui para atualizar iframe e link */
 export const MAP = {
@@ -162,7 +179,7 @@ export const COMPARE = {
     ] satisfies readonly CompareProblem[],
   },
   good: {
-    title: "RedeSub funcionando do seu jeito",
+    title: "Uma conexão para acompanhar sua rotina",
     items: [
       { id: "fiber", text: "100% fibra óptica", featured: true },
       { id: "wifi", text: "Wi-Fi pensado para a casa toda", featured: false },
@@ -185,31 +202,6 @@ export const COMPARE = {
     ] satisfies readonly CompareBenefit[],
   },
 } as const;
-
-// TODO: Substituir por depoimentos reais do Google quando disponíveis
-export const TESTIMONIALS = [
-  {
-    name: "Maria S.",
-    location: "Ilha de Outeiro",
-    rating: 5,
-    date: "há 2 meses",
-    text: "Internet estável o dia todo. Minha família usa ao mesmo tempo e não trava mais. Atendimento rápido pelo WhatsApp.",
-  },
-  {
-    name: "Carlos R.",
-    location: "São João do Outeiro",
-    rating: 5,
-    date: "há 1 mês",
-    text: "Migrei para a RedeSub e a diferença é enorme. Fibra de verdade, suporte que resolve e preço justo.",
-  },
-  {
-    name: "Ana P.",
-    location: "Belém",
-    rating: 5,
-    date: "há 3 semanas",
-    text: "Trabalho em home office e preciso de internet confiável. A RedeSub entrega estabilidade que eu não tinha antes.",
-  },
-] as const;
 
 export const NAV_LINKS = [
   { label: "Planos", href: "/#planos" },

@@ -32,25 +32,19 @@ export default function SiteTopbar() {
             </span>
           </a>
           <span className="site-topbar__divider" aria-hidden="true" />
-          {SUBSCRIBER_PORTAL_URL ? (
-            <a
-              href={SUBSCRIBER_PORTAL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="site-topbar__link site-topbar__link--portal"
-            >
-              <span className="site-topbar__link-label site-topbar__link-label--long">
-                Central do Assinante
-              </span>
-              <span className="site-topbar__link-label site-topbar__link-label--short">
-                Central
-              </span>
-            </a>
-          ) : (
-            <span className="site-topbar__muted">
-              Central do Assinante em breve
+          <a
+            href={SUBSCRIBER_PORTAL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="site-topbar__link site-topbar__link--portal"
+          >
+            <span className="site-topbar__link-label site-topbar__link-label--long">
+              Central do Assinante
             </span>
-          )}
+            <span className="site-topbar__link-label site-topbar__link-label--short">
+              Central
+            </span>
+          </a>
         </div>
       </div>
     </div>

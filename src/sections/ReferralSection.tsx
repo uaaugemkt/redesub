@@ -1,4 +1,4 @@
-import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "../lib/whatsapp";
+import { REFERRAL_URL } from "../lib/constants";
 
 export default function ReferralSection() {
   return (
@@ -7,20 +7,19 @@ export default function ReferralSection() {
         <div className="referral__content">
           <span className="referral__icon" aria-hidden="true">🤝</span>
           <div>
-            <h2>Internet boa é indicada por quem já usa.</h2>
+            <h2>Indique e Ganhe</h2>
             <p>
-              Indique um amigo e ganhe desconto na próxima mensalidade quando
-              ele contratar pelo seu link.
+              Indique a RedeSub e participe da nossa campanha de indicação.
             </p>
           </div>
         </div>
         <a
-          href={buildWhatsAppLink(WHATSAPP_MESSAGES.referral)}
+          href={REFERRAL_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn--white btn--md"
         >
-          Quero indicar um amigo
+          Participar agora
         </a>
       </div>
     </section>

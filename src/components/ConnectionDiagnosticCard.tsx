@@ -269,37 +269,15 @@ function ConnectionDiagnosticDesktop() {
   const isPositive =
     phase === "resolving" || phase === "resolved" || buttonVisual === "optimizing";
 
-  const headerTitle =
-    phase === "resolved"
-      ? "Conexão estabilizada com a RedeSub"
-      : phase === "resolving" || buttonVisual === "optimizing"
-        ? "RedeSub estabilizando sua conexão"
-        : "Analisando sua rotina conectada";
-
-  const headerSubtitle =
-    phase === "resolved"
-      ? "Sua rotina está pronta para trabalhar, estudar, assistir e jogar com muito mais estabilidade."
-      : phase === "diagnosing"
-        ? "Estamos verificando os principais momentos do seu dia."
-        : phase === "diagnosisComplete"
-          ? "Encontramos 4 pontos de instabilidade na sua rotina."
-          : phase === "resolving"
-            ? "Corrigindo cada momento com fibra estável e suporte próximo."
-            : "Estamos verificando os principais momentos do seu dia.";
-
   return (
     <article
       ref={rootRef}
       className={`connection-diagnostic ${isPositive ? "connection-diagnostic--positive" : ""} ${phase === "resolved" ? "connection-diagnostic--resolved" : ""}`}
       aria-live="polite"
+      aria-label="Diagnóstico da rotina conectada"
       data-phase={phase}
     >
       <div className="connection-diagnostic__glow" aria-hidden="true" />
-
-      <header className="connection-diagnostic__header">
-        <h3 className="connection-diagnostic__title">{headerTitle}</h3>
-        <p className="connection-diagnostic__subtitle">{headerSubtitle}</p>
-      </header>
 
       <div className="connection-diagnostic__progress-wrap">
         <div
@@ -308,14 +286,16 @@ function ConnectionDiagnosticDesktop() {
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={progress}
-          aria-label={progressLabel}
+          aria-label={progressLabel || "Progresso do diagnóstico"}
         >
           <div
             className="connection-diagnostic__progress-fill"
             style={{ width: `${progress}%` }}
           />
         </div>
-        <span className="connection-diagnostic__progress-label">{progressLabel}</span>
+        {progressLabel ? (
+          <span className="connection-diagnostic__progress-label">{progressLabel}</span>
+        ) : null}
       </div>
 
       <ul className="connection-diagnostic__list">

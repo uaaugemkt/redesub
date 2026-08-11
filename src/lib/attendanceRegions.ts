@@ -1,7 +1,7 @@
 import { ADDRESS, MAP } from "./constants";
 import { REGIONS } from "./plans";
 
-export type AttendanceRegionIcon = "map-pin" | "navigation" | "droplets";
+export type AttendanceRegionIcon = "map-pin" | "navigation";
 
 export interface AttendanceServiceRegion {
   id: string;
@@ -20,27 +20,21 @@ const REGION_COPY: Record<
   string,
   Pick<AttendanceServiceRegion, "description" | "details" | "icon">
 > = {
-  oteiro: {
+  outeiro: {
     description: "Ilha de Outeiro · São João do Outeiro",
     details: "Planos disponíveis para consulta no site.",
     icon: "map-pin",
-  },
-  coraci: {
-    description: "Consulte disponibilidade e planos com a equipe.",
-    details: "",
-    icon: "navigation",
-  },
-  "aguas-negras": {
-    description: "Consulte disponibilidade e planos com a equipe.",
-    details: "",
-    icon: "droplets",
   },
 };
 
 export const ATTENDANCE_SERVICE_REGIONS: readonly AttendanceServiceRegion[] =
   REGIONS.map((region) => {
-    const copy = REGION_COPY[region.id];
-    const hasMap = region.id === "oteiro";
+    const copy = REGION_COPY[region.id] ?? {
+      description: "Consulte disponibilidade com a equipe.",
+      details: "",
+      icon: "navigation" as const,
+    };
+    const hasMap = region.id === "outeiro";
 
     return {
       id: region.id,

@@ -12,7 +12,7 @@ export default function CoveragePage() {
     <>
       <InternalPageHero
         eyebrow="Cobertura"
-        title="Consulte a cobertura na sua região"
+        title="Consulte a disponibilidade na sua região"
         breadcrumbs={[
           { label: "Início", path: "/" },
           { label: "Cobertura" },

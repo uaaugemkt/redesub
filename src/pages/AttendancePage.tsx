@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import ContactForm from "../components/ContactForm";
-import AttendanceRegionSection from "../components/AttendanceRegionSection";
 import InternalPageHero from "../components/layout/InternalPageHero";
 import Reveal from "../components/ui/Reveal";
 import WhatsAppButton from "../components/WhatsAppButton";
@@ -188,8 +187,6 @@ export default function AttendancePage() {
         </div>
       </section>
 
-      <AttendanceRegionSection />
-
       <section className="section section--muted" id="central-assinante">
         <div className="container container--narrow">
           <Reveal>
@@ -201,20 +198,14 @@ export default function AttendancePage() {
               </p>
 
               <div className="attendance__portal-actions">
-                {SUBSCRIBER_PORTAL_URL ? (
-                  <a
-                    href={SUBSCRIBER_PORTAL_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn--outline btn--md"
-                  >
-                    Central do Assinante
-                  </a>
-                ) : (
-                  <p className="attendance__portal-pending" role="status">
-                    Central do Assinante em breve.
-                  </p>
-                )}
+                <a
+                  href={SUBSCRIBER_PORTAL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--outline btn--md"
+                >
+                  Central do Assinante
+                </a>
 
                 <WhatsAppButton
                   message={WHATSAPP_MESSAGES.supportIssue({

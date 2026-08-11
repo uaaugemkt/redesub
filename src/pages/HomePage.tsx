@@ -7,9 +7,9 @@ import PlansSection from "../sections/PlansSection";
 import CompareSection from "../sections/CompareSection";
 import UseCasesSection from "../sections/UseCasesSection";
 import AppsSection from "../sections/AppsSection";
-import LocalSection from "../sections/LocalSection";
 import TestimonialsSection from "../sections/TestimonialsSection";
 import ReferralSection from "../sections/ReferralSection";
+import InstagramSection from "../sections/InstagramSection";
 import FinalCTASection from "../sections/FinalCTASection";
 
 export default function HomePage() {
@@ -24,9 +24,9 @@ export default function HomePage() {
       <CompareSection />
       <UseCasesSection />
       <AppsSection variant="preview" />
-      <LocalSection variant="preview" />
       <TestimonialsSection />
       <ReferralSection />
+      <InstagramSection />
       <FinalCTASection />
     </>
   );

@@ -31,8 +31,12 @@ export default function CoverageFinalCTASection() {
 
               <div className="coverage-cta__action">
                 <WhatsAppButton
-                  message={WHATSAPP_MESSAGES.coverageConsult(regionName)}
-                  label="Consultar disponibilidade pelo WhatsApp"
+                  message={
+                    regionName
+                      ? WHATSAPP_MESSAGES.coverageRegionConsult(regionName)
+                      : WHATSAPP_MESSAGES.availability
+                  }
+                  label="Consultar disponibilidade"
                   variant="primary"
                   size="lg"
                   className="coverage-cta__btn"

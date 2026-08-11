@@ -41,21 +41,31 @@ const BENEFITS: ReadonlyArray<{
 
 export default function TrustProofSection() {
   return (
-    <section className="trust-proof" aria-label="Diferenciais RedeSub">
+    <section className="trust-proof" aria-labelledby="trust-proof-title">
       <div className="container trust-proof__container">
+        <Reveal>
+          <header className="trust-proof__header">
+            <span className="eyebrow">O dia a dia conectado</span>
+            <h2 className="trust-proof__heading" id="trust-proof-title">
+              Internet com atendimento próximo
+            </h2>
+            <p className="trust-proof__lead">
+              Fibra estável e suporte humano para sua rotina.
+            </p>
+          </header>
+        </Reveal>
+
         <ul className="trust-proof__grid">
           {BENEFITS.map((item, index) => (
-            <li key={item.id} className="trust-proof__cell">
+            <li key={item.id} className="trust-proof__item">
               <Reveal delay={index * 60} className="trust-proof__reveal">
-                <article className="trust-proof__card">
-                  <div className="trust-proof__icon" aria-hidden="true">
-                    {item.icon}
-                  </div>
-                  <div className="trust-proof__body">
-                    <h3 className="trust-proof__title">{item.title}</h3>
-                    <p className="trust-proof__desc">{item.description}</p>
-                  </div>
-                </article>
+                <div className="trust-proof__icon" aria-hidden="true">
+                  {item.icon}
+                </div>
+                <div className="trust-proof__body">
+                  <h3 className="trust-proof__title">{item.title}</h3>
+                  <p className="trust-proof__desc">{item.description}</p>
+                </div>
               </Reveal>
             </li>
           ))}

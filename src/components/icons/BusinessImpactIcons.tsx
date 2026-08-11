@@ -112,3 +112,61 @@ export function CircleHelpIcon({ className }: IconProps) {
     </IconShell>
   );
 }
+
+export function BuildingIcon({ className }: IconProps) {
+  return (
+    <IconShell className={className}>
+      <path
+        d="M4 20V8l8-4 8 4v12"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9 20v-6h6v6M9 10h.01M15 10h.01M12 10h.01M9 13h.01M15 13h.01M12 13h.01"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </IconShell>
+  );
+}
+
+export function SlidersIcon({ className }: IconProps) {
+  return (
+    <IconShell className={className}>
+      <path
+        d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h8M16 18h4"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+      />
+      <circle cx="16" cy="6" r="2" stroke="currentColor" strokeWidth="1.75" />
+      <circle cx="8" cy="12" r="2" stroke="currentColor" strokeWidth="1.75" />
+      <circle cx="14" cy="18" r="2" stroke="currentColor" strokeWidth="1.75" />
+    </IconShell>
+  );
+}
+
+export function TrendIcon({ className }: IconProps) {
+  return (
+    <IconShell className={className}>
+      <path
+        d="M3 17 10 10l4 4 7-7"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14 7h6v6"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </IconShell>
+  );
+}

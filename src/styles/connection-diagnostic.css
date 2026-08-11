@@ -2,8 +2,8 @@
 .connection-diagnostic {
   position: relative;
   max-width: 920px;
-  margin: 40px auto 0;
-  padding: 28px 28px 24px;
+  margin: 0 auto;
+  padding: 24px 28px 24px;
   background: var(--brand-white);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
@@ -60,36 +60,10 @@
   opacity: 1;
 }
 
-.connection-diagnostic__header {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.connection-diagnostic__title {
-  margin: 0 0 8px;
-  font-size: clamp(1.25rem, 2.5vw, 1.6rem);
-  font-weight: 800;
-  line-height: 1.2;
-  color: var(--brand-navy);
-}
-
-.connection-diagnostic--positive .connection-diagnostic__title {
-  color: var(--brand-white);
-}
-
+.connection-diagnostic__header,
+.connection-diagnostic__title,
 .connection-diagnostic__subtitle {
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.55;
-  color: var(--text-secondary);
-  max-width: 52ch;
-  margin-inline: auto;
-}
-
-.connection-diagnostic--positive .connection-diagnostic__subtitle {
-  color: rgba(255, 255, 255, 0.88);
+  display: none;
 }
 
 .connection-diagnostic__progress-wrap {

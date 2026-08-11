@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PlanCard from "../components/PlanCard";
 import PlansCarousel from "../components/PlansCarousel";
-import RegionFilter from "../components/RegionFilter";
 import Reveal from "../components/ui/Reveal";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { useSelection } from "../context/SelectionContext";
@@ -43,38 +42,29 @@ export default function PlansSection({
 
   return (
     <section
-      className={`plans section ${isPreview ? "plans--preview section--soft" : "plans--full"}`}
+      className={`plans section ${isPreview ? "plans--preview plans--spotlight" : "plans--full"}`}
       id="planos"
     >
       <div className="container">
         {showHeading && (
           <Reveal>
-            <div className="section__header section__header--center">
-              <span className="eyebrow">Escolha pelo seu uso</span>
-              <h2 className="section__title">
-                {isPreview ? "Planos para a sua região" : "Monte o plano ideal para sua casa"}
-              </h2>
+            <div className="section__header section__header--center plans__header">
+              <span className="eyebrow">Planos residenciais</span>
+              <h2 className="section__title">Escolha o plano ideal para sua casa</h2>
               <p className="section__desc">
-                Escolha o plano pelo seu uso, não só pelo número de megas. Fibra
-                para assistir, trabalhar, estudar e jogar ao mesmo tempo.
+                Conexão estável, benefícios exclusivos e suporte próximo para você
+                aproveitar a internet do seu jeito.
               </p>
             </div>
           </Reveal>
         )}
 
-        <RegionFilter
-          id="plans-region-filter"
-          className="plans__region-filter"
-          hideEmptyOption
-          showHint={false}
-        />
-
         {!hasPlans && (
           <Reveal>
             <div className="plans__empty plans__empty--consult" role="status">
               <p>
-                Ainda não temos planos cadastrados para <strong>{regionName}</strong>{" "}
-                no site. Consulte disponibilidade e valores com nossa equipe.
+                Ainda não temos planos cadastrados no site. Consulte disponibilidade
+                com nossa equipe.
               </p>
               <WhatsAppButton
                 message={WHATSAPP_MESSAGES.regionAvailability(regionName ?? "")}
@@ -88,16 +78,10 @@ export default function PlansSection({
 
         {hasPlans && (
           <div className="plans__results">
-            {region?.areaLabel && (
-              <p className="plans__region-note">
-                Planos para <strong>{region.name}</strong> ({region.areaLabel})
-              </p>
-            )}
-
             {useCarousel ? (
-              <PlansCarousel plans={plans} browseOnly />
+              <PlansCarousel plans={plans} />
             ) : (
-              <div className={`plans__grid ${!isPreview ? "plans__grid--large" : ""}`}>
+              <div className={`plans__grid plans__grid--4 ${!isPreview ? "plans__grid--large" : ""}`}>
                 {plans.map((plan, index) => (
                   <Reveal key={plan.id} delay={index * 80} className="plans__grid-cell">
                     <PlanCard plan={plan} large={!isPreview} />
@@ -108,7 +92,7 @@ export default function PlansSection({
 
             {isPreview && (
               <div className="plans__more">
-                <Link to="/planos" className="btn btn--primary btn--md">
+                <Link to="/planos" className="btn btn--outline btn--md plans__more-link">
                   Ver todos os planos
                 </Link>
               </div>

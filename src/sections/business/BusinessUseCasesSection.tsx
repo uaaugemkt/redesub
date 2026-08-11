@@ -1,79 +1,115 @@
+import type { ReactNode } from "react";
+import { MapPinIcon } from "../../components/icons/BenefitIcons";
+import {
+  GaugeIcon,
+  RouterIcon,
+  ShoppingCartIcon,
+  VideoIcon,
+} from "../../components/icons/BusinessImpactIcons";
 import Reveal from "../../components/ui/Reveal";
 
-const USE_CASES = [
+const SEGMENTS: ReadonlyArray<{
+  id: string;
+  title: string;
+  text: string;
+  icon: ReactNode;
+  size: "sm" | "lg";
+}> = [
   {
-    id: "commerce",
-    title: "Comércio",
-    text: "Maquininhas, sistemas de estoque, atendimento e comunicação online.",
+    id: "pequenas",
+    title: "Pequenas empresas",
+    text: "Conectividade para operações enxutas e rotina digital no dia a dia.",
+    icon: <RouterIcon />,
+    size: "sm",
   },
   {
-    id: "clinic",
-    title: "Consultório",
-    text: "Agendamentos, prontuários na nuvem e atendimento digital.",
+    id: "grandes",
+    title: "Grandes empresas",
+    text: "Performance e estabilidade para equipes e processos com maior demanda.",
+    icon: <GaugeIcon />,
+    size: "sm",
   },
   {
-    id: "office",
-    title: "Escritório",
-    text: "Videoconferência, arquivos na nuvem e sistemas corporativos.",
+    id: "comercios",
+    title: "Comércios",
+    text: "Internet para atendimento, sistemas e operação comercial contínua.",
+    icon: <ShoppingCartIcon />,
+    size: "sm",
   },
   {
-    id: "restaurant",
-    title: "Restaurantes e serviços",
-    text: "Pedidos, atendimento, pagamentos e conectividade para operação diária.",
+    id: "restaurantes",
+    title: "Restaurantes",
+    text: "Conexão para pedidos, pagamentos e o ritmo do salão.",
+    icon: <MapPinIcon />,
+    size: "lg",
   },
   {
-    id: "salon",
-    title: "Salão",
-    text: "Agenda online, pagamentos e comunicação com clientes.",
+    id: "escritorios",
+    title: "Escritórios e serviços",
+    text: "Estabilidade para videoconferências, arquivos e sistemas de trabalho.",
+    icon: <VideoIcon />,
+    size: "lg",
   },
-  {
-    id: "services",
-    title: "Pequeno prestador de serviços",
-    text: "Atendimento remoto, envio de arquivos e presença digital.",
-  },
-] as const;
+];
 
 export default function BusinessUseCasesSection() {
+  const top = SEGMENTS.filter((item) => item.size === "sm");
+  const bottom = SEGMENTS.filter((item) => item.size === "lg");
+
   return (
     <section
-      className="section section--soft business-usecases"
+      className="biz-segments section"
       aria-labelledby="business-usecases-title"
     >
       <div className="container">
         <Reveal>
-          <header className="business-usecases__header">
-            <span className="eyebrow">Cenários de uso</span>
-            <h2 className="section__title" id="business-usecases-title">
-              Solução indicada para diferentes operações
+          <header className="biz-segments__header">
+            <span className="eyebrow">Segmentos</span>
+            <h2 className="biz-segments__title" id="business-usecases-title">
+              Conectividade para diferentes negócios
             </h2>
-            <p className="section__desc">
-              Cada negócio utiliza a internet de um jeito. A equipe RedeSub orienta
-              conforme região, endereço e perfil de uso.
+            <p className="biz-segments__desc">
+              Soluções para operações de diferentes portes e segmentos.
             </p>
           </header>
         </Reveal>
 
-        <div className="business-usecases__grid">
-          {USE_CASES.map((item, index) => (
-            <Reveal key={item.id} delay={index * 60}>
-              <article className="business-usecases__card">
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
+        <div className="biz-segments__top">
+          {top.map((item, index) => (
+            <Reveal key={item.id} delay={index * 55}>
+              <article className={`biz-seg biz-seg--${item.id}`}>
+                <div className="biz-seg__art" aria-hidden="true">
+                  <span className="biz-seg__icon">{item.icon}</span>
+                  <span className="biz-seg__shape biz-seg__shape--a" />
+                  <span className="biz-seg__shape biz-seg__shape--b" />
+                </div>
+                <div className="biz-seg__body">
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
               </article>
             </Reveal>
           ))}
         </div>
 
-        <Reveal delay={120}>
-          <div className="business-usecases__visual">
-            <img
-              src="/media/beneficios/Manter-o-negocio-funcionando.png"
-              alt="Profissional utilizando internet estável no negócio"
-              loading="lazy"
-              className="business-usecases__image"
-            />
-          </div>
-        </Reveal>
+        <div className="biz-segments__bottom">
+          {bottom.map((item, index) => (
+            <Reveal key={item.id} delay={index * 70}>
+              <article className={`biz-seg biz-seg--lg biz-seg--${item.id}`}>
+                <div className="biz-seg__art" aria-hidden="true">
+                  <span className="biz-seg__icon">{item.icon}</span>
+                  <span className="biz-seg__shape biz-seg__shape--a" />
+                  <span className="biz-seg__shape biz-seg__shape--b" />
+                  <span className="biz-seg__shape biz-seg__shape--c" />
+                </div>
+                <div className="biz-seg__body">
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

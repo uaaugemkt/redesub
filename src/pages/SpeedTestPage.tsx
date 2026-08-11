@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import InternalPageHero from "../components/layout/InternalPageHero";
 import Reveal from "../components/ui/Reveal";
-import { SPEED_TEST_EMBED_URL } from "../config/integrations";
+import { SPEED_TEST_EMBED_URL, SPEED_TEST_URL } from "../config/integrations";
 import { PAGE_META } from "../config/site";
 import { usePageMeta } from "../hooks/usePageMeta";
 
@@ -17,7 +17,7 @@ export default function SpeedTestPage() {
   return (
     <>
       <InternalPageHero
-        eyebrow="Teste sua conexão"
+        eyebrow="Teste de velocidade"
         title="Confira a velocidade da sua internet"
         breadcrumbs={[
           { label: "Início", path: "/" },
@@ -30,19 +30,22 @@ export default function SpeedTestPage() {
           <Reveal>
             {status === "unconfigured" && (
               <div className="speed-test-page__fallback" role="status">
-                <h2>Indisponível temporariamente</h2>
+                <h2>Teste de velocidade RedeSub</h2>
                 <p>
-                  O teste de velocidade será integrado assim que a RedeSub
-                  disponibilizar a URL oficial de incorporação (iframe permitido
-                  pelo fornecedor).
+                  Meça a velocidade da sua conexão no velocímetro oficial da
+                  RedeSub.
                 </p>
+                <a
+                  href={SPEED_TEST_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--primary btn--md"
+                >
+                  Testar minha velocidade
+                </a>
                 <p className="speed-test-page__fallback-note">
-                  Dependência: configure <code>VITE_SPEED_TEST_EMBED_URL</code> no
-                  ambiente de deploy.
+                  <Link to="/">Voltar à página inicial</Link>
                 </p>
-                <Link to="/" className="btn btn--primary btn--md">
-                  Voltar à página inicial
-                </Link>
               </div>
             )}
 
@@ -57,12 +60,14 @@ export default function SpeedTestPage() {
                   <div className="speed-test-page__fallback" role="alert">
                     <h2>Não foi possível carregar o teste</h2>
                     <p>O fornecedor não permite incorporação nesta página.</p>
-                    <Link
-                      to="/atendimento#suporte-rapido"
+                    <a
+                      href={SPEED_TEST_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="btn btn--primary btn--md"
                     >
-                      Falar com suporte
-                    </Link>
+                      Testar minha velocidade
+                    </a>
                   </div>
                 )}
                 <iframe

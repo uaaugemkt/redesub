@@ -1,162 +1,146 @@
-import { useMemo } from "react";
+import { useId, useState } from "react";
+import Reveal from "../components/ui/Reveal";
+import { VideoIcon } from "../components/icons/BusinessImpactIcons";
 import {
-  APP_CATALOG,
-  getAppsByCategory,
-  getAppDisplayName,
-  NONE_APP_ID,
-  VITRINE_CATEGORIES,
-} from "../config/apps";
-import { useSelection } from "../context/SelectionContext";
-import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "../lib/whatsapp";
-import AppIcon from "../components/AppIcon";
+  CONTENT_PACKAGES,
+  type ContentPackage,
+} from "../lib/contentPackages";
+import { buildWhatsAppLink } from "../lib/whatsapp";
 
-const ADDON_APP_IDS = APP_CATALOG.filter(
-  (app) => app.id !== NONE_APP_ID && app.category === "entretenimento"
-).map((app) => app.id);
+function getInitialPackage(): ContentPackage {
+  return (
+    CONTENT_PACKAGES.find((pkg) => pkg.featured) ?? CONTENT_PACKAGES[0]
+  );
+}
+
+function packageFamily(pkg: ContentPackage): "power" | "hub" {
+  return pkg.id.startsWith("hub") ? "hub" : "power";
+}
+
+function ShowcaseArt({ family }: { family: "power" | "hub" }) {
+  return (
+    <div className="content-packages__stage" aria-hidden="true" data-family={family}>
+      <div className="content-packages__stage-glow" />
+      <div className="content-packages__stage-ring content-packages__stage-ring--outer" />
+      <div className="content-packages__stage-ring content-packages__stage-ring--inner" />
+      <div className="content-packages__stage-play">
+        <VideoIcon />
+      </div>
+      <span className="content-packages__stage-chip content-packages__stage-chip--a">AO VIVO</span>
+      <span className="content-packages__stage-chip content-packages__stage-chip--b">VOD</span>
+      <span className="content-packages__stage-chip content-packages__stage-chip--c">TV</span>
+      <span className="content-packages__stage-orb content-packages__stage-orb--1" />
+      <span className="content-packages__stage-orb content-packages__stage-orb--2" />
+      <span className="content-packages__stage-orb content-packages__stage-orb--3" />
+    </div>
+  );
+}
 
 interface AppsSectionProps {
   variant?: "preview" | "full";
-  /** Apenas vitrine informativa — sem seleção de adicionais */
+  /** Mantido por compatibilidade — a seção é sempre a vitrine de pacotes */
   informativeOnly?: boolean;
 }
 
-export default function AppsSection({
-  variant = "full",
-  informativeOnly = false,
-}: AppsSectionProps) {
-  const { regionName, selectedAddonIds, toggleAddon } = useSelection();
-  const isPreview = variant === "preview";
-  const showSelector = !isPreview && !informativeOnly;
-
-  const selectedNames = useMemo(
-    () => selectedAddonIds.map((id) => getAppDisplayName(id)),
-    [selectedAddonIds]
-  );
-
-  const whatsappHref = buildWhatsAppLink(
-    WHATSAPP_MESSAGES.addonConsult(selectedNames, regionName)
-  );
+export default function AppsSection(_props: AppsSectionProps = {}) {
+  const tabsId = useId();
+  const [activeId, setActiveId] = useState(() => getInitialPackage().id);
+  const activePackage =
+    CONTENT_PACKAGES.find((pkg) => pkg.id === activeId) ?? getInitialPackage();
+  const family = packageFamily(activePackage);
+  const href = buildWhatsAppLink(activePackage.whatsappMessage);
+  const panelId = `${tabsId}-panel`;
 
   return (
-    <section className="apps section section--alt" id="apps">
+    <section className="content-packages content-packages--showcase section" id="conteudos">
       <div className="container">
-        <div className="section__header section__header--center">
-          <span className="eyebrow">
-            {informativeOnly ? "Conheça os benefícios" : "Muito além da conexão"}
-          </span>
-          <h2 className="section__title">
-            {informativeOnly
-              ? "Mais serviços para sua rotina"
-              : "Seu plano pode ir além da internet."}
-          </h2>
-          <p className="section__desc">
-            {informativeOnly
-              ? "Conheça opções de entretenimento, educação, equipamentos e outros recursos disponíveis conforme o plano e a região."
-              : "Além da fibra, você pode personalizar seu plano com serviços de entretenimento, segurança, educação, saúde e vantagens."}
-          </p>
-        </div>
-
-        <div className="apps-showcase">
-          <p className="apps-showcase__lead">
-            Seu plano não é só internet. Ele também traz entretenimento,
-            segurança, estudo, saúde e benefícios extras para o dia a dia da sua
-            família.
-          </p>
-
-          <div className="apps-showcase__body">
-            {VITRINE_CATEGORIES.map((cat) => {
-              const apps = getAppsByCategory(cat.key);
-              if (apps.length === 0) return null;
-
-              return (
-                <div
-                  key={cat.key}
-                  className={`apps-showcase__row apps-showcase__row--${cat.key}`}
-                >
-                  <div className="apps-showcase__row-label">
-                    <span className="apps-showcase__row-icon" aria-hidden="true">
-                      {cat.icon}
-                    </span>
-                    <span>{cat.label}</span>
-                  </div>
-                  <div className="apps-showcase__row-apps">
-                    {apps.map((app) => (
-                      <div key={app.id} className="apps-showcase__chip" title={app.name}>
-                        <AppIcon app={app} size="sm" />
-                        <span>{app.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+        <Reveal>
+          <div className="section__header section__header--center content-packages__header">
+            <span className="eyebrow">Mais que internet</span>
+            <h2 className="section__title">Dê um UP no seu plano</h2>
+            <p className="section__desc">
+              Escolha um pacote de conteúdos e aproveite ainda mais sua conexão
+              RedeSub.
+            </p>
+            <p className="content-packages__note">
+              Pacotes adicionais ao plano de internet.
+            </p>
           </div>
-        </div>
+        </Reveal>
 
-        {showSelector ? (
-          <div className="apps-addons" id="adicionais" aria-labelledby="apps-addons-title">
-            <div className="apps-addons__header">
-              <h3 id="apps-addons-title" className="apps-addons__title">
-                Monte seus adicionais
-              </h3>
-              <p className="apps-addons__subtitle">
-                Selecione os serviços de interesse. Valores e disponibilidade são
-                confirmados pelo atendimento, sem preços estimados no site.
-              </p>
-            </div>
-
-            <div className="apps-addons__legend">
-              <span className="apps-addons__legend-item apps-addons__legend-item--included">
-                Incluso no plano
-              </span>
-              <span className="apps-addons__legend-item apps-addons__legend-item--addon">
-                Disponível como adicional
-              </span>
-            </div>
-
-            <ul className="apps-addons__grid">
-              {ADDON_APP_IDS.map((appId) => {
-                const app = APP_CATALOG.find((a) => a.id === appId);
-                if (!app) return null;
-                const isSelected = selectedAddonIds.includes(appId);
-
+        <Reveal delay={80}>
+          <div className={`content-packages__showcase content-packages__showcase--${family}`}>
+            <div
+              className="content-packages__tabs"
+              role="tablist"
+              aria-label="Pacotes de conteúdos"
+            >
+              {CONTENT_PACKAGES.map((pkg) => {
+                const selected = pkg.id === activePackage.id;
                 return (
-                  <li key={appId}>
-                    <button
-                      type="button"
-                      className={`apps-addons__card ${isSelected ? "apps-addons__card--selected" : ""}`}
-                      aria-pressed={isSelected}
-                      onClick={() => toggleAddon(appId)}
-                    >
-                      <AppIcon app={app} size="md" />
-                      <span className="apps-addons__card-name">{app.name}</span>
-                      <span className="apps-addons__card-cta">
-                        {isSelected ? "Selecionado" : "Adicionar ao meu plano"}
-                      </span>
-                    </button>
-                  </li>
+                  <button
+                    key={pkg.id}
+                    type="button"
+                    role="tab"
+                    id={`${tabsId}-${pkg.id}`}
+                    aria-selected={selected}
+                    aria-controls={panelId}
+                    tabIndex={selected ? 0 : -1}
+                    className={`content-packages__tab${selected ? " is-active" : ""}`}
+                    onClick={() => setActiveId(pkg.id)}
+                  >
+                    {pkg.name}
+                  </button>
                 );
               })}
-            </ul>
+            </div>
 
-            {selectedAddonIds.length > 0 && (
-              <p className="apps-addons__selected" role="status">
-                Selecionados: <strong>{selectedNames.join(", ")}</strong>
-              </p>
-            )}
+            <div
+              className="content-packages__panel"
+              role="tabpanel"
+              id={panelId}
+              aria-labelledby={`${tabsId}-${activePackage.id}`}
+            >
+              <ShowcaseArt family={family} />
 
-            <div className="apps-addons__footer">
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn--primary btn--md"
-              >
-                Consultar valor pelo WhatsApp
-              </a>
+              <div key={activePackage.id} className="content-packages__detail">
+                <p className="content-packages__family" data-family={family}>
+                  {family === "hub" ? "Hub" : "Power"}
+                </p>
+                <h3 className="content-packages__name">{activePackage.name}</h3>
+
+                <p
+                  className="content-packages__channels"
+                  aria-label={`${activePackage.channelCount} canais`}
+                >
+                  <span className="content-packages__channels-value">
+                    {activePackage.channelCount}
+                  </span>
+                  <span className="content-packages__channels-label">Canais</span>
+                </p>
+
+                <ul className="content-packages__chips">
+                  {activePackage.groups.map((group) => (
+                    <li key={`${activePackage.id}-${group.type}`}>
+                      <span className="content-packages__chip">{group.label}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <p className="content-packages__desc">{activePackage.description}</p>
+
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--primary btn--lg content-packages__cta"
+                >
+                  Quero este pacote
+                </a>
+              </div>
             </div>
           </div>
-        ) : null}
+        </Reveal>
       </div>
     </section>
   );

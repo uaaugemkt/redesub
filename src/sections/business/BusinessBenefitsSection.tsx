@@ -1,78 +1,59 @@
 import type { ReactNode } from "react";
+import { MessageCircleIcon, WifiIcon } from "../../components/icons/BenefitIcons";
 import {
-  CalendarCheckIcon,
-  MapPinIcon,
-  MessageCircleIcon,
-  WifiIcon,
-} from "../../components/icons/BenefitIcons";
+  GaugeIcon,
+  ShoppingCartIcon,
+} from "../../components/icons/BusinessImpactIcons";
 import Reveal from "../../components/ui/Reveal";
 
-const BENEFITS: ReadonlyArray<{
+const HIGHLIGHTS: ReadonlyArray<{
   id: string;
   title: string;
   text: string;
   icon: ReactNode;
 }> = [
   {
-    id: "viability",
-    title: "Consulta de viabilidade",
-    text: "Análise conforme região e endereço do estabelecimento.",
-    icon: <MapPinIcon />,
+    id: "velocidade",
+    title: "Alta velocidade",
+    text: "Mais performance para seu negócio.",
+    icon: <GaugeIcon />,
   },
   {
-    id: "regional",
-    title: "Atendimento regional",
-    text: "Comunicação próxima com equipe que conhece a área.",
-    icon: <MessageCircleIcon />,
-  },
-  {
-    id: "guidance",
-    title: "Orientação comercial",
-    text: "Indicação de solução alinhada ao perfil de uso.",
-    icon: <CalendarCheckIcon />,
-  },
-  {
-    id: "fit",
-    title: "Solução conforme necessidade",
-    text: "Avaliação do que o negócio realmente precisa.",
+    id: "estabilidade",
+    title: "Estabilidade",
+    text: "Conexão confiável para a rotina da sua empresa.",
     icon: <WifiIcon />,
   },
   {
-    id: "support",
-    title: "Suporte direto",
-    text: "Contato pelo WhatsApp para dúvidas e orientações.",
+    id: "suporte",
+    title: "Suporte especializado",
+    text: "Atendimento rápido e eficiente.",
     icon: <MessageCircleIcon />,
   },
   {
-    id: "online",
-    title: "Conectividade para operações online",
-    text: "Internet para sistemas, atendimento e rotina digital.",
-    icon: <WifiIcon />,
+    id: "solucoes",
+    title: "Soluções para empresas",
+    text: "Conectividade para diferentes tipos de negócio.",
+    icon: <ShoppingCartIcon />,
   },
 ];
 
 export default function BusinessBenefitsSection() {
   return (
-    <section className="section business-benefits" aria-labelledby="business-benefits-title">
+    <section
+      className="biz-highlights"
+      aria-label="Diferenciais para empresas"
+    >
       <div className="container">
-        <Reveal>
-          <header className="business-benefits__header">
-            <span className="eyebrow">Benefícios</span>
-            <h2 className="section__title" id="business-benefits-title">
-              O que a RedeSub oferece para o seu negócio
-            </h2>
-          </header>
-        </Reveal>
-
-        <div className="business-benefits__grid">
-          {BENEFITS.map((item, index) => (
-            <Reveal key={item.id} delay={index * 55}>
-              <article className="business-benefits__card">
-                <span className="business-benefits__icon" aria-hidden="true">
+        <div className="biz-highlights__grid">
+          {HIGHLIGHTS.map((item, index) => (
+            <Reveal key={item.id} delay={index * 50}>
+              <article className="biz-highlights__card">
+                <span className="biz-highlights__icon" aria-hidden="true">
                   {item.icon}
                 </span>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
+                <h2 className="biz-highlights__title">{item.title}</h2>
+                <p className="biz-highlights__text">{item.text}</p>
               </article>
             </Reveal>
           ))}

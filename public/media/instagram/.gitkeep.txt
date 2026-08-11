@@ -1,0 +1,10 @@
+# Pasta reservada para thumbnails oficiais do feed Instagram (@redesubfibra).
+#
+# É necessário fornecer/baixar as 12 imagens reais:
+#   post-01.webp … post-12.webp
+#
+# Para cada arquivo, informar também o permalink real correspondente
+# (ex.: https://www.instagram.com/redesubfibra/p/XXXX/).
+#
+# Depois de colocar as imagens, cadastre em src/lib/instagram.ts.
+# Não inventar posts, legendas ou permalinks.

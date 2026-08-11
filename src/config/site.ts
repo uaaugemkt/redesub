@@ -1,3 +1,8 @@
+import {
+  SPEED_TEST_URL,
+  SUBSCRIBER_PORTAL_URL,
+} from "../lib/constants";
+
 export interface PageMeta {
   title: string;
   description: string;
@@ -25,28 +30,28 @@ export const FOOTER_NAV = {
   servicos: [
     { label: "Planos", path: "/planos" },
     { label: "Suporte técnico", path: "/atendimento#suporte-rapido" },
-    { label: "Teste de velocidade", path: "/teste-de-velocidade" },
-    { label: "Central do Assinante", path: "/atendimento#central-assinante" },
+    { label: "Teste de velocidade", path: SPEED_TEST_URL },
+    { label: "Central do Assinante", path: SUBSCRIBER_PORTAL_URL },
   ],
 } as const;
 
 export const PAGE_META: Record<string, PageMeta> = {
   home: {
-    title: `${SITE_NAME} | Internet de fibra em Outeiro`,
+    title: "RedeSub | Internet de Fibra em Outeiro",
     description:
-      "Internet de fibra óptica com atendimento local, planos de até 850 Mega, suporte próximo e contratação pelo WhatsApp na região de Outeiro.",
+      "Internet de fibra em Outeiro com planos para residências e empresas, conexão estável, suporte rápido e serviços RedeSub.",
     path: "/",
   },
   planos: {
-    title: `Planos de internet | ${SITE_NAME}`,
+    title: "Planos de Internet Fibra | RedeSub",
     description:
-      "Escolha seu plano de fibra por região, monte seu combo com adicionais e fale com a equipe RedeSub pelo WhatsApp.",
+      "Conheça os planos de internet de fibra da RedeSub, com opções de 400, 500 e 800 Mega para diferentes necessidades de conexão.",
     path: "/planos",
   },
   cobertura: {
-    title: `Cobertura e disponibilidade | ${SITE_NAME}`,
+    title: "Cobertura RedeSub em Outeiro | Internet de Fibra",
     description:
-      "Consulte as regiões atendidas pela RedeSub e verifique disponibilidade no seu endereço com nossa equipe local.",
+      "Consulte a disponibilidade da internet de fibra RedeSub em Outeiro e fale com nossa equipe para verificar atendimento no seu endereço.",
     path: "/cobertura",
   },
   atendimento: {
@@ -76,13 +81,13 @@ export const PAGE_META: Record<string, PageMeta> = {
   empresas: {
     title: "Internet para Empresas | RedeSub",
     description:
-      "Consulte soluções de internet para pequenos negócios, escritórios e operações que dependem de conectividade.",
+      "Internet de fibra para empresas com planos Profissional de 700 Mega e Empresarial de 900 Mega, estabilidade e suporte especializado.",
     path: "/para-empresas",
   },
   velocidade: {
-    title: `Teste de velocidade | ${SITE_NAME}`,
+    title: "Teste de Velocidade | RedeSub",
     description:
-      "Meça a velocidade da sua conexão com o teste de velocidade RedeSub.",
+      "Acesse o velocímetro da RedeSub e verifique a velocidade da sua conexão com a internet.",
     path: "/teste-de-velocidade",
   },
   notFound: {
