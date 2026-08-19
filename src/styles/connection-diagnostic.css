@@ -20,10 +20,9 @@
 .connection-diagnostic--positive {
   background: linear-gradient(
     145deg,
-    var(--brand-navy-deep) 0%,
-    var(--brand-navy) 32%,
-    #b84800 68%,
-    var(--brand-orange) 100%
+    #522511 0%,
+    #8a3309 55%,
+    #e95000 100%
   );
   border-color: rgba(var(--brand-orange-rgb), 0.45);
   box-shadow:
@@ -44,12 +43,11 @@
 
 .connection-diagnostic__glow {
   position: absolute;
-  inset: -20% -10% auto;
-  height: 55%;
+  inset: 0;
   background: radial-gradient(
-    circle at 70% 20%,
-    rgba(var(--brand-orange-rgb), 0.22),
-    transparent 62%
+    circle at 92% 45%,
+    rgba(255, 152, 64, 0.32),
+    transparent 55%
   );
   opacity: 0;
   pointer-events: none;
@@ -126,6 +124,12 @@
   min-height: 0;
 }
 
+.connection-diagnostic--positive .connection-diagnostic__list {
+  background: rgba(20, 10, 4, 0.38);
+  border-radius: var(--radius-lg);
+  padding: 4px 6px;
+}
+
 .connection-diagnostic__item {
   position: relative;
   display: grid;
@@ -162,12 +166,12 @@
 }
 
 .connection-diagnostic--positive .connection-diagnostic__item {
-  background: rgba(255, 255, 255, 0.06);
-  border-bottom-color: rgba(255, 255, 255, 0.1);
+  background: transparent;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
 }
 
 .connection-diagnostic--positive .connection-diagnostic__item--fixed {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .connection-diagnostic__item--fixing {

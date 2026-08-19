@@ -2439,44 +2439,6 @@ ul {
   }
 }
 
-/* â”€â”€â”€ Referral â”€â”€â”€ */
-.referral {
-  background: linear-gradient(90deg, var(--orange) 0%, var(--orange-gradient-end) 100%);
-  padding: 48px 0;
-}
-
-.referral__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-}
-
-.referral__content {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  color: var(--white);
-}
-
-.referral__icon {
-  font-size: 2.5rem;
-  flex-shrink: 0;
-}
-
-.referral__content h2 {
-  font-size: clamp(1.25rem, 3vw, 1.75rem);
-  font-weight: 800;
-  line-height: 1.2;
-}
-
-.referral__content p {
-  margin-top: 8px;
-  font-size: 0.95rem;
-  opacity: 0.9;
-  max-width: 480px;
-}
-
 /* ─── Final CTA ─── */
 .final-cta {
   background: var(--white);
@@ -3022,14 +2984,6 @@ ul {
     grid-template-columns: 1fr;
   }
 
-  .referral__inner {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .referral__content {
-    flex-direction: column;
-  }
 }
 
 @media (max-width: 768px) {

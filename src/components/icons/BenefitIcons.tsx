@@ -105,6 +105,53 @@ export function CircleCheckIcon({ className }: BenefitIconProps) {
   );
 }
 
+export function UsersIcon({ className }: BenefitIconProps) {
+  return (
+    <IconShell className={className}>
+      <circle cx="9" cy="8" r="3.25" stroke="currentColor" strokeWidth="1.75" />
+      <path
+        d="M3 20c0-3.31 2.69-6 6-6s6 2.69 6 6"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+      />
+      <path
+        d="M15.5 5.2c1.5.4 2.5 1.75 2.5 3.3 0 1.55-1 2.9-2.5 3.3M18.5 14.3c1.98.5 3.5 2.3 3.5 4.7"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+      />
+    </IconShell>
+  );
+}
+
+export function GiftIcon({ className }: BenefitIconProps) {
+  return (
+    <IconShell className={className}>
+      <rect x="3.5" y="9" width="17" height="4" rx="1" stroke="currentColor" strokeWidth="1.75" />
+      <path
+        d="M5 13h14v7a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-7Z"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinejoin="round"
+      />
+      <path d="M12 9v12" stroke="currentColor" strokeWidth="1.75" />
+      <path
+        d="M12 9c0-2.2-1.5-4-3.5-4S6 6.3 6 7.5 7 9 8.5 9H12Z"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 9c0-2.2 1.5-4 3.5-4S18 6.3 18 7.5 17 9 15.5 9H12Z"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinejoin="round"
+      />
+    </IconShell>
+  );
+}
+
 export function CalendarCheckIcon({ className }: BenefitIconProps) {
   return (
     <IconShell className={className}>
