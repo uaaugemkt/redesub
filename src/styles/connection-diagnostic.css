@@ -22,12 +22,12 @@
     145deg,
     var(--brand-navy-deep) 0%,
     var(--brand-navy) 32%,
-    #0278c4 68%,
-    var(--brand-blue) 100%
+    #b84800 68%,
+    var(--brand-orange) 100%
   );
-  border-color: rgba(var(--brand-blue-rgb), 0.45);
+  border-color: rgba(var(--brand-orange-rgb), 0.45);
   box-shadow:
-    0 20px 56px rgba(var(--brand-blue-rgb), 0.28),
+    0 20px 56px rgba(var(--brand-orange-rgb), 0.28),
     0 0 0 1px rgba(255, 255, 255, 0.08) inset;
   color: var(--brand-white);
 }
@@ -37,9 +37,9 @@
 }
 
 @keyframes connection-diagnostic-celebrate {
-  0% { box-shadow: 0 16px 48px rgba(var(--brand-blue-rgb), 0.2); }
-  50% { box-shadow: 0 24px 64px rgba(var(--brand-blue-rgb), 0.38); }
-  100% { box-shadow: 0 20px 56px rgba(var(--brand-blue-rgb), 0.28); }
+  0% { box-shadow: 0 16px 48px rgba(var(--brand-orange-rgb), 0.2); }
+  50% { box-shadow: 0 24px 64px rgba(var(--brand-orange-rgb), 0.38); }
+  100% { box-shadow: 0 20px 56px rgba(var(--brand-orange-rgb), 0.28); }
 }
 
 .connection-diagnostic__glow {
@@ -48,7 +48,7 @@
   height: 55%;
   background: radial-gradient(
     circle at 70% 20%,
-    rgba(var(--brand-blue-rgb), 0.22),
+    rgba(var(--brand-orange-rgb), 0.22),
     transparent 62%
   );
   opacity: 0;
@@ -95,10 +95,10 @@
   background: linear-gradient(
     90deg,
     var(--brand-orange) 0%,
-    var(--brand-blue) 55%,
-    #4dbfff 100%
+    var(--brand-orange-light) 55%,
+    #ffb066 100%
   );
-  box-shadow: 0 0 14px rgba(var(--brand-blue-rgb), 0.45);
+  box-shadow: 0 0 14px rgba(var(--brand-orange-rgb), 0.45);
 }
 
 .connection-diagnostic__progress-label {
@@ -175,8 +175,8 @@
 }
 
 @keyframes connection-item-pulse {
-  0%, 100% { box-shadow: inset 0 0 0 0 rgba(var(--brand-blue-rgb), 0); }
-  50% { box-shadow: inset 0 0 0 2px rgba(var(--brand-blue-rgb), 0.35); }
+  0%, 100% { box-shadow: inset 0 0 0 0 rgba(var(--brand-orange-rgb), 0); }
+  50% { box-shadow: inset 0 0 0 2px rgba(var(--brand-orange-rgb), 0.35); }
 }
 
 .connection-diagnostic__time {
@@ -204,7 +204,7 @@
 
 .connection-diagnostic__item--fixed .connection-diagnostic__icon {
   background: rgba(255, 255, 255, 0.95);
-  color: var(--brand-blue);
+  color: var(--brand-orange);
   transform: scale(1.04);
 }
 
@@ -215,7 +215,7 @@
 
 .connection-diagnostic--positive .connection-diagnostic__item--fixed .connection-diagnostic__icon {
   background: rgba(255, 255, 255, 0.95);
-  color: var(--brand-blue);
+  color: var(--brand-orange);
 }
 
 .connection-diagnostic__content {
@@ -270,14 +270,14 @@
   color: var(--brand-navy);
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 4px 12px rgba(var(--brand-blue-rgb), 0.15);
+  box-shadow: 0 4px 12px rgba(var(--brand-orange-rgb), 0.15);
 }
 
 .connection-diagnostic__badge-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--brand-blue);
+  background: var(--brand-orange);
 }
 
 .connection-diagnostic__shine {
@@ -368,10 +368,10 @@
   height: 52px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.95);
-  color: var(--brand-blue);
+  color: var(--brand-orange);
   box-shadow:
     0 0 0 6px rgba(var(--brand-orange-rgb), 0.2),
-    0 8px 24px rgba(var(--brand-blue-rgb), 0.25);
+    0 8px 24px rgba(var(--brand-orange-rgb), 0.25);
   animation: connection-check-pop 0.55s cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 
@@ -405,7 +405,7 @@
 }
 
 .connection-diagnostic__restart:focus-visible {
-  outline: 3px solid var(--brand-blue-light);
+  outline: 3px solid var(--brand-orange-light);
   outline-offset: 2px;
 }
 
@@ -493,12 +493,12 @@
 }
 
 .connection-diagnostic-mobile__nav-btn:hover:not(:disabled) {
-  border-color: rgba(var(--brand-blue-rgb), 0.35);
-  color: var(--brand-blue);
+  border-color: rgba(var(--brand-orange-rgb), 0.35);
+  color: var(--brand-orange);
 }
 
 .connection-diagnostic-mobile__nav-btn:focus-visible {
-  outline: 3px solid rgba(var(--brand-blue-rgb), 0.35);
+  outline: 3px solid rgba(var(--brand-orange-rgb), 0.35);
   outline-offset: 2px;
 }
 
@@ -527,7 +527,7 @@
 }
 
 .connection-diagnostic-mobile__track:focus-visible {
-  outline: 3px solid rgba(var(--brand-blue-rgb), 0.35);
+  outline: 3px solid rgba(var(--brand-orange-rgb), 0.35);
   outline-offset: 4px;
   border-radius: var(--radius-md);
 }
@@ -539,7 +539,7 @@
   min-width: 0;
   padding: clamp(18px, 4vw, 22px);
   border-radius: var(--radius-xl);
-  border: 1px solid rgba(var(--brand-blue-rgb), 0.14);
+  border: 1px solid rgba(var(--brand-orange-rgb), 0.14);
   background: var(--brand-white);
   box-shadow: var(--shadow-md);
 }
@@ -550,7 +550,7 @@
   gap: 10px;
   margin-bottom: 14px;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(var(--brand-blue-rgb), 0.1);
+  border-bottom: 1px solid rgba(var(--brand-orange-rgb), 0.1);
 }
 
 .connection-diagnostic-mobile__time {
@@ -566,8 +566,8 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  color: var(--brand-blue);
-  background: rgba(var(--brand-blue-rgb), 0.1);
+  color: var(--brand-orange);
+  background: rgba(var(--brand-orange-rgb), 0.1);
 }
 
 .connection-diagnostic-mobile__category {
@@ -608,7 +608,7 @@
 }
 
 .connection-diagnostic-mobile__block--after .connection-diagnostic-mobile__label {
-  color: var(--brand-blue);
+  color: var(--brand-orange);
 }
 
 .connection-diagnostic-mobile__block h3 {
@@ -634,15 +634,15 @@
 }
 
 .connection-diagnostic-mobile__block--after {
-  background: linear-gradient(180deg, rgba(var(--brand-blue-rgb), 0.06) 0%, #fff 100%);
+  background: linear-gradient(180deg, rgba(var(--brand-orange-rgb), 0.06) 0%, #fff 100%);
   border-radius: var(--radius-md);
   padding: 14px 14px 12px;
-  border-left: 3px solid var(--brand-blue);
+  border-left: 3px solid var(--brand-orange);
 }
 
 .connection-diagnostic-mobile__divider {
   height: 1px;
-  background: rgba(var(--brand-blue-rgb), 0.12);
+  background: rgba(var(--brand-orange-rgb), 0.12);
   margin: 4px 0;
 }
 
@@ -667,7 +667,7 @@
 .connection-diagnostic-mobile__badge--ok {
   color: var(--brand-navy);
   background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(var(--brand-blue-rgb), 0.18);
+  border: 1px solid rgba(var(--brand-orange-rgb), 0.18);
 }
 
 .connection-diagnostic-mobile__dots {
@@ -683,17 +683,17 @@
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: rgba(var(--brand-blue-rgb), 0.2);
+  background: rgba(var(--brand-orange-rgb), 0.2);
   cursor: pointer;
 }
 
 .connection-diagnostic-mobile__dot--active {
-  background: var(--brand-blue);
+  background: var(--brand-orange);
   transform: scale(1.15);
 }
 
 .connection-diagnostic-mobile__dot:focus-visible {
-  outline: 2px solid var(--brand-blue);
+  outline: 2px solid var(--brand-orange);
   outline-offset: 3px;
 }
 

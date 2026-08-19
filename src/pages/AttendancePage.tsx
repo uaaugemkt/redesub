@@ -221,21 +221,6 @@ export default function AttendancePage() {
           </Reveal>
         </div>
       </section>
-
-      <section className="section attendance__final-cta">
-        <div className="container container--narrow">
-          <Reveal>
-            <div className="attendance__final-card">
-              <h2>Precisa de ajuda agora?</h2>
-              <p>
-                Nossa equipe está pronta para orientar contratação, suporte e
-                consultas pelo WhatsApp.
-              </p>
-              <WhatsAppButton size="lg" className="btn--hero" />
-            </div>
-          </Reveal>
-        </div>
-      </section>
     </>
   );
 }

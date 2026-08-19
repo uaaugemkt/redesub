@@ -20,7 +20,7 @@
   overflow: hidden;
   padding: clamp(36px, 5vw, 56px) 0 clamp(120px, 14vw, 168px);
   color: var(--brand-white);
-  background: linear-gradient(135deg, #04162f 0%, #07284d 55%, #0a3d6f 100%);
+  background: linear-gradient(135deg, #04162f 0%, #1a2438 55%, #7a3200 100%);
 }
 
 .biz-hero__backdrop {
