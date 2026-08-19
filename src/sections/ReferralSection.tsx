@@ -58,18 +58,20 @@ export default function ReferralSection() {
         </div>
 
         <div className="referral__content">
-          <img
-            src="/media/icone-indique-e-ganhe.webp"
-            alt=""
-            aria-hidden="true"
-            className="referral__icon-3d"
-            width={1312}
-            height={1199}
-            loading="lazy"
-            decoding="async"
-          />
           <h2 className="referral__title" id="referral-title">
-            <span className="referral__title-line">Indique</span>
+            <span className="referral__title-line referral__title-line--first">
+              Indique
+              <img
+                src="/media/icone-indique-e-ganhe.webp"
+                alt=""
+                aria-hidden="true"
+                className="referral__icon-3d"
+                width={1312}
+                height={1199}
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
             <span className="referral__title-line referral__title-highlight">
               e Ganhe
             </span>
