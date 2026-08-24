@@ -38,9 +38,8 @@ export const HERO_VIDEO_SRC =
 export const HERO_VIDEO_POSTER = "/logo-redesub.webp";
 
 /**
- * URL pública do perfil Google Meu Negócio / avaliações.
- * Defina em VITE_GOOGLE_REVIEWS_URL ou em constants.GOOGLE_REVIEWS_URL
- * quando a RedeSub fornecer o link oficial.
+ * URL pública do perfil Google / avaliações.
+ * Defina em VITE_GOOGLE_REVIEWS_URL para sobrescrever o link em googleReviews.ts.
  */
 export const GOOGLE_REVIEWS_URL =
   import.meta.env.VITE_GOOGLE_REVIEWS_URL?.trim() || OFFICIAL_GOOGLE_REVIEWS_URL;

@@ -11,6 +11,8 @@ interface UseSnapCarouselOptions {
   slideCount: number;
   /** When set, scrolls to this index when it changes (e.g. selected plan). */
   syncIndex?: number | null;
+  /** How many slides are fully visible; used to stop before empty trailing space. */
+  visibleCount?: number;
 }
 
 interface UseSnapCarouselResult {
@@ -46,12 +48,15 @@ function getNearestIndex(track: HTMLElement, slides: HTMLElement[]): number {
 export function useSnapCarousel({
   slideCount,
   syncIndex = null,
+  visibleCount = 1,
 }: UseSnapCarouselOptions): UseSnapCarouselResult {
   const trackRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const reducedMotionRef = useRef(false);
   const scrollingProgrammatically = useRef(false);
+  const peek = Math.max(1, Math.min(visibleCount, Math.max(slideCount, 1)));
+  const maxIndex = Math.max(0, slideCount - peek);
 
   const setSlideRef = useCallback((index: number, node: HTMLElement | null) => {
     slideRefs.current[index] = node;
@@ -60,10 +65,12 @@ export function useSnapCarousel({
   const goToSlide = useCallback(
     (index: number) => {
       const track = trackRef.current;
-      const slide = slideRefs.current[index];
-      if (!track || !slide || slideCount === 0) return;
+      if (!track || slideCount === 0) return;
 
-      const safeIndex = Math.max(0, Math.min(slideCount - 1, index));
+      const safeIndex = Math.max(0, Math.min(maxIndex, index));
+      const slide = slideRefs.current[safeIndex];
+      if (!slide) return;
+
       const behavior: ScrollBehavior = reducedMotionRef.current ? "auto" : "smooth";
 
       scrollingProgrammatically.current = true;
@@ -77,7 +84,7 @@ export function useSnapCarousel({
         scrollingProgrammatically.current = false;
       }, behavior === "smooth" ? 400 : 0);
     },
-    [slideCount]
+    [maxIndex, slideCount]
   );
 
   const goPrev = useCallback(() => {
@@ -99,12 +106,19 @@ export function useSnapCarousel({
   }, []);
 
   useEffect(() => {
+    if (activeIndex > maxIndex) {
+      goToSlide(maxIndex);
+    }
+  }, [activeIndex, goToSlide, maxIndex]);
+
+  useEffect(() => {
     const track = trackRef.current;
     if (!track || slideCount === 0) return;
 
     let frame = 0;
 
     let scrollEndTimer: number | undefined;
+    const clampIndex = (index: number) => Math.max(0, Math.min(maxIndex, index));
 
     const syncFromScroll = () => {
       if (scrollingProgrammatically.current) return;
@@ -112,8 +126,7 @@ export function useSnapCarousel({
       window.cancelAnimationFrame(frame);
       frame = window.requestAnimationFrame(() => {
         const slides = slideRefs.current.filter(Boolean) as HTMLElement[];
-        const nearest = getNearestIndex(track, slides);
-        setActiveIndex(nearest);
+        setActiveIndex(clampIndex(getNearestIndex(track, slides)));
       });
 
       if (scrollEndTimer) window.clearTimeout(scrollEndTimer);
@@ -123,7 +136,7 @@ export function useSnapCarousel({
     const snapOnScrollEnd = () => {
       if (scrollingProgrammatically.current) return;
       const slides = slideRefs.current.filter(Boolean) as HTMLElement[];
-      const nearest = getNearestIndex(track, slides);
+      const nearest = clampIndex(getNearestIndex(track, slides));
       const slide = slides[nearest];
       if (!slide) return;
 
@@ -148,7 +161,7 @@ export function useSnapCarousel({
       window.cancelAnimationFrame(frame);
       if (scrollEndTimer) window.clearTimeout(scrollEndTimer);
     };
-  }, [slideCount]);
+  }, [maxIndex, slideCount]);
 
   useEffect(() => {
     if (syncIndex == null || syncIndex < 0) return;
@@ -178,7 +191,7 @@ export function useSnapCarousel({
     setSlideRef,
     activeIndex,
     canPrev: activeIndex > 0,
-    canNext: activeIndex < slideCount - 1,
+    canNext: activeIndex < maxIndex,
     goToSlide,
     goPrev,
     goNext,

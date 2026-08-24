@@ -36,8 +36,7 @@ export const ADDRESS = {
   full: "Av. Nossa Sra. da Conceição, 31, São João do Outeiro, Belém/PA",
 };
 
-export const GOOGLE_REVIEWS_URL =
-  "https://g.page/r/CSMU0CwoaFW0EAs/review";
+export { GOOGLE_REVIEWS_URL } from "./googleReviews";
 
 export {
   INSTAGRAM_HANDLE,

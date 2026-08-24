@@ -5929,8 +5929,7 @@
 
 /* Google Reviews — editorial */
 .testimonials {
-  background: #f7f9fc;
-  padding-block: clamp(56px, 7vw, 88px);
+  padding-block: clamp(64px, 8vw, 104px);
 }
 
 /* CTA final */

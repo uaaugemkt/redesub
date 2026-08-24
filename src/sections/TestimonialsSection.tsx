@@ -1,16 +1,35 @@
-import { useEffect, useState } from "react";
 import { GOOGLE_REVIEWS_PROFILE_URL } from "../config/integrations";
 import {
-  GOOGLE_REVIEWS_DATA,
-  fetchGoogleReviews,
+  GOOGLE_REVIEWS,
+  formatAverageRating,
+  formatTotalReviewsLabel,
   getDisplayGoogleReviews,
-  hasGoogleReviews,
+  getReviewInitial,
   type GoogleReview,
-  type GoogleReviewsSummary,
 } from "../lib/googleReviews";
+import { useSnapCarousel } from "../hooks/useSnapCarousel";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 import Reveal from "../components/ui/Reveal";
 
-function StarRating({ rating, label }: { rating: number; label: string }) {
+const AVATAR_TONES = 4;
+
+function avatarTone(id: string): number {
+  let hash = 0;
+  for (let i = 0; i < id.length; i += 1) {
+    hash = (hash + id.charCodeAt(i)) % AVATAR_TONES;
+  }
+  return hash;
+}
+
+function StarRating({
+  rating,
+  label,
+  size = 16,
+}: {
+  rating: number;
+  label: string;
+  size?: number;
+}) {
   const clamped = Math.max(0, Math.min(5, Math.round(rating)));
 
   return (
@@ -18,8 +37,8 @@ function StarRating({ rating, label }: { rating: number; label: string }) {
       {Array.from({ length: 5 }, (_, i) => (
         <svg
           key={i}
-          width="18"
-          height="18"
+          width={size}
+          height={size}
           viewBox="0 0 20 20"
           className={
             i < clamped
@@ -35,162 +54,261 @@ function StarRating({ rating, label }: { rating: number; label: string }) {
   );
 }
 
-function GoogleMark() {
+function QuoteMark() {
   return (
-    <span className="testimonial-card__google" aria-hidden="true">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+    <span className="testimonial-card__quote-mark" aria-hidden="true">
+      <svg width="26" height="20" viewBox="0 0 26 20" fill="none">
         <path
-          d="M22.5 12.3c0-.8-.1-1.5-.2-2.2H12v4.2h5.9c-.3 1.4-1 2.5-2.1 3.3v2.7h3.4c2-1.8 3.3-4.5 3.3-8Z"
-          fill="#4285F4"
-        />
-        <path
-          d="M12 23c2.9 0 5.3-.9 7.1-2.6l-3.4-2.7c-1 .7-2.2 1.1-3.7 1.1-2.8 0-5.2-1.9-6.1-4.4H2.4v2.8C4.2 20.6 7.8 23 12 23Z"
-          fill="#34A853"
-        />
-        <path
-          d="M5.9 14.4c-.2-.7-.4-1.4-.4-2.1s.1-1.5.4-2.1V7.3H2.4C1.7 8.7 1.3 10.3 1.3 12s.4 3.3 1.1 4.7l3.5-2.3Z"
-          fill="#FBBC05"
-        />
-        <path
-          d="M12 5.4c1.6 0 3 .5 4.1 1.6l3.1-3.1C17.3 2.1 14.9 1 12 1 7.8 1 4.2 3.4 2.4 7.3l3.5 2.8c.9-2.5 3.3-4.7 6.1-4.7Z"
-          fill="#EA4335"
+          d="M10.4 20H0V11.2C0 6.1 2.7 2.3 8.2.4L9.6 3.1C6.2 4.4 4.6 6.5 4.6 9.7H10.4V20Zm15.6 0H15.6V11.2c0-5.1 2.7-8.9 8.2-10.8L25.2 3.1c-3.4 1.3-5 3.4-5 6.6H26V20Z"
+          fill="currentColor"
         />
       </svg>
-      Google
     </span>
   );
 }
 
-function ReviewCard({ review }: { review: GoogleReview }) {
+function ReviewAvatar({ review }: { review: GoogleReview }) {
+  const initial = getReviewInitial(review.authorName);
+  const photo = review.photoUrl?.trim() ?? "";
+
+  if (photo) {
+    return (
+      <img
+        className="testimonial-card__photo"
+        src={photo}
+        alt=""
+        width={48}
+        height={48}
+        loading="lazy"
+        decoding="async"
+      />
+    );
+  }
+
   return (
-    <article className="testimonial-card testimonial-card--review">
-      <div className="testimonial-card__header">
-        <StarRating
-          rating={review.rating}
-          label={`${review.rating} de 5 estrelas`}
-        />
-        <GoogleMark />
-      </div>
+    <span
+      className={`testimonial-card__avatar testimonial-card__avatar--${avatarTone(review.id)}`}
+      aria-hidden="true"
+    >
+      {initial}
+    </span>
+  );
+}
 
-      <blockquote>&ldquo;{review.text}&rdquo;</blockquote>
+function ReviewCard({
+  review,
+  featured = false,
+}: {
+  review: GoogleReview;
+  featured?: boolean;
+}) {
+  return (
+    <article
+      className={`testimonial-card${featured ? " testimonial-card--featured" : ""}`}
+    >
+      <QuoteMark />
 
-      <footer>
-        {review.authorPhoto ? (
-          <img
-            className="testimonial-card__photo"
-            src={review.authorPhoto}
-            alt=""
-            width={40}
-            height={40}
-          />
-        ) : (
-          <div className="testimonial-card__avatar" aria-hidden="true">
-            {review.authorName.charAt(0)}
-          </div>
-        )}
-        <div>
-          <strong>{review.authorName}</strong>
-          {review.relativeTime ? (
-            <span className="testimonial-card__time">{review.relativeTime}</span>
+      <header className="testimonial-card__person">
+        <ReviewAvatar review={review} />
+        <div className="testimonial-card__identity">
+          <strong className="testimonial-card__name">{review.authorName}</strong>
+          {review.context ? (
+            <span className="testimonial-card__context">{review.context}</span>
           ) : null}
         </div>
-      </footer>
+      </header>
+
+      <StarRating
+        rating={review.rating}
+        label={`${review.rating} de 5 estrelas`}
+        size={15}
+      />
+
+      <blockquote className="testimonial-card__quote">{review.text}</blockquote>
+
+      <p className="testimonial-card__source">{GOOGLE_REVIEWS.sourceLabel}</p>
     </article>
   );
 }
 
+function ReviewsCarousel({ reviews }: { reviews: GoogleReview[] }) {
+  const showThree = useMediaQuery("(min-width: 1024px)");
+  const showTwo = useMediaQuery("(min-width: 768px)");
+  const visibleCount = showThree ? 3 : showTwo ? 2 : 1;
+  const {
+    trackRef,
+    setSlideRef,
+    activeIndex,
+    canPrev,
+    canNext,
+    goPrev,
+    goNext,
+    goToSlide,
+    handleTrackKeyDown,
+  } = useSnapCarousel({
+    slideCount: reviews.length,
+    visibleCount,
+  });
+
+  const featuredIndex =
+    visibleCount === 3 ? activeIndex + 1 : activeIndex;
+
+  const statusLabel =
+    visibleCount === 1
+      ? `Avaliação ${activeIndex + 1} de ${reviews.length}`
+      : `Avaliações ${activeIndex + 1} a ${Math.min(activeIndex + visibleCount, reviews.length)} de ${reviews.length}`;
+
+  return (
+    <div className="testimonials-carousel">
+      <button
+        type="button"
+        className="testimonials-carousel__arrow testimonials-carousel__arrow--prev"
+        aria-label="Ver avaliações anteriores"
+        disabled={!canPrev}
+        onClick={goPrev}
+      >
+        <ChevronIcon direction="left" />
+      </button>
+
+      <div className="testimonials-carousel__stage">
+        <p className="testimonials-carousel__status" aria-live="polite">
+          {statusLabel}
+        </p>
+
+        <div
+          ref={trackRef}
+          className="testimonials-carousel__track"
+          role="region"
+          aria-roledescription="carrossel"
+          aria-label="Avaliações de clientes no Google"
+          tabIndex={0}
+          onKeyDown={handleTrackKeyDown}
+        >
+          {reviews.map((review, index) => {
+            const inView =
+              index >= activeIndex && index < activeIndex + visibleCount;
+
+            return (
+              <div
+                key={review.id}
+                ref={(node) => setSlideRef(index, node)}
+                className="testimonials-carousel__slide"
+                aria-hidden={!inView}
+              >
+                <ReviewCard
+                  review={review}
+                  featured={index === featuredIndex}
+                />
+              </div>
+            );
+          })}
+        </div>
+
+        <div
+          className="testimonials-carousel__dots"
+          role="tablist"
+          aria-label="Selecionar avaliação"
+        >
+          {reviews.map((review, index) => (
+            <button
+              key={review.id}
+              type="button"
+              role="tab"
+              className={`testimonials-carousel__dot ${index === activeIndex ? "testimonials-carousel__dot--active" : ""}`}
+              aria-selected={index === activeIndex}
+              aria-label={`Mostrar a partir da avaliação de ${review.authorName}`}
+              onClick={() => goToSlide(index)}
+            />
+          ))}
+        </div>
+      </div>
+
+      <button
+        type="button"
+        className="testimonials-carousel__arrow testimonials-carousel__arrow--next"
+        aria-label="Ver próximas avaliações"
+        disabled={!canNext}
+        onClick={goNext}
+      >
+        <ChevronIcon direction="right" />
+      </button>
+    </div>
+  );
+}
+
+function ChevronIcon({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d={direction === "left" ? "M15 6l-6 6 6 6" : "M9 6l6 6-6 6"}
+        stroke="currentColor"
+        strokeWidth="1.85"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export default function TestimonialsSection() {
-  const [data, setData] = useState<GoogleReviewsSummary>(GOOGLE_REVIEWS_DATA);
-  const reviews = getDisplayGoogleReviews(data);
-  const showReviews = hasGoogleReviews(data);
+  const reviews = getDisplayGoogleReviews();
   const profileUrl = GOOGLE_REVIEWS_PROFILE_URL;
-  const showSummary =
-    showReviews && (data.averageRating !== null || data.totalReviews !== null);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    void fetchGoogleReviews(controller.signal).then((payload) => {
-      if (!controller.signal.aborted) {
-        setData(payload);
-      }
-    });
-
-    return () => controller.abort();
-  }, []);
+  const averageLabel = formatAverageRating(GOOGLE_REVIEWS.averageRating);
+  const totalLabel = formatTotalReviewsLabel(GOOGLE_REVIEWS.totalReviews);
 
   return (
     <section
-      className={`testimonials section ${showReviews ? "" : "testimonials--empty"}`.trim()}
+      className="testimonials section"
       id="depoimentos"
       aria-labelledby="depoimentos-title"
     >
+      <div className="testimonials__glow" aria-hidden="true" />
+
       <div className="container">
         <Reveal>
-          <div className="section__header section__header--center testimonials__header">
-            <span className="eyebrow">Quem usa, recomenda</span>
-            <h2 className="section__title" id="depoimentos-title">
-              A experiência de quem escolhe a RedeSub
+          <header className="testimonials__header">
+            <span className="eyebrow">Avaliações no Google</span>
+            <p
+              className="testimonials__score"
+              aria-label={`Nota ${averageLabel} de 5`}
+            >
+              <span className="testimonials__score-value">{averageLabel}</span>
+              <StarRating
+                rating={GOOGLE_REVIEWS.averageRating}
+                label={`Nota média ${averageLabel} de 5`}
+                size={26}
+              />
+            </p>
+            <h2 className="testimonials__title" id="depoimentos-title">
+              {totalLabel}
             </h2>
-            {showReviews ? (
-              <p className="section__desc">
-                Avaliações reais de clientes no Google.
-              </p>
-            ) : null}
-          </div>
+            <p className="testimonials__proof">{GOOGLE_REVIEWS.socialProof}</p>
+          </header>
         </Reveal>
 
-        {showSummary ? (
+        {reviews.length > 0 ? (
           <Reveal delay={40}>
-            <div className="testimonials__summary">
-              {data.averageRating !== null ? (
-                <>
-                  <p className="testimonials__average">
-                    <strong>{data.averageRating.toFixed(1)}</strong>
-                    <span>de 5</span>
-                  </p>
-                  <StarRating
-                    rating={data.averageRating}
-                    label={`Nota média ${data.averageRating} de 5`}
-                  />
-                </>
-              ) : null}
-              {data.totalReviews !== null ? (
-                <p className="testimonials__count">
-                  {data.totalReviews}{" "}
-                  {data.totalReviews === 1 ? "avaliação" : "avaliações"} no Google
-                </p>
-              ) : null}
-            </div>
+            <ReviewsCarousel reviews={reviews} />
           </Reveal>
-        ) : null}
-
-        {showReviews ? (
-          <div className="testimonials__grid">
-            {reviews.map((review, index) => (
-              <Reveal key={`${review.authorName}-${index}`} delay={index * 50}>
-                <ReviewCard review={review} />
-              </Reveal>
-            ))}
-          </div>
         ) : null}
 
         {profileUrl ? (
-          <Reveal delay={showReviews ? 80 : 40}>
+          <Reveal delay={80}>
             <div className="testimonials__footer">
-              <div className="testimonials__actions">
-                <a
-                  href={profileUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn--outline btn--md"
-                >
-                  Ver avaliações no Google
-                </a>
-              </div>
+              <a
+                href={profileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn testimonials__cta"
+              >
+                Ver todas as avaliações no Google
+              </a>
+              <p className="testimonials__asof">{GOOGLE_REVIEWS.consultedLabel}</p>
             </div>
           </Reveal>
-        ) : null}
+        ) : (
+          <p className="testimonials__asof">{GOOGLE_REVIEWS.consultedLabel}</p>
+        )}
       </div>
     </section>
   );
