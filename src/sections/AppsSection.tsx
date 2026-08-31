@@ -42,7 +42,7 @@ interface AppsSectionProps {
   informativeOnly?: boolean;
 }
 
-export default function AppsSection(_props: AppsSectionProps = {}) {
+export default function AppsSection({ variant = "preview" }: AppsSectionProps = {}) {
   const tabsId = useId();
   const [activeId, setActiveId] = useState(() => getInitialPackage().id);
   const activePackage =
@@ -50,9 +50,14 @@ export default function AppsSection(_props: AppsSectionProps = {}) {
   const family = packageFamily(activePackage);
   const href = buildWhatsAppLink(activePackage.whatsappMessage);
   const panelId = `${tabsId}-panel`;
+  const variantClass =
+    variant === "full" ? "content-packages--plans" : "content-packages--home";
 
   return (
-    <section className="content-packages content-packages--showcase section" id="conteudos">
+    <section
+      className={`content-packages content-packages--showcase section ${variantClass}`}
+      id="conteudos"
+    >
       <div className="container">
         <Reveal>
           <div className="section__header section__header--center content-packages__header">
