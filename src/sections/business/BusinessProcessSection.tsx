@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { MessageCircleIcon } from "../../components/icons/BenefitIcons";
 import {
   BuildingIcon,
@@ -7,25 +8,31 @@ import Reveal from "../../components/ui/Reveal";
 import WhatsAppButton from "../../components/WhatsAppButton";
 import { WHATSAPP_MESSAGES } from "../../lib/whatsapp";
 
-const POINTS = [
+const SUPPORT_CARDS: ReadonlyArray<{
+  id: string;
+  title: string;
+  text: string;
+  icon: ReactNode;
+}> = [
   {
     id: "rapido",
     title: "Atendimento rápido e eficiente",
+    text: "Agilidade para orientar sua empresa e esclarecer suas dúvidas.",
     icon: <MessageCircleIcon />,
   },
   {
     id: "especializado",
     title: "Suporte especializado",
+    text: "Atendimento preparado para as necessidades do seu negócio.",
     icon: <HeadphonesIcon />,
   },
   {
     id: "solucoes",
     title: "Soluções para empresas",
+    text: "Opções adequadas a diferentes estruturas e operações.",
     icon: <BuildingIcon />,
   },
-] as const;
-
-const OFFICE_PHOTO = "/media/beneficios/Trabalhar-sem-interrupcoes.png";
+];
 
 /** Atendimento empresarial — único CTA intermediário da página. */
 export default function BusinessProcessSection() {
@@ -34,29 +41,36 @@ export default function BusinessProcessSection() {
       className="biz-support section"
       aria-labelledby="business-process-title"
     >
-      <div className="container">
-        <div className="biz-support__layout">
-          <Reveal className="biz-support__copy">
+      <div className="container biz-support__inner">
+        <Reveal>
+          <header className="biz-support__header">
             <span className="eyebrow">Atendimento</span>
             <h2 className="biz-support__title" id="business-process-title">
-              Atendimento para sua empresa
+              Suporte próximo para sua empresa
             </h2>
             <p className="biz-support__desc">
-              Fale com a RedeSub para consultar disponibilidade e encontrar a
-              opção mais adequada para o seu negócio.
+              Fale com a RedeSub para consultar disponibilidade, conhecer as
+              opções para o seu endereço e esclarecer suas dúvidas.
             </p>
+          </header>
+        </Reveal>
 
-            <ul className="biz-support__list">
-              {POINTS.map((item) => (
-                <li key={item.id}>
-                  <span className="biz-support__icon" aria-hidden="true">
-                    {item.icon}
-                  </span>
-                  <span>{item.title}</span>
-                </li>
-              ))}
-            </ul>
+        <div className="biz-support__cards">
+          {SUPPORT_CARDS.map((item, index) => (
+            <Reveal key={item.id} delay={index * 55}>
+              <article className="biz-support__card">
+                <span className="biz-support__card-icon" aria-hidden="true">
+                  {item.icon}
+                </span>
+                <h3 className="biz-support__card-title">{item.title}</h3>
+                <p className="biz-support__card-text">{item.text}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
 
+        <Reveal delay={120}>
+          <div className="biz-support__actions">
             <WhatsAppButton
               message={WHATSAPP_MESSAGES.businessInquiry()}
               label="Falar com atendimento"
@@ -64,22 +78,8 @@ export default function BusinessProcessSection() {
               size="lg"
               className="biz-support__cta"
             />
-          </Reveal>
-
-          <Reveal className="biz-support__media" delay={80}>
-            <figure className="biz-support__figure">
-              <img
-                src={OFFICE_PHOTO}
-                alt="Atendimento RedeSub para empresas"
-                className="biz-support__image"
-                width={900}
-                height={700}
-                loading="lazy"
-                decoding="async"
-              />
-            </figure>
-          </Reveal>
-        </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

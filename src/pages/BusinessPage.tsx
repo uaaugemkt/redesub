@@ -1,5 +1,4 @@
 import "../styles/business-page.css";
-import BusinessBenefitsSection from "../sections/business/BusinessBenefitsSection";
 import BusinessDarkSection from "../sections/business/BusinessDarkSection";
 import BusinessEditorialSection from "../sections/business/BusinessEditorialSection";
 import BusinessFAQSection from "../sections/business/BusinessFAQSection";
@@ -17,7 +16,6 @@ export default function BusinessPage() {
   return (
     <div className="business-page">
       <BusinessHeroSection />
-      <BusinessBenefitsSection />
       <BusinessEditorialSection />
       <BusinessUseCasesSection />
       <BusinessDarkSection />

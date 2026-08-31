@@ -2,21 +2,19 @@ import Breadcrumbs from "../../components/ui/Breadcrumbs";
 import WhatsAppButton from "../../components/WhatsAppButton";
 import { WHATSAPP_MESSAGES } from "../../lib/whatsapp";
 
-const HERO_PILLS = [
+const HEADER_PILLS = [
   "Alta velocidade",
   "Estabilidade",
   "Suporte especializado",
 ] as const;
 
-const OFFICE_PHOTO = "/media/beneficios/Trabalhar-sem-interrupcoes.png";
-
 export default function BusinessHeroSection() {
   return (
     <section className="biz-hero" aria-labelledby="business-hero-title">
       <div className="biz-hero__backdrop" aria-hidden="true">
-        <span className="biz-hero__glow biz-hero__glow--orange" />
-        <span className="biz-hero__glow biz-hero__glow--blue" />
-        <span className="biz-hero__grid" />
+        <span className="biz-hero__glow biz-hero__glow--warm" />
+        <span className="biz-hero__glow biz-hero__glow--light" />
+        <span className="biz-hero__overlay" />
       </div>
 
       <div className="container biz-hero__inner">
@@ -30,11 +28,11 @@ export default function BusinessHeroSection() {
 
           <span className="biz-hero__eyebrow">Internet para empresas</span>
           <h1 className="biz-hero__title" id="business-hero-title">
-            Conectividade para sua empresa crescer
+            Internet empresarial para uma operação mais eficiente
           </h1>
           <p className="biz-hero__desc">
-            Internet de fibra para negócios que precisam de velocidade,
-            estabilidade e suporte.
+            Fibra para empresas que precisam de velocidade, estabilidade e
+            suporte especializado no dia a dia.
           </p>
 
           <div className="biz-hero__ctas">
@@ -44,31 +42,19 @@ export default function BusinessHeroSection() {
               variant="primary"
               size="lg"
             />
-            <a href="#planos-empresariais" className="btn btn--outline-light btn--lg">
+            <a
+              href="#planos-empresariais"
+              className="btn btn--lg biz-hero__cta-secondary"
+            >
               Conhecer planos
             </a>
           </div>
 
           <ul className="biz-hero__pills">
-            {HERO_PILLS.map((item) => (
+            {HEADER_PILLS.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
-        </div>
-
-        <div className="biz-hero__visual">
-          <div className="biz-hero__frame">
-            <img
-              src={OFFICE_PHOTO}
-              alt="Profissional em ambiente de trabalho conectado com a RedeSub"
-              className="biz-hero__image"
-              width={960}
-              height={720}
-              decoding="async"
-              fetchPriority="high"
-            />
-            <div className="biz-hero__frame-glow" aria-hidden="true" />
-          </div>
         </div>
       </div>
     </section>

@@ -8,7 +8,7 @@ const POINTS = [
   "Soluções para empresas",
 ] as const;
 
-const OFFICE_PHOTO = "/media/beneficios/Trabalhar-sem-interrupcoes.png";
+const EDITORIAL_PHOTO = "/media/empresa/empresa-1.webp";
 
 export default function BusinessEditorialSection() {
   return (
@@ -21,8 +21,8 @@ export default function BusinessEditorialSection() {
           <Reveal className="biz-editorial__media">
             <figure className="biz-editorial__figure">
               <img
-                src={OFFICE_PHOTO}
-                alt="Ambiente de trabalho conectado com internet RedeSub"
+                src={EDITORIAL_PHOTO}
+                alt="Ambiente empresarial conectado com internet RedeSub"
                 className="biz-editorial__image"
                 width={900}
                 height={700}
@@ -35,11 +35,11 @@ export default function BusinessEditorialSection() {
           <Reveal className="biz-editorial__copy" delay={80}>
             <span className="eyebrow">Para o seu negócio</span>
             <h2 className="biz-editorial__title" id="business-editorial-title">
-              Conectividade preparada para o ritmo da sua empresa
+              Desempenho à altura das demandas da sua empresa
             </h2>
             <p className="biz-editorial__desc">
-              Soluções de internet para apoiar a rotina de diferentes tipos de
-              negócio com velocidade, estabilidade e suporte.
+              Soluções de internet empresarial para apoiar atividades essenciais
+              do negócio, com estabilidade, velocidade e suporte especializado.
             </p>
             <ul className="biz-editorial__list">
               {POINTS.map((item) => (

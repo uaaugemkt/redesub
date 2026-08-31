@@ -18,35 +18,35 @@ const SEGMENTS: ReadonlyArray<{
   {
     id: "pequenas",
     title: "Pequenas empresas",
-    text: "Conectividade para operações enxutas e rotina digital no dia a dia.",
+    text: "Internet estável para atividades comerciais, sistemas e rotina administrativa.",
     icon: <RouterIcon />,
     size: "sm",
   },
   {
     id: "grandes",
     title: "Grandes empresas",
-    text: "Performance e estabilidade para equipes e processos com maior demanda.",
+    text: "Desempenho e estabilidade para operações com maior demanda.",
     icon: <GaugeIcon />,
     size: "sm",
   },
   {
     id: "comercios",
     title: "Comércios",
-    text: "Internet para atendimento, sistemas e operação comercial contínua.",
+    text: "Internet para atendimento, sistemas, vendas e operação do estabelecimento.",
     icon: <ShoppingCartIcon />,
     size: "sm",
   },
   {
     id: "restaurantes",
     title: "Restaurantes",
-    text: "Conexão para pedidos, pagamentos e o ritmo do salão.",
+    text: "Conexão para sistemas, pagamentos, atendimento e rotina do negócio.",
     icon: <MapPinIcon />,
     size: "lg",
   },
   {
     id: "escritorios",
     title: "Escritórios e serviços",
-    text: "Estabilidade para videoconferências, arquivos e sistemas de trabalho.",
+    text: "Internet confiável para equipes, sistemas, arquivos e comunicação.",
     icon: <VideoIcon />,
     size: "lg",
   },
@@ -66,10 +66,10 @@ export default function BusinessUseCasesSection() {
           <header className="biz-segments__header">
             <span className="eyebrow">Segmentos</span>
             <h2 className="biz-segments__title" id="business-usecases-title">
-              Conectividade para diferentes negócios
+              Soluções para diferentes perfis de negócio
             </h2>
             <p className="biz-segments__desc">
-              Soluções para operações de diferentes portes e segmentos.
+              Internet empresarial adequada às necessidades de cada operação.
             </p>
           </header>
         </Reveal>
