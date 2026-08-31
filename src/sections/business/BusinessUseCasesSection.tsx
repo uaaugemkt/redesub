@@ -13,6 +13,8 @@ const SEGMENTS: ReadonlyArray<{
   title: string;
   text: string;
   icon: ReactNode;
+  image: string;
+  imageAlt: string;
   size: "sm" | "lg";
 }> = [
   {
@@ -20,6 +22,8 @@ const SEGMENTS: ReadonlyArray<{
     title: "Pequenas empresas",
     text: "Internet estável para atividades comerciais, sistemas e rotina administrativa.",
     icon: <RouterIcon />,
+    image: "/media/empresa/segmentos/pequenas-empresas.webp",
+    imageAlt: "Pequena empresa com equipe trabalhando",
     size: "sm",
   },
   {
@@ -27,6 +31,8 @@ const SEGMENTS: ReadonlyArray<{
     title: "Grandes empresas",
     text: "Desempenho e estabilidade para operações com maior demanda.",
     icon: <GaugeIcon />,
+    image: "/media/empresa/segmentos/grandes-empresas.webp",
+    imageAlt: "Equipe em ambiente corporativo",
     size: "sm",
   },
   {
@@ -34,6 +40,8 @@ const SEGMENTS: ReadonlyArray<{
     title: "Comércios",
     text: "Internet para atendimento, sistemas, vendas e operação do estabelecimento.",
     icon: <ShoppingCartIcon />,
+    image: "/media/empresa/segmentos/comercios.webp",
+    imageAlt: "Operação de comércio e atendimento",
     size: "sm",
   },
   {
@@ -41,6 +49,8 @@ const SEGMENTS: ReadonlyArray<{
     title: "Restaurantes",
     text: "Conexão para sistemas, pagamentos, atendimento e rotina do negócio.",
     icon: <MapPinIcon />,
+    image: "/media/empresa/segmentos/restaurantes.webp",
+    imageAlt: "Restaurante em operação",
     size: "lg",
   },
   {
@@ -48,6 +58,8 @@ const SEGMENTS: ReadonlyArray<{
     title: "Escritórios e serviços",
     text: "Internet confiável para equipes, sistemas, arquivos e comunicação.",
     icon: <VideoIcon />,
+    image: "/media/empresa/segmentos/escritorios-e-servicos.webp",
+    imageAlt: "Profissionais trabalhando em escritório",
     size: "lg",
   },
 ];
@@ -78,10 +90,19 @@ export default function BusinessUseCasesSection() {
           {top.map((item, index) => (
             <Reveal key={item.id} delay={index * 55}>
               <article className={`biz-seg biz-seg--${item.id}`}>
-                <div className="biz-seg__art" aria-hidden="true">
-                  <span className="biz-seg__icon">{item.icon}</span>
-                  <span className="biz-seg__shape biz-seg__shape--a" />
-                  <span className="biz-seg__shape biz-seg__shape--b" />
+                <div className="biz-seg__art">
+                  <img
+                    src={item.image}
+                    alt={item.imageAlt}
+                    className="biz-seg__image"
+                    width={640}
+                    height={360}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="biz-seg__icon" aria-hidden="true">
+                    {item.icon}
+                  </span>
                 </div>
                 <div className="biz-seg__body">
                   <h3>{item.title}</h3>
@@ -96,11 +117,19 @@ export default function BusinessUseCasesSection() {
           {bottom.map((item, index) => (
             <Reveal key={item.id} delay={index * 70}>
               <article className={`biz-seg biz-seg--lg biz-seg--${item.id}`}>
-                <div className="biz-seg__art" aria-hidden="true">
-                  <span className="biz-seg__icon">{item.icon}</span>
-                  <span className="biz-seg__shape biz-seg__shape--a" />
-                  <span className="biz-seg__shape biz-seg__shape--b" />
-                  <span className="biz-seg__shape biz-seg__shape--c" />
+                <div className="biz-seg__art">
+                  <img
+                    src={item.image}
+                    alt={item.imageAlt}
+                    className="biz-seg__image"
+                    width={960}
+                    height={432}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="biz-seg__icon" aria-hidden="true">
+                    {item.icon}
+                  </span>
                 </div>
                 <div className="biz-seg__body">
                   <h3>{item.title}</h3>

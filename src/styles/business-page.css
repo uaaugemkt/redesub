@@ -291,39 +291,15 @@
 .biz-seg__art {
   position: relative;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 78% 20%, rgba(255, 122, 0, 0.28), transparent 45%),
-    linear-gradient(145deg, #06284a 0%, #0a3d6f 55%, #123f68 100%);
+  background: #e8eef5;
 }
 
-.biz-seg--pequenas .biz-seg__art {
-  background:
-    radial-gradient(circle at 20% 80%, rgba(3, 161, 253, 0.28), transparent 50%),
-    linear-gradient(145deg, #04162f 0%, #0a3d6f 100%);
-}
-
-.biz-seg--grandes .biz-seg__art {
-  background:
-    radial-gradient(circle at 85% 70%, rgba(255, 122, 0, 0.35), transparent 48%),
-    linear-gradient(160deg, #04162f 0%, #07284d 100%);
-}
-
-.biz-seg--comercios .biz-seg__art {
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.16), transparent 45%),
-    linear-gradient(135deg, #0a3d6f 0%, #dc4300 140%);
-}
-
-.biz-seg--restaurantes .biz-seg__art {
-  background:
-    radial-gradient(circle at 70% 30%, rgba(255, 180, 80, 0.3), transparent 45%),
-    linear-gradient(150deg, #04162f 0%, #123f68 50%, #ff6a00 160%);
-}
-
-.biz-seg--escritorios .biz-seg__art {
-  background:
-    radial-gradient(circle at 25% 25%, rgba(3, 161, 253, 0.25), transparent 50%),
-    linear-gradient(145deg, #04162f 0%, #07284d 60%, #0a4a7a 100%);
+.biz-seg__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .biz-seg__icon {
@@ -338,39 +314,9 @@
   height: 44px;
   border-radius: 14px;
   color: var(--brand-white);
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(5, 30, 55, 0.68);
   border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.biz-seg__shape {
-  position: absolute;
-  border: 1.5px solid rgba(255, 255, 255, 0.22);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.biz-seg__shape--a {
-  width: 120px;
-  height: 120px;
-  right: -24px;
-  bottom: -36px;
-}
-
-.biz-seg__shape--b {
-  width: 64px;
-  height: 64px;
-  right: 46px;
-  top: 28px;
-  opacity: 0.7;
-}
-
-.biz-seg__shape--c {
-  width: 28px;
-  height: 28px;
-  left: 58%;
-  bottom: 24px;
-  background: rgba(255, 122, 0, 0.35);
-  border: none;
+  backdrop-filter: blur(6px);
 }
 
 .biz-seg__body {
