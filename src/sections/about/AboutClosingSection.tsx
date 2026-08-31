@@ -9,12 +9,12 @@ export default function AboutClosingSection() {
         <Reveal>
           <div className="about-closing__panel">
             <div className="about-closing__decor" aria-hidden="true">
-              <span className="about-closing__glow about-closing__glow--blue" />
-              <span className="about-closing__glow about-closing__glow--orange" />
+              <span className="about-closing__glow about-closing__glow--warm" />
+              <span className="about-closing__glow about-closing__glow--light" />
               <svg className="about-closing__lines" viewBox="0 0 800 200" preserveAspectRatio="none">
                 <path
                   d="M0 120 C180 80, 320 160, 520 110 S720 90, 800 130"
-                  stroke="rgba(3,161,253,0.18)"
+                  stroke="rgba(255, 255, 255, 0.14)"
                   strokeWidth="1.5"
                   fill="none"
                 />

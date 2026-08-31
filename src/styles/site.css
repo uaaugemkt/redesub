@@ -2761,6 +2761,80 @@
   color: var(--text-secondary);
 }
 
+/* Quem somos — mesma superfície laranja da Vida Conectada (Home) */
+.about-who.about-who--connected > .container {
+  position: relative;
+  z-index: 3;
+}
+
+.about-who.about-who--connected .eyebrow {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.about-who.about-who--connected .section__title {
+  color: var(--brand-white);
+}
+
+.about-who.about-who--connected .section__desc {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.about-who.about-who--connected .about-who__aside {
+  border-left-color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.about-who.about-who--connected .about-who__aside-icon {
+  color: var(--brand-white);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.about-who.about-who--connected .about-who__aside h3 {
+  color: var(--brand-white);
+}
+
+.about-who.about-who--connected .about-who__aside p {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.about-process.about-process--connected > .container {
+  position: relative;
+  z-index: 3;
+}
+
+.about-process.about-process--connected .eyebrow {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.about-process.about-process--connected .section__title {
+  color: var(--brand-white);
+}
+
+.about-process.about-process--connected .about-process__steps::before {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
+}
+
+.about-process.about-process--connected .about-process__number {
+  color: var(--brand-orange);
+  background: var(--brand-white);
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+.about-process.about-process--connected .about-process__step h3 {
+  color: var(--brand-white);
+}
+
+.about-process.about-process--connected .about-process__step p {
+  color: rgba(255, 255, 255, 0.84);
+}
+
 .about-essence {
   background: rgba(var(--brand-blue-rgb), 0.04);
 }
@@ -3031,14 +3105,20 @@
   overflow: hidden;
   border-radius: var(--radius-xl);
   padding: clamp(32px, 4.5vw, 48px) clamp(24px, 4vw, 48px);
-  background: linear-gradient(
-    145deg,
-    var(--brand-navy-deep) 0%,
-    #4a2a12 42%,
-    var(--brand-orange) 100%
-  );
-  border: 1px solid rgba(var(--brand-orange-rgb), 0.28);
-  box-shadow: 0 24px 64px rgba(var(--blue-dark-rgb), 0.28);
+  background:
+    radial-gradient(
+      circle at 20% 25%,
+      rgba(255, 255, 255, 0.08),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(120, 35, 0, 0.14),
+      transparent 35%
+    ),
+    linear-gradient(135deg, #b63d08 0%, #d94d00 48%, #ff6500 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 24px 64px rgba(100, 30, 0, 0.24);
   color: var(--white);
 }
 
@@ -3052,23 +3132,25 @@
   position: absolute;
   border-radius: 50%;
   filter: blur(60px);
-  opacity: 0.45;
+  pointer-events: none;
 }
 
-.about-closing__glow--blue {
-  width: 260px;
-  height: 260px;
-  top: -70px;
-  right: -30px;
-  background: rgba(3, 161, 253, 0.35);
+.about-closing__glow--warm {
+  width: min(42vw, 280px);
+  height: min(42vw, 280px);
+  top: -18%;
+  right: -6%;
+  background: rgba(255, 200, 120, 0.32);
+  opacity: 0.55;
 }
 
-.about-closing__glow--orange {
-  width: 180px;
-  height: 180px;
-  bottom: -50px;
-  left: 10%;
-  background: rgba(255, 133, 5, 0.22);
+.about-closing__glow--light {
+  width: min(36vw, 220px);
+  height: min(36vw, 220px);
+  bottom: -16%;
+  left: 8%;
+  background: rgba(255, 240, 210, 0.22);
+  opacity: 0.7;
 }
 
 .about-closing__lines {
@@ -3076,7 +3158,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.6;
+  opacity: 0.35;
 }
 
 .about-closing__layout {
@@ -3097,7 +3179,7 @@
 .about-closing__eyebrow {
   display: inline-block;
   margin-bottom: 10px;
-  color: var(--orange);
+  color: rgba(255, 255, 255, 0.92);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -3109,6 +3191,7 @@
   font-weight: 800;
   line-height: 1.15;
   margin-bottom: 14px;
+  color: var(--brand-white);
 }
 
 .about-closing__text {
@@ -3120,16 +3203,26 @@
 .about-closing__text--closing {
   margin-top: 12px;
   font-size: 0.92rem;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.86);
 }
 
 .about-closing__action {
   flex-shrink: 0;
 }
 
-.about-closing__btn {
-  box-shadow: 0 10px 28px rgba(var(--brand-orange-rgb), 0.42);
+.about-closing__btn.btn--primary {
+  background: var(--brand-white);
+  color: var(--brand-navy);
+  border-color: transparent;
+  box-shadow: 0 12px 32px rgba(80, 24, 0, 0.22);
   white-space: nowrap;
+}
+
+.about-closing__btn.btn--primary:hover {
+  background: #fff9f5;
+  color: var(--brand-navy);
+  box-shadow: 0 14px 36px rgba(80, 24, 0, 0.28);
+  transform: translateY(-2px);
 }
 
 .business-cta {
@@ -4670,14 +4763,15 @@
   transform: translateY(-1px);
 }
 
-/* Vida Conectada — bloco laranja premium + fundo vivo */
-.use-cases.use-cases--connected {
+/* Vida Conectada + Quem somos + Nosso jeito de atender — superfície laranja compartilhada */
+.use-cases.use-cases--connected,
+.about-who.about-who--connected,
+.about-process.about-process--connected {
   --mouse-x: 50%;
   --mouse-y: 40%;
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding-block: clamp(72px, 8vw, 104px);
   color: var(--brand-white);
   background: linear-gradient(
     135deg,
@@ -4687,7 +4781,13 @@
   );
 }
 
-.use-cases.use-cases--connected::before {
+.use-cases.use-cases--connected {
+  padding-block: clamp(72px, 8vw, 104px);
+}
+
+.use-cases.use-cases--connected::before,
+.about-who.about-who--connected::before,
+.about-process.about-process--connected::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -5241,6 +5341,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .use-cases.use-cases--connected::before,
+  .about-who.about-who--connected::before,
+  .about-process.about-process--connected::before,
   .use-cases__blob--1,
   .use-cases__blob--2,
   .use-cases__blob--3,

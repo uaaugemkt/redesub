@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+import ConnectedSurfaceFx from "../../components/ui/ConnectedSurfaceFx";
 import Reveal from "../../components/ui/Reveal";
 
 const STEPS = [
@@ -26,9 +28,17 @@ const STEPS = [
 export default function AboutHowWeWorkSection() {
   return (
     <section
-      className="section section--muted about-process"
+      className="section about-process about-process--connected"
       aria-labelledby="about-process-title"
+      style={
+        {
+          "--mouse-x": "50%",
+          "--mouse-y": "40%",
+        } as CSSProperties
+      }
     >
+      <ConnectedSurfaceFx />
+
       <div className="container">
         <Reveal>
           <header className="about-process__header">

@@ -1,8 +1,21 @@
+import type { CSSProperties } from "react";
+import ConnectedSurfaceFx from "../../components/ui/ConnectedSurfaceFx";
 import Reveal from "../../components/ui/Reveal";
 
 export default function AboutWhoWeAreSection() {
   return (
-    <section className="section section--soft about-who" aria-labelledby="about-who-title">
+    <section
+      className="section about-who about-who--connected"
+      aria-labelledby="about-who-title"
+      style={
+        {
+          "--mouse-x": "50%",
+          "--mouse-y": "40%",
+        } as CSSProperties
+      }
+    >
+      <ConnectedSurfaceFx />
+
       <div className="container about-who__inner">
         <Reveal>
           <span className="eyebrow">Quem somos</span>
