@@ -21,21 +21,21 @@ export interface HeroSlide {
 export const HERO_SLIDES: readonly HeroSlide[] = [
   {
     id: "planos",
-    imageSrc: "/media/banners/banner1.webp",
+    imageSrc: "/media/banners/BANNER-1.webp",
     imageAlt: "Campanha RedeSub — planos de internet de fibra",
     label: "Planos RedeSub",
     link: { type: "internal", to: "/#planos" },
   },
   {
     id: "indique",
-    imageSrc: "/media/banners/banner2.webp",
+    imageSrc: "/media/banners/BANNER-2.webp",
     imageAlt: "Campanha RedeSub — Indique e Ganhe",
     label: "Indique e Ganhe",
     link: { type: "external", href: REFERRAL_URL },
   },
   {
     id: "conteudos",
-    imageSrc: "/media/banners/banner3.webp",
+    imageSrc: "/media/banners/BANNER-3.webp",
     imageAlt: "Campanha RedeSub — pacotes de conteúdos",
     label: "Conteúdos RedeSub",
     link: { type: "internal", to: "/#conteudos" },
