@@ -20,7 +20,7 @@ export default function AboutWhoWeAreSection() {
         <Reveal>
           <span className="eyebrow">Quem somos</span>
           <h2 className="section__title" id="about-who-title">
-            Uma provedora regional que escolheu estar perto.
+            O provedor regional que escolheu estar perto
           </h2>
           <p className="section__desc">
             A RedeSub nasceu para atender comunidades que precisam de conexão de
