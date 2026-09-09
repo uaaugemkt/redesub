@@ -40,6 +40,14 @@ export const HERO_SLIDES: readonly HeroSlide[] = [
     label: "Conteúdos RedeSub",
     link: { type: "internal", to: "/#conteudos" },
   },
+  {
+    id: "indicacao",
+    imageSrc: "/media/banners/banner-indicacao.webp",
+    imageAlt:
+      "Campanha RedeSub — indicou, contratou, ganhou: indique seu amigo e ganhe",
+    label: "Indique seu amigo e ganhe",
+    link: { type: "external", href: REFERRAL_URL },
+  },
 ] as const;
 
 export const HERO_AUTOPLAY_MS = 6000;
