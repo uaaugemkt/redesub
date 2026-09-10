@@ -99,5 +99,34 @@ export const PAGE_META: Record<string, PageMeta> = {
   },
 };
 
+/**
+ * Imagem padrão de compartilhamento (Open Graph / WhatsApp).
+ * Precisa ser JPEG ou PNG — o WhatsApp não gera preview a partir de WebP —
+ * e ficar abaixo de ~300 KB. Gerada por scripts/generate-og-image.sh.
+ */
+export const OG_IMAGE = {
+  path: "/og-image.jpg",
+  type: "image/jpeg",
+  width: 1200,
+  height: 630,
+  alt: "RedeSub — Internet de Fibra em Outeiro",
+} as const;
+
+export const SITE_LOCALE = "pt_BR";
+
+/**
+ * Páginas indexáveis — fonte única para o prerender e para o sitemap.
+ * Ficam de fora: /contato e /suporte (redirecionam) e /404 (noindex).
+ */
+export const INDEXABLE_PAGES: readonly PageMeta[] = [
+  PAGE_META.home,
+  PAGE_META.planos,
+  PAGE_META.cobertura,
+  PAGE_META.atendimento,
+  PAGE_META.sobre,
+  PAGE_META.empresas,
+  PAGE_META.velocidade,
+];
+
 export const SITE_TAGLINE =
   "Internet de fibra com atendimento local para você assistir, trabalhar e viver conectado.";

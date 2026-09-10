@@ -4,11 +4,31 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+      Bloco de SEO — scripts/prerender.mjs substitui tudo entre os marcadores
+      por rota no build, gerando um HTML estático por página. Os valores abaixo
+      são os da home e servem de fallback no dev server.
+      Robôs de preview (WhatsApp, Facebook) não executam JavaScript: o que
+      estiver aqui é tudo o que eles enxergam.
+    -->
+    <!--seo:start-->
+    <title>RedeSub | Internet de Fibra em Outeiro</title>
     <meta
       name="description"
       content="Internet de fibra em Outeiro com planos para residências e empresas, conexão estável, suporte rápido e serviços RedeSub."
     />
-    <title>RedeSub | Internet de Fibra em Outeiro</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="RedeSub Internet de Fibra" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content="RedeSub | Internet de Fibra em Outeiro" />
+    <meta
+      property="og:description"
+      content="Internet de fibra em Outeiro com planos para residências e empresas, conexão estável, suporte rápido e serviços RedeSub."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!--seo:end-->
+
     <link
       rel="preload"
       as="image"
