@@ -5,6 +5,8 @@
  * ═══════════════════════════════════════════════════════════════
  */
 
+import { formatPhoneBR } from "./phone";
+
 /** Caminho do logotipo em /public */
 export const LOGO_SRC = "/logo-redesub.webp";
 
@@ -14,9 +16,9 @@ export const LOGO_SRC = "/logo-redesub.webp";
  */
 export const WHATSAPP_NUMBER = "5591993100223";
 
-/** Telefone/WhatsApp exibido na página */
-export const PHONE_DISPLAY = "91 99310-0223";
-export const WHATSAPP_DISPLAY = "91 99310-0223";
+/** Telefone/WhatsApp exibido na página, mascarado a partir de WHATSAPP_NUMBER: (XX) XXXXX-XXXX */
+export const PHONE_DISPLAY = formatPhoneBR(WHATSAPP_NUMBER.replace(/^55/, ""));
+export const WHATSAPP_DISPLAY = PHONE_DISPLAY;
 
 /**
  * URLs externas oficiais — fonte única para links comerciais e de assinante.

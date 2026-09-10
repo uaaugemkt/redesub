@@ -376,6 +376,39 @@
   margin-bottom: 6px;
 }
 
+.site-footer-full__whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.site-footer-full__whatsapp svg {
+  flex-shrink: 0;
+}
+
+.site-footer-full__address {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.site-footer-full__pin {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.site-footer-full__whatsapp:hover,
+.site-footer-full__whatsapp:focus-visible {
+  color: var(--brand-white);
+  text-decoration: underline;
+}
+
 .site-footer-full__title {
   font-size: 0.85rem;
   font-weight: 800;
@@ -420,6 +453,12 @@
   font-size: 0.85rem;
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.86);
+}
+
+.site-footer-full__cnpj {
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 0.01em;
 }
 
 .site-footer-full__note {

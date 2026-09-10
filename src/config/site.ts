@@ -11,6 +11,8 @@ export interface PageMeta {
 
 export const SITE_NAME = "RedeSub Internet de Fibra";
 
+export const SITE_CNPJ = "36.173.906/0001-55";
+
 export const MAIN_NAV = [
   { label: "Início", path: "/" },
   { label: "Planos", path: "/planos" },
