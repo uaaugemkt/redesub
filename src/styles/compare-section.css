@@ -159,17 +159,6 @@
   pointer-events: none;
 }
 
-.compare__problem-topline {
-  position: absolute;
-  top: 0;
-  left: 18px;
-  right: 42%;
-  height: 3px;
-  border-radius: 0 0 4px 4px;
-  background: linear-gradient(90deg, #fca5a5 0%, #fca5a5 55%, transparent 55%, transparent 68%, #fecaca 68%, #fecaca 78%, transparent 78%);
-  opacity: 0.75;
-}
-
 .compare__problem-head {
   position: relative;
   z-index: 1;
@@ -402,17 +391,6 @@
     linear-gradient(#fff 0 0);
   mask-composite: exclude;
   pointer-events: none;
-}
-
-.compare__solution-accent {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  border-radius: calc(var(--radius-xl) + 4px) calc(var(--radius-xl) + 4px) 0 0;
-  background: linear-gradient(90deg, var(--brand-orange) 0%, #ffa033 38%, var(--brand-blue) 100%);
-  opacity: 0.95;
 }
 
 .compare__solution-glow {

@@ -86,7 +86,6 @@ export default function CompareSection({
             aria-label={`Antes: ${COMPARE.bad.title}`}
           >
             <div className="compare__problem-noise" aria-hidden="true" />
-            <div className="compare__problem-topline" aria-hidden="true" />
 
             <div className="compare__problem-head">
               <div className="compare__side-tags">
@@ -140,7 +139,6 @@ export default function CompareSection({
             className="compare__solution"
             aria-label={`Com a RedeSub: ${COMPARE.good.title}`}
           >
-            <div className="compare__solution-accent" aria-hidden="true" />
             <div className="compare__solution-glow" aria-hidden="true" />
             <FiberPattern />
 
