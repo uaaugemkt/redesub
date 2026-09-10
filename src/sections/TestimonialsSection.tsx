@@ -33,7 +33,7 @@ function StarRating({
   const clamped = Math.max(0, Math.min(5, Math.round(rating)));
 
   return (
-    <div className="testimonials__stars" aria-label={label}>
+    <span className="testimonials__stars" role="img" aria-label={label}>
       {Array.from({ length: 5 }, (_, i) => (
         <svg
           key={i}
@@ -50,7 +50,7 @@ function StarRating({
           <path d="M10 1l2.39 4.84L18 6.68l-4 3.9.94 5.5L10 13.77l-4.94 2.6.94-5.5-4-3.9 5.61-.84z" />
         </svg>
       ))}
-    </div>
+    </span>
   );
 }
 
