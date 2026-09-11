@@ -225,11 +225,11 @@ export default function AttendancePage() {
         <div className="container container--narrow">
           <Reveal>
             <div className="attendance__portal">
-              <span className="eyebrow">Área do assinante</span>
-              <h2 className="section__title">Já é cliente RedeSub?</h2>
+              <span className="eyebrow">Financeiro ou segunda via</span>
+              <h2 className="section__title">Segunda via, financeiro e serviços da sua conta</h2>
               <p className="section__desc">
-                Acesse os serviços disponíveis para assinantes ou fale direto
-                com o atendimento.
+                Acesse a Central do Assinante para boletos e dados da conta,
+                ou fale direto com o atendimento pelo canal adequado.
               </p>
             </div>
           </Reveal>
