@@ -53,7 +53,6 @@ const RESIDENTIAL_PLANS: readonly Plan[] = [
       "Suporte rápido",
     ],
     badge: "Sem fidelidade",
-    featured: true,
     whatsappMessage:
       "Olá! Tenho interesse no plano Liberdade 400 Mega da RedeSub.",
   },
@@ -86,6 +85,7 @@ const RESIDENTIAL_PLANS: readonly Plan[] = [
       "Suporte rápido",
     ],
     badge: null,
+    featured: true,
     whatsappMessage:
       "Olá! Tenho interesse no plano New Evolução Turbo 800 Mega da RedeSub.",
   },

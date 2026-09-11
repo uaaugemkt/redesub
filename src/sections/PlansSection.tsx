@@ -92,8 +92,8 @@ export default function PlansSection({
 
             {isPreview && (
               <div className="plans__more">
-                <Link to="/planos" className="btn btn--outline btn--md plans__more-link">
-                  Ver todos os planos
+                <Link to="/para-empresas" className="btn btn--outline btn--md plans__more-link">
+                  Ver planos empresariais
                 </Link>
               </div>
             )}
