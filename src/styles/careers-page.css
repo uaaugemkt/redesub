@@ -1,19 +1,5 @@
 /* Trabalhe conosco — hero + apoio + formulário de candidatura */
 
-.careers-intro {
-  padding-top: clamp(28px, 4vw, 40px);
-  padding-bottom: clamp(28px, 4vw, 40px);
-  text-align: center;
-}
-
-.careers-intro__text {
-  max-width: 640px;
-  margin: 0 auto 20px;
-  font-size: 1.02rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
-}
-
 .careers-support {
   text-align: center;
 }
@@ -318,8 +304,4 @@
     text-align: left;
   }
 
-  .careers-intro .btn {
-    width: 100%;
-    justify-content: center;
-  }
 }

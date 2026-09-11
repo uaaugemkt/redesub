@@ -23,21 +23,6 @@ export default function CareersPage() {
         breadcrumbs={[{ label: "Início", path: "/" }, { label: "Trabalhe conosco" }]}
       />
 
-      <section className="section careers-intro">
-        <div className="container container--narrow">
-          <Reveal>
-            <p className="careers-intro__text">
-              Estamos sempre em busca de pessoas comprometidas, que gostam de
-              aprender e querem crescer junto com a gente. Envie seu currículo
-              e faça parte do nosso banco de talentos.
-            </p>
-            <a href="#enviar-curriculo" className="btn btn--primary btn--lg">
-              Enviar meu currículo
-            </a>
-          </Reveal>
-        </div>
-      </section>
-
       <section className="section section--muted careers-support">
         <div className="container container--narrow">
           <Reveal>
