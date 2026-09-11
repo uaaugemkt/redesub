@@ -257,12 +257,17 @@ Endereço/Bairro: ${data.address}`;
  * SpeedTestModal (mesmo modal do rodapé) em vez de sair para o WhatsApp.
  */
 export const SUPPORT_QUICK_ISSUES = [
-  { id: "sem-internet", label: "Estou sem internet" },
-  { id: "internet-lenta", label: "Internet lenta" },
-  { id: "teste-velocidade", label: "Teste de velocidade", action: "speed-test" },
+  { id: "sem-internet", label: "Estou sem internet", priority: true },
+  { id: "internet-lenta", label: "Internet lenta", priority: true },
   { id: "internet-instavel", label: "Internet instável" },
   { id: "wifi-nao-conecta", label: "Wi-Fi não conecta" },
   { id: "roteador", label: "Problema com roteador" },
+  {
+    id: "teste-velocidade",
+    label: "Teste de velocidade",
+    action: "speed-test",
+    priority: true,
+  },
   { id: "segunda-via", label: "Segunda via ou financeiro" },
   { id: "falar-suporte", label: "Falar com o suporte" },
 ] as const;

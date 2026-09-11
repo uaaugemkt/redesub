@@ -72,6 +72,7 @@ export default function SpeedTestModal({ open, onClose }: SpeedTestModalProps) {
             title="Teste de velocidade RedeSub"
             className="speed-test-modal__iframe"
             frameBorder="0"
+            scrolling="no"
           />
         </div>
       </div>

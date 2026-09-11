@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import ContactForm from "../components/ContactForm";
 import InternalPageHero from "../components/layout/InternalPageHero";
@@ -102,43 +103,63 @@ export default function AttendancePage() {
           <Reveal>
             <h2 className="section__title">Suporte rápido</h2>
             <p className="section__desc">
-              Cliente RedeSub? Toque no motivo do contato para abrir o WhatsApp com
-              a mensagem pronta.
+              Toque em uma opção para abrir o atendimento correspondente.
             </p>
           </Reveal>
 
           <ul className="attendance__issues">
-            {SUPPORT_QUICK_ISSUES.map((issue, index) => (
-              <Reveal key={issue.id} delay={index * 40}>
-                <li>
-                  {"action" in issue && issue.action === "speed-test" ? (
-                    <button
-                      type="button"
-                      className="attendance__issue-btn"
-                      onClick={openSpeedTestModal}
-                    >
-                      <IssueIcon id={issue.id} />
-                      <span>{issue.label}</span>
-                    </button>
-                  ) : (
-                    <a
-                      href={buildWhatsAppLink(
-                        WHATSAPP_MESSAGES.supportIssue({
-                          reason: issue.label,
-                          region: regionName,
-                        })
-                      )}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="attendance__issue-btn"
-                    >
-                      <IssueIcon id={issue.id} />
-                      <span>{issue.label}</span>
-                    </a>
-                  )}
-                </li>
-              </Reveal>
-            ))}
+            {SUPPORT_QUICK_ISSUES.map((issue, index) => {
+              const isSpeedTest = "action" in issue && issue.action === "speed-test";
+              const isPriority = "priority" in issue && issue.priority;
+              const className = `attendance__issue-btn ${isPriority ? "attendance__issue-btn--priority" : ""}`;
+              const hint = isSpeedTest ? "Ver o velocímetro" : "Abrir no WhatsApp";
+
+              const content = (
+                <>
+                  <span className="attendance__issue-icon" aria-hidden="true">
+                    <IssueIcon id={issue.id} />
+                  </span>
+                  <span className="attendance__issue-body">
+                    <span className="attendance__issue-title">{issue.label}</span>
+                    <span className="attendance__issue-hint">{hint}</span>
+                  </span>
+                  <span className="attendance__issue-chevron" aria-hidden="true">
+                    <ChevronIcon />
+                  </span>
+                </>
+              );
+
+              return (
+                <Reveal key={issue.id} delay={index * 40}>
+                  <li>
+                    {isSpeedTest ? (
+                      <button
+                        type="button"
+                        className={className}
+                        onClick={openSpeedTestModal}
+                      >
+                        {content}
+                      </button>
+                    ) : (
+                      <a
+                        href={buildWhatsAppLink(
+                          WHATSAPP_MESSAGES.supportIssue({
+                            reason: issue.label,
+                            region: regionName,
+                          })
+                        )}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={className}
+                        aria-label={`${issue.label} — abrir no WhatsApp`}
+                      >
+                        {content}
+                      </a>
+                    )}
+                  </li>
+                </Reveal>
+              );
+            })}
           </ul>
         </div>
       </section>
@@ -263,26 +284,90 @@ function PathIcon({ type }: { type: "contract" | "support" | "billing" }) {
   );
 }
 
-function IssueIcon({ id }: { id: string }) {
-  if (id === "teste-velocidade") {
-    return (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M4 16a8 8 0 1 1 16 0" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
-        <path d="M12 16l4-5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
-        <circle cx="12" cy="16" r="1.25" fill="currentColor" />
-      </svg>
-    );
-  }
-
+function ChevronIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      {id === "wifi-nao-conecta" ? (
-        <path d="M2 8.5 12 18l10-9.5M5 12l7 6.5L19 12" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-      ) : (
-        <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.75" />
-      )}
-      <path d="M12 9v4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
-      <circle cx="12" cy="16.5" r="0.75" fill="currentColor" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="m9 6 6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
+}
+
+function IssueIcon({ id }: { id: string }) {
+  const shell = (children: ReactNode) => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      {children}
+    </svg>
+  );
+
+  switch (id) {
+    case "sem-internet":
+      // Globo + traço — sem conexão nenhuma.
+      return shell(
+        <>
+          <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.75" />
+          <path d="M4 12h16M12 4c2.2 2.2 3.3 5 3.3 8s-1.1 5.8-3.3 8c-2.2-2.2-3.3-5-3.3-8s1.1-5.8 3.3-8Z" stroke="currentColor" strokeWidth="1.75" />
+          <path d="M3.5 3.5l17 17" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+        </>
+      );
+    case "internet-lenta":
+      // Timer — conexão lenta.
+      return shell(
+        <>
+          <circle cx="12" cy="13" r="8" stroke="currentColor" strokeWidth="1.75" />
+          <path d="M12 9v4l3 2" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M9.5 2h5M12 2v2.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+        </>
+      );
+    case "internet-instavel":
+      // Pulso/atividade — sinal oscilando.
+      return shell(
+        <path d="M3 12h4l2-7 4 14 2-7h6" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+      );
+    case "wifi-nao-conecta":
+      // Wi-Fi com traço — não conecta.
+      return shell(
+        <>
+          <path d="M5 8.5a11 11 0 0 1 14 0M7.8 11.7a7 7 0 0 1 8.4 0M10.6 15a3 3 0 0 1 2.8 0" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+          <circle cx="12" cy="18" r="1" fill="currentColor" />
+          <path d="M3.5 3.5l17 17" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+        </>
+      );
+    case "roteador":
+      // Roteador — caixa com antenas.
+      return shell(
+        <>
+          <rect x="3.5" y="13" width="17" height="7" rx="1.75" stroke="currentColor" strokeWidth="1.75" />
+          <path d="M8 13V9a4 4 0 0 1 8 0v4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+          <circle cx="8" cy="16.5" r="1" fill="currentColor" />
+          <path d="M12 16.5h5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+        </>
+      );
+    case "teste-velocidade":
+      // Velocímetro — mesmo símbolo do modal de teste de velocidade.
+      return shell(
+        <>
+          <path d="M4 16a8 8 0 1 1 16 0" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+          <path d="M12 16l4-5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+          <circle cx="12" cy="16" r="1.25" fill="currentColor" />
+        </>
+      );
+    case "segunda-via":
+      // Recibo/documento — financeiro.
+      return shell(
+        <>
+          <path d="M6 3h12v18l-2.5-1.5L13 21l-2.5-1.5L8 21l-2-1.5V3Z" stroke="currentColor" strokeWidth="1.75" strokeLinejoin="round" />
+          <path d="M9 8h6M9 12h6" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+        </>
+      );
+    default:
+      // "falar-suporte" e fallback — balão de conversa.
+      return shell(
+        <path
+          d="M4 12a8 8 0 1 1 3.2 6.4L4 20l1.4-3.6A7.96 7.96 0 0 1 4 12Z"
+          stroke="currentColor"
+          strokeWidth="1.75"
+          strokeLinejoin="round"
+        />
+      );
+  }
 }
