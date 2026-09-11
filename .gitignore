@@ -37,6 +37,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# wrangler (Cloudflare Pages Functions local dev state — currículos de teste, etc.)
+.wrangler
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

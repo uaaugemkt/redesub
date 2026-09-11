@@ -1,0 +1,325 @@
+/* Trabalhe conosco — hero + apoio + formulário de candidatura */
+
+.careers-intro {
+  padding-top: clamp(28px, 4vw, 40px);
+  padding-bottom: clamp(28px, 4vw, 40px);
+  text-align: center;
+}
+
+.careers-intro__text {
+  max-width: 640px;
+  margin: 0 auto 20px;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.careers-support {
+  text-align: center;
+}
+
+.careers-differentials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 28px;
+  list-style: none;
+  margin: clamp(24px, 3vw, 32px) 0 0;
+  padding: 0;
+}
+
+.careers-differentials__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--brand-navy);
+}
+
+.careers-differentials__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: var(--brand-blue);
+  background: var(--brand-blue-soft);
+}
+
+.careers-apply {
+  padding-top: clamp(32px, 4vw, 48px);
+  scroll-margin-top: calc(var(--header-h) + 16px);
+}
+
+/* Formulário — estende a família .contact-form__* já usada em ContactForm,
+   mas como cartão opaco de página (não glassmorphism sobre imagem). */
+.careers-form {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 40px);
+  background: var(--brand-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.careers-form__header {
+  margin-bottom: 22px;
+  text-align: center;
+}
+
+.careers-form__title {
+  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+  font-weight: 800;
+  color: var(--brand-navy);
+}
+
+.careers-form__subtitle {
+  margin-top: 6px;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.careers-form__honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.careers-form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 18px;
+}
+
+.careers-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.careers-form__field--wide {
+  grid-column: 1 / -1;
+}
+
+.careers-form__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 22px;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.careers-form__consent input {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--brand-blue);
+}
+
+.careers-form__consent a {
+  color: var(--brand-blue);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.careers-form__submit-error {
+  margin-top: 16px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #dc2626;
+}
+
+.careers-form__submit {
+  width: 100%;
+  margin-top: 22px;
+  justify-content: center;
+}
+
+.careers-form--success {
+  text-align: center;
+  padding: clamp(40px, 6vw, 56px) clamp(24px, 4vw, 40px);
+}
+
+.careers-form__success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  color: var(--brand-blue);
+  background: var(--brand-blue-soft);
+}
+
+.careers-form__success-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--brand-navy);
+  margin-bottom: 10px;
+}
+
+.careers-form__success-text {
+  max-width: 480px;
+  margin: 0 auto 24px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Upload de currículo */
+.resume-upload__zone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 16px;
+  text-align: center;
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-muted);
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.resume-upload__zone--active {
+  border-color: var(--brand-blue);
+  background: var(--brand-blue-soft);
+}
+
+.resume-upload__zone--error {
+  border-color: #ef4444;
+}
+
+.resume-upload__zone--filled {
+  border-style: solid;
+  border-color: rgba(var(--brand-blue-rgb), 0.3);
+  background: var(--brand-white);
+  padding: 14px 16px;
+}
+
+.resume-upload__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 4px;
+  border-radius: 50%;
+  color: var(--brand-blue);
+  background: var(--brand-white);
+}
+
+.resume-upload__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--brand-navy);
+}
+
+.resume-upload__hint {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.resume-upload__button {
+  margin-top: 8px;
+}
+
+.resume-upload__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.resume-upload__zone--filled .resume-upload__input {
+  display: none;
+}
+
+.resume-upload__file {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+}
+
+.resume-upload__file-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: #16a34a;
+}
+
+.resume-upload__file-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.resume-upload__file-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--brand-navy);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resume-upload__file-size {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.resume-upload__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--brand-white);
+  color: var(--text-secondary);
+  cursor: pointer;
+  z-index: 1;
+  position: relative;
+}
+
+.resume-upload__remove:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+@media (max-width: 680px) {
+  .careers-form__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .careers-differentials {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    text-align: left;
+  }
+
+  .careers-intro .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -10,6 +10,8 @@ const AttendancePage = lazy(() => import("./pages/AttendancePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const BusinessPage = lazy(() => import("./pages/BusinessPage"));
 const SpeedTestPage = lazy(() => import("./pages/SpeedTestPage"));
+const CareersPage = lazy(() => import("./pages/CareersPage"));
+const PrivacyPolicyPage = lazy(() => import("./pages/PrivacyPolicyPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 function PageLoader() {
@@ -88,6 +90,22 @@ function AppRoutes() {
           element={
             <SiteLayout>
               <SpeedTestPage />
+            </SiteLayout>
+          }
+        />
+        <Route
+          path="/trabalhe-conosco"
+          element={
+            <SiteLayout>
+              <CareersPage />
+            </SiteLayout>
+          }
+        />
+        <Route
+          path="/politica-de-privacidade"
+          element={
+            <SiteLayout>
+              <PrivacyPolicyPage />
             </SiteLayout>
           }
         />

@@ -42,6 +42,8 @@ export const FOOTER_NAV = {
     { label: "Cobertura", path: COVERAGE_WHATSAPP_HREF },
     { label: "Para empresas", path: "/para-empresas" },
     { label: "Atendimento", path: "/atendimento" },
+    { label: "Trabalhe conosco", path: "/trabalhe-conosco" },
+    { label: "Política de Privacidade", path: "/politica-de-privacidade" },
   ],
   servicos: [
     { label: "Planos", path: PLANS_SECTION_HREF },
@@ -98,6 +100,18 @@ export const PAGE_META: Record<string, PageMeta> = {
       "Acesse o velocímetro da RedeSub e verifique a velocidade da sua conexão com a internet.",
     path: "/teste-de-velocidade",
   },
+  trabalheConosco: {
+    title: "Trabalhe Conosco | RedeSub",
+    description:
+      "Envie seu currículo para a RedeSub e faça parte do nosso banco de talentos. Conheça oportunidades e construa sua carreira com a gente.",
+    path: "/trabalhe-conosco",
+  },
+  privacidade: {
+    title: `Política de Privacidade | ${SITE_NAME}`,
+    description:
+      "Saiba como a RedeSub coleta, usa e protege os dados pessoais de quem utiliza o site, em conformidade com a LGPD.",
+    path: "/politica-de-privacidade",
+  },
   notFound: {
     title: `Página não encontrada | ${SITE_NAME}`,
     description: "A página que você procura não foi encontrada.",
@@ -131,6 +145,8 @@ export const INDEXABLE_PAGES: readonly PageMeta[] = [
   PAGE_META.sobre,
   PAGE_META.empresas,
   PAGE_META.velocidade,
+  PAGE_META.trabalheConosco,
+  PAGE_META.privacidade,
 ];
 
 export const SITE_TAGLINE =
