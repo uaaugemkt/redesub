@@ -272,10 +272,20 @@ export default function AttendancePage() {
                   <IssueIcon id="falar-suporte" />
                 </span>
                 <h3>Falar com o atendimento</h3>
-                <p>
-                  Fale direto com nossa equipe pelo WhatsApp para resolver
-                  rapidamente.
-                </p>
+                <ul className="attendance__portal-card-topics">
+                  <li>
+                    <CircleCheckIcon />
+                    <span>Atendimento humano</span>
+                  </li>
+                  <li>
+                    <CircleCheckIcon />
+                    <span>Resposta rápida</span>
+                  </li>
+                  <li>
+                    <CircleCheckIcon />
+                    <span>Direto pelo WhatsApp</span>
+                  </li>
+                </ul>
                 <WhatsAppButton
                   message={WHATSAPP_MESSAGES.supportIssue({
                     reason: "Falar com o atendimento",

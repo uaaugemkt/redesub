@@ -3975,8 +3975,8 @@
 .attendance__portal-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
   height: 100%;
   padding: 28px 22px;
   border-radius: var(--radius-lg);
