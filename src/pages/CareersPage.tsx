@@ -23,37 +23,35 @@ export default function CareersPage() {
         breadcrumbs={[{ label: "Início", path: "/" }, { label: "Trabalhe conosco" }]}
       />
 
-      <section className="section section--muted careers-support">
-        <div className="container container--narrow">
-          <Reveal>
-            <h2 className="section__title">Seu próximo desafio pode começar aqui</h2>
-            <p className="section__desc">
-              Cadastre seu currículo em nosso banco de talentos. Quando surgir
-              uma oportunidade compatível com o seu perfil, nossa equipe
-              poderá entrar em contato.
-            </p>
-          </Reveal>
+      <section className="section section--muted careers-apply" id="enviar-curriculo">
+        <div className="container">
+          <div className="careers-apply__layout">
+            <Reveal>
+              <div className="careers-apply__lead">
+                <h2 className="section__title">Seu próximo desafio pode começar aqui</h2>
+                <p className="section__desc">
+                  Cadastre seu currículo em nosso banco de talentos. Quando
+                  surgir uma oportunidade compatível com o seu perfil, nossa
+                  equipe poderá entrar em contato.
+                </p>
 
-          <Reveal delay={70}>
-            <ul className="careers-differentials">
-              {DIFFERENTIALS.map((item) => (
-                <li key={item.text} className="careers-differentials__item">
-                  <span className="careers-differentials__icon" aria-hidden="true">
-                    <DifferentialIcon type={item.icon} />
-                  </span>
-                  <span>{item.text}</span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </section>
+                <ul className="careers-differentials">
+                  {DIFFERENTIALS.map((item) => (
+                    <li key={item.text} className="careers-differentials__item">
+                      <span className="careers-differentials__icon" aria-hidden="true">
+                        <DifferentialIcon type={item.icon} />
+                      </span>
+                      <span>{item.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
 
-      <section className="section careers-apply" id="enviar-curriculo">
-        <div className="container container--narrow">
-          <Reveal>
-            <JobApplicationForm />
-          </Reveal>
+            <Reveal delay={90}>
+              <JobApplicationForm />
+            </Reveal>
+          </div>
         </div>
       </section>
     </div>

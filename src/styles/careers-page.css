@@ -1,14 +1,26 @@
 /* Trabalhe conosco — hero + apoio + formulário de candidatura */
 
-.careers-support {
-  text-align: center;
+.careers-apply {
+  scroll-margin-top: calc(var(--header-h) + 16px);
+}
+
+/* Texto à esquerda, formulário à direita — mesmo padrão de duas colunas já
+   usado em /atendimento (.attendance__form-layout), para consistência. */
+.careers-apply__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 480px);
+  gap: 48px;
+  align-items: start;
+}
+
+.careers-apply__lead .section__title {
+  margin-bottom: 12px;
 }
 
 .careers-differentials {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px 28px;
+  flex-direction: column;
+  gap: 16px;
   list-style: none;
   margin: clamp(24px, 3vw, 32px) 0 0;
   padding: 0;
@@ -17,8 +29,8 @@
 .careers-differentials__item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 0.92rem;
+  gap: 12px;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--brand-navy);
 }
@@ -27,24 +39,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
   border-radius: 50%;
   color: var(--brand-blue);
   background: var(--brand-blue-soft);
 }
 
-.careers-apply {
-  padding-top: clamp(32px, 4vw, 48px);
-  scroll-margin-top: calc(var(--header-h) + 16px);
-}
-
 /* Formulário — estende a família .contact-form__* já usada em ContactForm,
    mas como cartão opaco de página (não glassmorphism sobre imagem). */
 .careers-form {
-  max-width: 760px;
-  margin: 0 auto;
   padding: clamp(24px, 4vw, 40px);
   background: var(--brand-white);
   border: 1px solid var(--border);
@@ -292,16 +297,15 @@
   color: #ef4444;
 }
 
+@media (max-width: 1024px) {
+  .careers-apply__layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
 @media (max-width: 680px) {
   .careers-form__grid {
     grid-template-columns: 1fr;
   }
-
-  .careers-differentials {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-    text-align: left;
-  }
-
 }
