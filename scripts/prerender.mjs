@@ -225,6 +225,15 @@ async function main() {
   await mkdir(join(DIST, "404"), { recursive: true });
   await writeFile(join(DIST, "404", "index.html"), notFound, "utf8");
 
+  // Shell do SPA para o fallback do _redirects (`/* /_shell.html 200`), com
+  // nome deliberadamente diferente de "index.html": o validador de
+  // _redirects da Cloudflare Pages tem um falso positivo conhecido que
+  // marca "/* /index.html 200" como loop infinito (ele assume que o alvo
+  // seria normalizado de volta para "/" e reprocessado por "/*"), mesmo
+  // quando isso não acontece de verdade — https://github.com/cloudflare/workers-sdk/issues/11824.
+  // Usar um nome de arquivo diferente evita esse falso positivo.
+  await writeFile(join(DIST, "_shell.html"), notFound, "utf8");
+
   await writeFile(join(DIST, "robots.txt"), buildRobots(siteUrl), "utf8");
 
   if (siteUrl) {

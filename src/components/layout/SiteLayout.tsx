@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import DesktopWhatsAppFab from "../DesktopWhatsAppFab";
 import { SpeedTestModalProvider } from "../../context/SpeedTestModalContext";
 import SiteTopbar from "./SiteTopbar";
@@ -11,6 +11,16 @@ interface SiteLayoutProps {
   showFloatingWhatsApp?: boolean;
 }
 
+/** Enquanto o chunk da página carrega, só o conteúdo pisca — header, topbar e rodapé continuam visíveis. */
+function PageLoader() {
+  return (
+    <div className="page-loader" role="status" aria-live="polite">
+      <span className="page-loader__spinner" aria-hidden="true" />
+      <span>Carregando…</span>
+    </div>
+  );
+}
+
 export default function SiteLayout({
   children,
   showFloatingWhatsApp = true,
@@ -20,7 +30,9 @@ export default function SiteLayout({
       <SkipLink />
       <SiteTopbar />
       <SiteHeader />
-      <main id="conteudo-principal">{children}</main>
+      <main id="conteudo-principal">
+        <Suspense fallback={<PageLoader />}>{children}</Suspense>
+      </main>
       <SiteFooter />
       {showFloatingWhatsApp && <DesktopWhatsAppFab />}
     </SpeedTestModalProvider>

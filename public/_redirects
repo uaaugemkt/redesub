@@ -20,4 +20,9 @@
 
 # Fallback do SPA: qualquer outra URL entrega o shell do React, que renderiza
 # a rota no cliente. 200 (rewrite) e não 30x, para preservar a URL.
-/*  /index.html  200
+#
+# Alvo é /_shell.html (gerado por scripts/prerender.mjs), não /index.html:
+# apontar para "index.html" aqui aciona um falso positivo conhecido do
+# validador da Cloudflare Pages ("Infinite loop detected"), que ignora a
+# regra inteira e quebra o fallback — https://github.com/cloudflare/workers-sdk/issues/11824.
+/*  /_shell.html  200
