@@ -27,13 +27,6 @@ export const HERO_SLIDES: readonly HeroSlide[] = [
     link: { type: "internal", to: "/#planos" },
   },
   {
-    id: "indique",
-    imageSrc: "/media/banners/BANNER-2.webp",
-    imageAlt: "Campanha RedeSub — Indique e Ganhe",
-    label: "Indique e Ganhe",
-    link: { type: "external", href: REFERRAL_URL },
-  },
-  {
     id: "conteudos",
     imageSrc: "/media/banners/BANNER-3.webp",
     imageAlt: "Campanha RedeSub — pacotes de conteúdos",
