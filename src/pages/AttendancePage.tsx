@@ -221,26 +221,51 @@ export default function AttendancePage() {
         </div>
       </section>
 
-      <section className="section section--muted" id="central-assinante">
+      <section className="section section--navy" id="central-assinante">
         <div className="container container--narrow">
           <Reveal>
             <div className="attendance__portal">
+              <span className="eyebrow">Área do assinante</span>
               <h2 className="section__title">Já é cliente RedeSub?</h2>
               <p className="section__desc">
-                Acesse os serviços disponíveis para assinantes ou fale com o
-                atendimento.
+                Acesse os serviços disponíveis para assinantes ou fale direto
+                com o atendimento.
               </p>
+            </div>
+          </Reveal>
 
-              <div className="attendance__portal-actions">
+          <div className="attendance__portal-grid">
+            <Reveal delay={40}>
+              <article className="attendance__portal-card">
+                <span className="attendance__portal-card-icon" aria-hidden="true">
+                  <IssueIcon id="segunda-via" />
+                </span>
+                <h3>Central do Assinante</h3>
+                <p>
+                  Segunda via de boleto, dados cadastrais e histórico da sua
+                  conta.
+                </p>
                 <a
                   href={SUBSCRIBER_PORTAL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn--outline btn--md"
                 >
-                  Central do Assinante
+                  Acessar central
                 </a>
+              </article>
+            </Reveal>
 
+            <Reveal delay={80}>
+              <article className="attendance__portal-card">
+                <span className="attendance__portal-card-icon" aria-hidden="true">
+                  <IssueIcon id="falar-suporte" />
+                </span>
+                <h3>Falar com o atendimento</h3>
+                <p>
+                  Fale direto com nossa equipe pelo WhatsApp para resolver
+                  rapidamente.
+                </p>
                 <WhatsAppButton
                   message={WHATSAPP_MESSAGES.supportIssue({
                     reason: "Falar com o atendimento",
@@ -250,9 +275,9 @@ export default function AttendancePage() {
                   variant="primary"
                   size="md"
                 />
-              </div>
-            </div>
-          </Reveal>
+              </article>
+            </Reveal>
+          </div>
         </div>
       </section>
     </>

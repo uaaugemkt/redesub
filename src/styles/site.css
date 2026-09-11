@@ -3953,12 +3953,79 @@
   text-align: center;
 }
 
-.attendance__portal-actions {
+.attendance__portal .eyebrow {
+  display: block;
+  margin-bottom: 10px;
+}
+
+/*
+ * Destino âncora do card "Financeiro ou segunda via" (topo da página) —
+ * precisa ler como uma seção própria, não como um banner de CTA genérico.
+ * Reaproveita a linguagem visual de .attendance__path-card (ícone + título +
+ * texto + ação) para consistência com o restante da página.
+ */
+.attendance__portal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 640px;
+  margin: 28px auto 0;
+}
+
+.attendance__portal-card {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 28px 22px;
+  border-radius: var(--radius-lg);
+  background: var(--brand-white);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.attendance__portal-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(var(--brand-blue-rgb), 0.2);
+}
+
+.attendance__portal-card-icon {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin-top: 20px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  color: var(--brand-blue);
+  background: var(--brand-blue-soft);
+}
+
+.attendance__portal-card h3 {
+  font-size: 1.05rem;
+  color: var(--brand-navy);
+  margin-bottom: 8px;
+}
+
+.attendance__portal-card p {
+  flex: 1;
+  margin: 0 0 18px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+/* Cards continuam claros mesmo com a seção em fundo navy (.section--navy
+   força texto branco em h2/h3/p do bloco todo — os cards são a exceção). */
+.section--navy .attendance__portal-card h3 {
+  color: var(--brand-navy);
+}
+
+.section--navy .attendance__portal-card p {
+  color: var(--text-secondary);
 }
 
 .attendance__portal-pending {
@@ -3994,7 +4061,11 @@
     gap: 28px;
   }
 
-  .attendance__portal-actions .btn {
+  .attendance__portal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .attendance__portal-card .btn {
     width: 100%;
     justify-content: center;
   }
