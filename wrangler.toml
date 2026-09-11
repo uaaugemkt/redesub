@@ -3,11 +3,21 @@ compatibility_date = "2024-09-01"
 pages_build_output_dir = "dist"
 
 # Currículos da página /trabalhe-conosco (functions/api/job-application.ts).
-# Bucket PRIVADO — sem acesso público, sem Public Development URL habilitada.
-# Criar em: Cloudflare dashboard → R2 → Create bucket → "redesub-job-applications"
-# (ou `npx wrangler r2 bucket create redesub-job-applications`), depois
-# conectar o binding abaixo ao Pages project em Settings → Functions →
-# R2 bucket bindings (o nome do binding precisa ser exatamente RESUMES_BUCKET).
-[[r2_buckets]]
-binding = "RESUMES_BUCKET"
-bucket_name = "redesub-job-applications"
+#
+# DESATIVADO por enquanto — o bucket "redesub-job-applications" ainda não
+# existe na conta Cloudflare, e o deploy falha ("R2 bucket ... not found")
+# se o binding abaixo estiver ativo apontando para um bucket inexistente.
+# A função já trata a ausência do binding sem quebrar o site: o formulário
+# em /trabalhe-conosco continua funcionando normalmente, só o envio do
+# currículo responde com "Não conseguimos enviar seu currículo agora" até
+# isto ser reativado.
+#
+# Para reativar quando o bucket existir:
+# 1. Criar o bucket PRIVADO (sem Public Development URL) em Cloudflare
+#    dashboard → R2 → Create bucket → "redesub-job-applications"
+#    (ou `npx wrangler r2 bucket create redesub-job-applications`);
+# 2. Descomentar as 3 linhas abaixo e fazer novo deploy.
+#
+# [[r2_buckets]]
+# binding = "RESUMES_BUCKET"
+# bucket_name = "redesub-job-applications"
