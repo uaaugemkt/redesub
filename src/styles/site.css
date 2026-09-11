@@ -4018,6 +4018,34 @@
   color: var(--text-secondary);
 }
 
+.attendance__portal-card-topics {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.attendance__portal-card-topics li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+.attendance__portal-card-topics svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--brand-blue);
+}
+
 /* Cards continuam claros mesmo com a seção em fundo navy (.section--navy
    força texto branco em h2/h3/p do bloco todo — os cards são a exceção). */
 .section--navy .attendance__portal-card h3 {

@@ -241,10 +241,20 @@ export default function AttendancePage() {
                   <IssueIcon id="segunda-via" />
                 </span>
                 <h3>Central do Assinante</h3>
-                <p>
-                  Segunda via de boleto, dados cadastrais e histórico da sua
-                  conta.
-                </p>
+                <ul className="attendance__portal-card-topics">
+                  <li>
+                    <CircleCheckIcon />
+                    <span>Segunda via de boleto</span>
+                  </li>
+                  <li>
+                    <CircleCheckIcon />
+                    <span>Dados cadastrais</span>
+                  </li>
+                  <li>
+                    <CircleCheckIcon />
+                    <span>Histórico da conta</span>
+                  </li>
+                </ul>
                 <a
                   href={SUBSCRIBER_PORTAL_URL}
                   target="_blank"
