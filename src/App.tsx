@@ -2,10 +2,10 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./components/layout/ScrollToTop";
 import SiteLayout from "./components/layout/SiteLayout";
+import { PLANS_SECTION_HREF } from "./config/site";
 import { SelectionProvider } from "./context/SelectionContext";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
-const PlansPage = lazy(() => import("./pages/PlansPage"));
 const CoveragePage = lazy(() => import("./pages/CoveragePage"));
 const AttendancePage = lazy(() => import("./pages/AttendancePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
@@ -35,11 +35,7 @@ function AppRoutes() {
         />
         <Route
           path="/planos"
-          element={
-            <SiteLayout>
-              <PlansPage />
-            </SiteLayout>
-          }
+          element={<Navigate to={PLANS_SECTION_HREF} replace />}
         />
         <Route
           path="/cobertura"

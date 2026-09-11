@@ -4,7 +4,7 @@
  * Um SPA entrega um único index.html para todas as rotas. Robôs de preview de
  * link (WhatsApp, Facebook, Telegram) não executam JavaScript, então enxergam
  * sempre o mesmo <head> e nunca o conteúdo real da página. Este script resolve
- * isso escrevendo um HTML estático por rota — dist/planos/index.html etc. —
+ * isso escrevendo um HTML estático por rota — dist/sobre/index.html etc. —
  * com título, descrição, canonical, Open Graph e JSON-LD já embutidos.
  *
  * O <body> continua sendo o shell do SPA: o React assume no cliente

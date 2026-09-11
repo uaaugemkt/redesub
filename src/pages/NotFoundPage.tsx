@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { PAGE_META } from "../config/site";
+import { PAGE_META, PLANS_SECTION_HREF } from "../config/site";
 import { usePageMeta } from "../hooks/usePageMeta";
 
 export default function NotFoundPage() {
@@ -20,7 +20,7 @@ export default function NotFoundPage() {
           <Link to="/" className="btn btn--primary btn--md">
             Ir para o início
           </Link>
-          <Link to="/planos" className="btn btn--outline btn--md">
+          <Link to={PLANS_SECTION_HREF} className="btn btn--outline btn--md">
             Ver planos
           </Link>
           <Link to="/atendimento" className="btn btn--outline btn--md">

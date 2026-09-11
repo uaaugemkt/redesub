@@ -13,9 +13,16 @@ export const SITE_NAME = "RedeSub Internet de Fibra";
 
 export const SITE_CNPJ = "36.173.906/0001-55";
 
+/**
+ * Âncora da seção de planos residenciais na Home — não é mais uma página
+ * própria. Usada pelo item "Planos" do menu e por qualquer link que precise
+ * levar até lá, de qualquer rota (ver SiteHeader e ScrollToTop).
+ */
+export const PLANS_SECTION_HREF = "/#planos";
+
 export const MAIN_NAV = [
   { label: "Início", path: "/" },
-  { label: "Planos", path: "/planos" },
+  { label: "Planos", path: PLANS_SECTION_HREF },
   { label: "Cobertura", path: "/cobertura" },
   { label: "Para empresas", path: "/para-empresas" },
   { label: "Atendimento", path: "/atendimento" },
@@ -30,7 +37,7 @@ export const FOOTER_NAV = {
     { label: "Atendimento", path: "/atendimento" },
   ],
   servicos: [
-    { label: "Planos", path: "/planos" },
+    { label: "Planos", path: PLANS_SECTION_HREF },
     { label: "Suporte técnico", path: "/atendimento#suporte-rapido" },
     { label: "Teste de velocidade", path: SPEED_TEST_URL },
     { label: "Central do Assinante", path: SUBSCRIBER_PORTAL_URL },
@@ -43,12 +50,6 @@ export const PAGE_META: Record<string, PageMeta> = {
     description:
       "Internet de fibra em Outeiro com planos para residências e empresas, conexão estável, suporte rápido e serviços RedeSub.",
     path: "/",
-  },
-  planos: {
-    title: "Planos de Internet Fibra | RedeSub",
-    description:
-      "Conheça os planos de internet de fibra da RedeSub, com opções de 400, 500 e 800 Mega para diferentes necessidades de conexão.",
-    path: "/planos",
   },
   cobertura: {
     title: "Cobertura RedeSub em Outeiro | Internet de Fibra",
@@ -116,11 +117,10 @@ export const SITE_LOCALE = "pt_BR";
 
 /**
  * Páginas indexáveis — fonte única para o prerender e para o sitemap.
- * Ficam de fora: /contato e /suporte (redirecionam) e /404 (noindex).
+ * Ficam de fora: /contato, /suporte e /planos (redirecionam) e /404 (noindex).
  */
 export const INDEXABLE_PAGES: readonly PageMeta[] = [
   PAGE_META.home,
-  PAGE_META.planos,
   PAGE_META.cobertura,
   PAGE_META.atendimento,
   PAGE_META.sobre,

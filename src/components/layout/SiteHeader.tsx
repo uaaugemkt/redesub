@@ -1,8 +1,43 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { MAIN_NAV } from "../../config/site";
+import { MAIN_NAV, PLANS_SECTION_HREF } from "../../config/site";
 import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "../../lib/whatsapp";
 import Logo from "../Logo";
+
+interface NavItemProps {
+  link: (typeof MAIN_NAV)[number];
+  className: string;
+  activeClassName: string;
+  onClick: () => void;
+}
+
+/**
+ * "Planos" não é mais uma rota própria — é uma âncora da Home
+ * (PLANS_SECTION_HREF). Usa <Link> simples em vez de <NavLink> porque o
+ * destino resolve para pathname "/", e marcá-lo como ativo junto de "Início"
+ * seria enganoso. Compartilhado entre o menu desktop e o drawer mobile para
+ * não duplicar essa regra nos dois lugares.
+ */
+function NavItem({ link, className, activeClassName, onClick }: NavItemProps) {
+  if (link.path === PLANS_SECTION_HREF) {
+    return (
+      <Link to={link.path} className={className} onClick={onClick}>
+        {link.label}
+      </Link>
+    );
+  }
+
+  return (
+    <NavLink
+      to={link.path}
+      className={({ isActive }) => `${className} ${isActive ? activeClassName : ""}`}
+      onClick={onClick}
+      end={link.path === "/"}
+    >
+      {link.label}
+    </NavLink>
+  );
+}
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -54,17 +89,13 @@ export default function SiteHeader() {
 
         <nav className="site-header__nav" aria-label="Principal">
           {MAIN_NAV.map((link) => (
-            <NavLink
+            <NavItem
               key={link.path}
-              to={link.path}
-              className={({ isActive }) =>
-                `site-header__link ${isActive ? "site-header__link--active" : ""}`
-              }
+              link={link}
+              className="site-header__link"
+              activeClassName="site-header__link--active"
               onClick={closeMenu}
-              end={link.path === "/"}
-            >
-              {link.label}
-            </NavLink>
+            />
           ))}
         </nav>
 
@@ -101,17 +132,13 @@ export default function SiteHeader() {
       >
         <nav className="site-header__drawer-nav" aria-label="Menu mobile">
           {MAIN_NAV.map((link) => (
-            <NavLink
+            <NavItem
               key={link.path}
-              to={link.path}
-              className={({ isActive }) =>
-                `site-header__drawer-link ${isActive ? "site-header__drawer-link--active" : ""}`
-              }
+              link={link}
+              className="site-header__drawer-link"
+              activeClassName="site-header__drawer-link--active"
               onClick={closeMenu}
-              end={link.path === "/"}
-            >
-              {link.label}
-            </NavLink>
+            />
           ))}
         </nav>
         <div className="site-header__drawer-actions">

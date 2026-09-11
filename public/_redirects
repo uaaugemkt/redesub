@@ -1,13 +1,17 @@
 # Cloudflare Pages — regras de rota.
 #
-# Os arquivos estáticos (inclusive as páginas pré-renderizadas em /planos/,
-# /sobre/ etc.) têm prioridade sobre estas regras: elas só valem quando nenhum
-# arquivo corresponde à URL.
+# Os arquivos estáticos (inclusive as páginas pré-renderizadas em /sobre/,
+# /atendimento/ etc.) têm prioridade sobre estas regras: elas só valem quando
+# nenhum arquivo corresponde à URL.
 
 # Rotas antigas — 301 no edge em vez de redirecionamento por JavaScript, para
 # que o Google consolide o link equity no destino em vez de indexar as duas.
 /contato   /atendimento              301
 /suporte   /atendimento#suporte-rapido  301
+
+# /planos deixou de ser uma página própria — o "Planos" do menu agora é uma
+# seção da Home (#planos). Sem prerender em /planos/, então esta regra vale.
+/planos   /#planos   301
 
 # Fallback do SPA: qualquer outra URL entrega o shell do React, que renderiza
 # a rota no cliente. 200 (rewrite) e não 30x, para preservar a URL.
