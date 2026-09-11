@@ -1,7 +1,5 @@
-import {
-  SPEED_TEST_URL,
-  SUBSCRIBER_PORTAL_URL,
-} from "../lib/constants";
+import { SUBSCRIBER_PORTAL_URL } from "../lib/constants";
+import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "../lib/whatsapp";
 
 export interface PageMeta {
   title: string;
@@ -20,10 +18,19 @@ export const SITE_CNPJ = "36.173.906/0001-55";
  */
 export const PLANS_SECTION_HREF = "/#planos";
 
+/**
+ * "Cobertura" não é mais uma página própria — abre direto o WhatsApp oficial
+ * para o visitante consultar disponibilidade no endereço (ver SiteHeader e
+ * public/_redirects para a URL antiga /cobertura).
+ */
+export const COVERAGE_WHATSAPP_HREF = buildWhatsAppLink(
+  WHATSAPP_MESSAGES.coverageMenu
+);
+
 export const MAIN_NAV = [
   { label: "Início", path: "/" },
   { label: "Planos", path: PLANS_SECTION_HREF },
-  { label: "Cobertura", path: "/cobertura" },
+  { label: "Cobertura", path: COVERAGE_WHATSAPP_HREF },
   { label: "Para empresas", path: "/para-empresas" },
   { label: "Atendimento", path: "/atendimento" },
   { label: "Sobre a RedeSub", path: "/sobre" },
@@ -32,14 +39,18 @@ export const MAIN_NAV = [
 export const FOOTER_NAV = {
   institucional: [
     { label: "Sobre a RedeSub", path: "/sobre" },
-    { label: "Cobertura", path: "/cobertura" },
+    { label: "Cobertura", path: COVERAGE_WHATSAPP_HREF },
     { label: "Para empresas", path: "/para-empresas" },
     { label: "Atendimento", path: "/atendimento" },
   ],
   servicos: [
     { label: "Planos", path: PLANS_SECTION_HREF },
     { label: "Suporte técnico", path: "/atendimento#suporte-rapido" },
-    { label: "Teste de velocidade", path: SPEED_TEST_URL },
+    /**
+     * Sem página/URL própria — abre o SpeedTestModal (ver SiteFooter e
+     * SpeedTestModalContext). "path" fica vazio porque não é navegável.
+     */
+    { label: "Teste de velocidade", path: "", action: "speed-test-modal" },
     { label: "Central do Assinante", path: SUBSCRIBER_PORTAL_URL },
   ],
 } as const;
@@ -50,12 +61,6 @@ export const PAGE_META: Record<string, PageMeta> = {
     description:
       "Internet de fibra em Outeiro com planos para residências e empresas, conexão estável, suporte rápido e serviços RedeSub.",
     path: "/",
-  },
-  cobertura: {
-    title: "Cobertura RedeSub em Outeiro | Internet de Fibra",
-    description:
-      "Consulte a disponibilidade da internet de fibra RedeSub em Outeiro e fale com nossa equipe para verificar atendimento no seu endereço.",
-    path: "/cobertura",
   },
   atendimento: {
     title: `Atendimento e Suporte | ${SITE_NAME}`,
@@ -117,11 +122,11 @@ export const SITE_LOCALE = "pt_BR";
 
 /**
  * Páginas indexáveis — fonte única para o prerender e para o sitemap.
- * Ficam de fora: /contato, /suporte e /planos (redirecionam) e /404 (noindex).
+ * Ficam de fora: /contato, /suporte, /planos e /cobertura (redirecionam) e
+ * /404 (noindex).
  */
 export const INDEXABLE_PAGES: readonly PageMeta[] = [
   PAGE_META.home,
-  PAGE_META.cobertura,
   PAGE_META.atendimento,
   PAGE_META.sobre,
   PAGE_META.empresas,

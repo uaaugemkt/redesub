@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import DesktopWhatsAppFab from "../DesktopWhatsAppFab";
+import { SpeedTestModalProvider } from "../../context/SpeedTestModalContext";
 import SiteTopbar from "./SiteTopbar";
 import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
@@ -15,13 +16,13 @@ export default function SiteLayout({
   showFloatingWhatsApp = true,
 }: SiteLayoutProps) {
   return (
-    <>
+    <SpeedTestModalProvider>
       <SkipLink />
       <SiteTopbar />
       <SiteHeader />
       <main id="conteudo-principal">{children}</main>
       <SiteFooter />
       {showFloatingWhatsApp && <DesktopWhatsAppFab />}
-    </>
+    </SpeedTestModalProvider>
   );
 }

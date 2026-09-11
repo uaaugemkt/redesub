@@ -71,16 +71,9 @@ export const WHATSAPP_MESSAGES = {
     return lines.join("\n");
   },
 
-  coverageConsult: (region?: string | null) => {
-    const lines = [
-      "Olá! Vim pelo site da RedeSub e gostaria de consultar a cobertura no meu endereço.",
-    ];
-    if (region?.trim()) {
-      lines.push("", `Região: ${region.trim()}`);
-    }
-    lines.push("", "Podem verificar a disponibilidade para mim?");
-    return lines.join("\n");
-  },
+  /** Item "Cobertura" do menu — abre o WhatsApp direto, sem página própria. */
+  coverageMenu:
+    "Olá! Gostaria de consultar a cobertura da RedeSub no meu endereço. Pode me ajudar?",
 
   planConfiguration: ({
     region,
@@ -115,9 +108,6 @@ export const WHATSAPP_MESSAGES = {
 
   regionAvailability: (regionName: string) =>
     `Olá! Vim pelo site da RedeSub e gostaria de consultar disponibilidade na região ${regionName}.\n\nPoderiam me informar planos, cobertura e valores?`,
-
-  coverageRegionConsult: (regionName: string) =>
-    `Olá! Gostaria de consultar a disponibilidade da RedeSub em ${regionName}.`,
 
   businessInquiry: ({
     region,
@@ -261,10 +251,15 @@ Endereço/Bairro: ${data.address}`;
   },
 } as const;
 
-/** Motivos rápidos da seção de suporte técnico */
+/**
+ * Motivos rápidos da seção de suporte técnico. A maioria abre o WhatsApp com
+ * o motivo pré-preenchido; "teste-velocidade" é a exceção — abre o
+ * SpeedTestModal (mesmo modal do rodapé) em vez de sair para o WhatsApp.
+ */
 export const SUPPORT_QUICK_ISSUES = [
   { id: "sem-internet", label: "Estou sem internet" },
   { id: "internet-lenta", label: "Internet lenta" },
+  { id: "teste-velocidade", label: "Teste de velocidade", action: "speed-test" },
   { id: "internet-instavel", label: "Internet instável" },
   { id: "wifi-nao-conecta", label: "Wi-Fi não conecta" },
   { id: "roteador", label: "Problema com roteador" },

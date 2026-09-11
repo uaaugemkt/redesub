@@ -12,13 +12,29 @@ interface NavItemProps {
 }
 
 /**
- * "Planos" não é mais uma rota própria — é uma âncora da Home
- * (PLANS_SECTION_HREF). Usa <Link> simples em vez de <NavLink> porque o
- * destino resolve para pathname "/", e marcá-lo como ativo junto de "Início"
- * seria enganoso. Compartilhado entre o menu desktop e o drawer mobile para
- * não duplicar essa regra nos dois lugares.
+ * "Planos" e "Cobertura" não são rotas de página própria:
+ * - Planos é uma âncora da Home (PLANS_SECTION_HREF) — usa <Link> simples em
+ *   vez de <NavLink> porque o destino resolve para pathname "/", e marcá-lo
+ *   como ativo junto de "Início" seria enganoso.
+ * - Cobertura abre o WhatsApp direto em nova aba.
+ * Compartilhado entre o menu desktop e o drawer mobile para não duplicar
+ * essa regra nos dois lugares.
  */
 function NavItem({ link, className, activeClassName, onClick }: NavItemProps) {
+  if (/^https?:\/\//i.test(link.path)) {
+    return (
+      <a
+        href={link.path}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+        onClick={onClick}
+      >
+        {link.label}
+      </a>
+    );
+  }
+
   if (link.path === PLANS_SECTION_HREF) {
     return (
       <Link to={link.path} className={className} onClick={onClick}>

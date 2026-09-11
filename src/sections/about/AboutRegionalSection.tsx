@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
 import { MapPinIcon } from "../../components/icons/BenefitIcons";
 import Reveal from "../../components/ui/Reveal";
 import { REGIONS } from "../../lib/plans";
+import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "../../lib/whatsapp";
 
 export default function AboutRegionalSection() {
   return (
@@ -53,9 +53,14 @@ export default function AboutRegionalSection() {
               ))}
             </ul>
             <div className="about-regional__panel-cta">
-              <Link to="/cobertura" className="btn btn--primary btn--md">
+              <a
+                href={buildWhatsAppLink(WHATSAPP_MESSAGES.coverageMenu)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--primary btn--md"
+              >
                 Consultar cobertura
-              </Link>
+              </a>
             </div>
           </div>
         </Reveal>

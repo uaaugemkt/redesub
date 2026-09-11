@@ -13,6 +13,11 @@
 # seção da Home (#planos). Sem prerender em /planos/, então esta regra vale.
 /planos   /#planos   301
 
+# /cobertura deixou de ser uma página própria — o "Cobertura" do menu agora
+# abre direto o WhatsApp oficial (mesmo número/mensagem do menu, ver
+# src/lib/whatsapp.ts → WHATSAPP_MESSAGES.coverageMenu).
+/cobertura   https://wa.me/5591993100223?text=Ol%C3%A1!%20Gostaria%20de%20consultar%20a%20cobertura%20da%20RedeSub%20no%20meu%20endere%C3%A7o.%20Pode%20me%20ajudar%3F   301
+
 # Fallback do SPA: qualquer outra URL entrega o shell do React, que renderiza
 # a rota no cliente. 200 (rewrite) e não 30x, para preservar a URL.
 /*  /index.html  200

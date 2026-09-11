@@ -1,12 +1,30 @@
 import { Link } from "react-router-dom";
 import { FOOTER_NAV, SITE_CNPJ, SITE_NAME, SITE_TAGLINE } from "../../config/site";
+import { useSpeedTestModal } from "../../context/SpeedTestModalContext";
 import { ADDRESS, PHONE_DISPLAY } from "../../lib/constants";
 import { buildWhatsAppLink, WHATSAPP_MESSAGES } from "../../lib/whatsapp";
 import { MapPinIcon } from "../icons/BenefitIcons";
 import WhatsAppIcon from "../icons/WhatsAppIcon";
 import Logo from "../Logo";
 
-function FooterLink({ path, label }: { path: string; label: string }) {
+interface FooterLinkProps {
+  path: string;
+  label: string;
+  /** "speed-test-modal" abre o SpeedTestModal em vez de navegar. */
+  action?: "speed-test-modal";
+}
+
+function FooterLink({ path, label, action }: FooterLinkProps) {
+  const { openSpeedTestModal } = useSpeedTestModal();
+
+  if (action === "speed-test-modal") {
+    return (
+      <button type="button" onClick={openSpeedTestModal}>
+        {label}
+      </button>
+    );
+  }
+
   if (/^https?:\/\//i.test(path)) {
     return (
       <a href={path} target="_blank" rel="noopener noreferrer">
@@ -68,8 +86,12 @@ export default function SiteFooter() {
           <h2 className="site-footer-full__title">Serviços</h2>
           <ul>
             {FOOTER_NAV.servicos.map((item) => (
-              <li key={item.path}>
-                <FooterLink path={item.path} label={item.label} />
+              <li key={item.label}>
+                <FooterLink
+                  path={item.path}
+                  label={item.label}
+                  action={"action" in item ? item.action : undefined}
+                />
               </li>
             ))}
           </ul>

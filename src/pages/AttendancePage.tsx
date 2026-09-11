@@ -5,6 +5,7 @@ import Reveal from "../components/ui/Reveal";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { SUBSCRIBER_PORTAL_URL } from "../config/integrations";
 import { PAGE_META } from "../config/site";
+import { useSpeedTestModal } from "../context/SpeedTestModalContext";
 import { usePageMeta } from "../hooks/usePageMeta";
 import { ADDRESS, PHONE_DISPLAY } from "../lib/constants";
 import {
@@ -52,6 +53,7 @@ const FORM_BENEFITS = [
 export default function AttendancePage() {
   usePageMeta(PAGE_META.atendimento);
   const { regionName } = useSelection();
+  const { openSpeedTestModal } = useSpeedTestModal();
 
   return (
     <>
@@ -109,20 +111,31 @@ export default function AttendancePage() {
             {SUPPORT_QUICK_ISSUES.map((issue, index) => (
               <Reveal key={issue.id} delay={index * 40}>
                 <li>
-                  <a
-                    href={buildWhatsAppLink(
-                      WHATSAPP_MESSAGES.supportIssue({
-                        reason: issue.label,
-                        region: regionName,
-                      })
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="attendance__issue-btn"
-                  >
-                    <IssueIcon id={issue.id} />
-                    <span>{issue.label}</span>
-                  </a>
+                  {"action" in issue && issue.action === "speed-test" ? (
+                    <button
+                      type="button"
+                      className="attendance__issue-btn"
+                      onClick={openSpeedTestModal}
+                    >
+                      <IssueIcon id={issue.id} />
+                      <span>{issue.label}</span>
+                    </button>
+                  ) : (
+                    <a
+                      href={buildWhatsAppLink(
+                        WHATSAPP_MESSAGES.supportIssue({
+                          reason: issue.label,
+                          region: regionName,
+                        })
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="attendance__issue-btn"
+                    >
+                      <IssueIcon id={issue.id} />
+                      <span>{issue.label}</span>
+                    </a>
+                  )}
                 </li>
               </Reveal>
             ))}
@@ -251,6 +264,16 @@ function PathIcon({ type }: { type: "contract" | "support" | "billing" }) {
 }
 
 function IssueIcon({ id }: { id: string }) {
+  if (id === "teste-velocidade") {
+    return (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 16a8 8 0 1 1 16 0" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+        <path d="M12 16l4-5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+        <circle cx="12" cy="16" r="1.25" fill="currentColor" />
+      </svg>
+    );
+  }
+
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       {id === "wifi-nao-conecta" ? (
