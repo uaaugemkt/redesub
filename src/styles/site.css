@@ -5260,13 +5260,8 @@
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-  grid-template-areas:
-    "stage detail"
-    "stage actions";
-  column-gap: clamp(24px, 4vw, 48px);
-  row-gap: 18px;
+  gap: clamp(24px, 4vw, 48px);
   align-items: center;
-  align-content: center;
   min-height: 420px;
   padding: clamp(28px, 4vw, 44px);
   border-radius: 28px;
@@ -5452,157 +5447,72 @@
   border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
-.content-packages__stage-slot {
-  grid-area: stage;
-  position: relative;
-  z-index: 1;
-  min-width: 0;
-}
-
 .content-packages__detail {
-  grid-area: detail;
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 14px;
-  align-self: end;
   animation: contentPackageSwap 220ms ease;
 }
 
-.content-packages__actions {
-  grid-area: actions;
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-self: start;
-  animation: contentPackageSwap 220ms ease;
-}
-
-/* Marcas em destaque — composição editorial (1 principal + 2 + 2) */
-.content-packages__brands {
-  position: relative;
+/* Marcas em destaque — selos discretos no lugar das tags */
+.content-packages__logos {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  max-width: 460px;
-  margin-inline: auto;
+  gap: 6px;
+  margin-top: -2px;
 }
 
-.content-packages__brands::before {
-  content: "";
-  position: absolute;
-  inset: -6% -10%;
-  border-radius: 999px;
-  pointer-events: none;
-  background: radial-gradient(ellipse at 50% 40%, rgba(255, 232, 200, 0.28) 0%, transparent 62%);
-  filter: blur(10px);
+.content-packages__logos-label {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
 }
 
-.content-packages__brand-grid {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 10px;
-  width: 100%;
+.content-packages__logos-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.content-packages__brand {
-  --brand-pad-y: 10px;
-  --brand-pad-x: 14px;
-  /* Os canvases 512x512 têm ~15% de margem transparente; o bleed compensa. */
-  --brand-bleed: 1.18;
+.content-packages__logo {
+  /* Canvas 512x512 com ~15% de margem transparente: bleed compensa. */
+  --logo-bleed: 1.22;
   position: relative;
   overflow: hidden;
-  border-radius: 18px;
-  background: var(--brand-white);
-  box-shadow:
-    0 14px 32px rgba(80, 24, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  transition: transform var(--transition), box-shadow var(--transition);
+  width: 70px;
+  height: 50px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-.content-packages__brand:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 18px 38px rgba(80, 24, 0, 0.26),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.content-packages__brand--1 {
-  --brand-pad-y: 12px;
-  --brand-pad-x: 18px;
-  grid-column: 3 / 11;
-  aspect-ratio: 2.2;
-  border-radius: 22px;
-}
-
-.content-packages__brand--2 {
-  grid-column: 1 / 7;
-  aspect-ratio: 1.75;
-}
-
-.content-packages__brand--3 {
-  grid-column: 7 / 13;
-  aspect-ratio: 1.75;
-}
-
-.content-packages__brand--4 {
-  grid-column: 2 / 7;
-  aspect-ratio: 1.6;
-}
-
-.content-packages__brand--5 {
-  grid-column: 7 / 12;
-  aspect-ratio: 1.6;
-}
-
-/* Absoluto para o canvas 512x512 não forçar o tile a virar quadrado */
-.content-packages__brand-logo {
+.content-packages__logo-img {
   position: absolute;
   top: 50%;
   left: 50%;
   display: block;
-  width: calc((100% - var(--brand-pad-x) * 2) * var(--brand-bleed));
-  height: calc((100% - var(--brand-pad-y) * 2) * var(--brand-bleed));
+  width: calc(100% * var(--logo-bleed));
+  height: calc(100% * var(--logo-bleed));
   transform: translate(-50%, -50%);
   object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
 }
 
-.content-packages__brand-more {
-  position: relative;
-  appearance: none;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 999px;
-  padding: 7px 14px;
-  font: inherit;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: rgba(255, 255, 255, 0.95);
-  background: rgba(255, 255, 255, 0.12);
-  cursor: pointer;
-  transition: background var(--transition), border-color var(--transition);
-}
-
-.content-packages__brand-more:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
-.content-packages__brand-more:focus-visible {
-  outline: 2px solid var(--brand-white);
-  outline-offset: 2px;
+.content-packages__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
 }
 
 .content-packages__desc--secondary {
@@ -5729,54 +5639,13 @@
 @media (max-width: 900px) {
   .content-packages__panel {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "detail"
-      "stage"
-      "actions";
     gap: 20px;
     min-height: 0;
     padding: 24px 20px 28px;
   }
 
-  .content-packages__detail,
-  .content-packages__actions {
-    align-self: auto;
-  }
-
   .content-packages__stage {
     min-height: 220px;
-  }
-
-  /* Marcas: mesma hierarquia, um pouco mais compactas */
-  .content-packages__brands {
-    max-width: 420px;
-  }
-
-  .content-packages__brand-grid {
-    gap: 8px;
-  }
-
-  .content-packages__brand {
-    --brand-pad-y: 8px;
-    --brand-pad-x: 12px;
-    border-radius: 14px;
-  }
-
-  .content-packages__brand--1 {
-    --brand-pad-y: 10px;
-    --brand-pad-x: 14px;
-    grid-column: 2 / 12;
-    border-radius: 16px;
-  }
-
-  .content-packages__brand--4 {
-    grid-column: 1 / 7;
-    aspect-ratio: 1.75;
-  }
-
-  .content-packages__brand--5 {
-    grid-column: 7 / 13;
-    aspect-ratio: 1.75;
   }
 
   .content-packages__tabs {
@@ -6061,19 +5930,12 @@
 }
 
 /* Planos — marcas em destaque e CTA secundário sobre painel claro */
-.content-packages--plans .content-packages__brands::before {
-  background: radial-gradient(ellipse at 50% 40%, rgba(var(--brand-orange-rgb), 0.16) 0%, transparent 62%);
+.content-packages--plans .content-packages__logos-label {
+  color: rgba(var(--brand-navy-rgb), 0.6);
 }
 
-.content-packages--plans .content-packages__brand {
-  border: 1px solid rgba(var(--brand-navy-rgb), 0.08);
-  box-shadow: 0 12px 28px rgba(100, 30, 0, 0.12);
-}
-
-.content-packages--plans .content-packages__brand-more {
-  color: var(--brand-navy);
-  background: rgba(var(--brand-navy-rgb), 0.06);
-  border-color: rgba(var(--brand-navy-rgb), 0.14);
+.content-packages--plans .content-packages__logo {
+  border-color: rgba(var(--brand-navy-rgb), 0.1);
 }
 
 .content-packages--plans .content-packages__cta--secondary {
@@ -6086,8 +5948,13 @@
   border-color: rgba(var(--brand-navy-rgb), 0.5);
 }
 
+/* Dois CTAs lado a lado no desktop; em telas estreitas a regra de 640px
+   já os deixa com largura total. */
 .content-packages__actions .content-packages__cta {
+  flex: 1 1 200px;
+  min-width: 0;
   margin-top: 0;
+  padding-inline: 24px;
 }
 
 .content-packages--plans .content-packages__stage-orb--2 {
