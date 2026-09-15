@@ -27,7 +27,7 @@ export interface ContentPackage {
   /**
    * Lista oficial de canais/marcas; gera destaques (`featured`), o modal
    * "Ver todos os canais" e a contagem. Vazia até os logos do pacote serem
-   * adicionados em /public/media/<pacote>/.
+   * adicionados em /public/media/canais/ e registrados no CHANNEL_CATALOG.
    */
   channels: readonly ContentChannel[];
   featured?: boolean;
@@ -40,60 +40,128 @@ export interface ContentPackage {
 /** Quantas marcas o painel destaca — o restante fica só no modal. */
 export const FEATURED_CHANNELS_LIMIT = 5;
 
-const HUB_CINE_LOGO_DIR = "/media/hub-cine";
-const hubCineLogo = (file: string) => `${HUB_CINE_LOGO_DIR}/${file}.webp`;
+const CHANNEL_LOGO_DIR = "/media/canais";
 
 /**
- * Canais do Hub Cine. Os logos vêm todos de /public/media/hub-cine
- * (512x512, fundo transparente).
- *
- * A ordem importa: os `featured` aparecem no painel na sequência em que
- * estão aqui (o primeiro ganha a posição principal). Max, Premiere e ESPN
- * são prioridade comercial, mas ainda não temos os logos oficiais — quando
- * chegarem, basta adicioná-los no topo desta lista com `featured: true`
- * (ex.: hubCineLogo("max"), hubCineLogo("premiere"), hubCineLogo("espn"))
- * e ajustar os `featured` excedentes.
+ * Catálogo de canais/marcas com logo oficial em /public/media/canais
+ * (WebP 512x512, fundo transparente). Cada pacote monta sua lista a partir
+ * daqui, então nome e arquivo ficam em um lugar só.
  */
-const HUB_CINE_CHANNELS: readonly ContentChannel[] = [
-  { name: "Telecine Premium", logo: hubCineLogo("telecine-premium"), featured: true },
-  { name: "AMC", logo: hubCineLogo("amc"), featured: true },
-  { name: "Sony One", logo: hubCineLogo("sony-one"), featured: true },
-  { name: "Universal+", logo: hubCineLogo("universal-plus"), featured: true },
-  { name: "CNN Brasil", logo: hubCineLogo("cnn-brasil"), featured: true },
-  { name: "Telecine Action", logo: hubCineLogo("telecine-action") },
-  { name: "Telecine Cult", logo: hubCineLogo("telecine-cult") },
-  { name: "Telecine Fun", logo: hubCineLogo("telecine-fun") },
-  { name: "Telecine Pipoca", logo: hubCineLogo("telecine-pipoca") },
-  { name: "Telecine Touch", logo: hubCineLogo("telecine-touch") },
-  { name: "Film & Arts", logo: hubCineLogo("film-and-arts") },
-  { name: "W Collection", logo: hubCineLogo("w-collection") },
-  { name: "Band", logo: hubCineLogo("band") },
-  { name: "SBT", logo: hubCineLogo("sbt") },
-  { name: "RecordTV", logo: hubCineLogo("recordtv") },
-  { name: "RedeTV!", logo: hubCineLogo("rede-tv") },
-  { name: "TV Cultura", logo: hubCineLogo("cultura") },
-  { name: "TV Brasil", logo: hubCineLogo("tv-brasil") },
-  { name: "TV Gazeta", logo: hubCineLogo("gazeta") },
-  { name: "Futura", logo: hubCineLogo("futura") },
-  { name: "Rá-Tim-Bum", logo: hubCineLogo("ra-tim-bum") },
-  { name: "Moonbug", logo: hubCineLogo("moonbug") },
-  { name: "Edye", logo: hubCineLogo("edye") },
-  { name: "Manual do Mundo", logo: hubCineLogo("manual-do-mundo") },
-  { name: "Fatos Desconhecidos", logo: hubCineLogo("fatos-desconhecidos") },
-  { name: "Desimpedidos", logo: hubCineLogo("desimpedidos") },
-  { name: "Acelerados", logo: hubCineLogo("acelerados") },
-  { name: "Good Game TV", logo: hubCineLogo("good-game-tv") },
-  { name: "FitDance", logo: hubCineLogo("fitdance") },
-  { name: "Xpeed School", logo: hubCineLogo("xpeed-school") },
-  { name: "Canal Artesanal", logo: hubCineLogo("canal-artesanal") },
-  { name: "Itaú Cultural Play", logo: hubCineLogo("itau-cultural-play") },
-  { name: "WhE Play Plus", logo: hubCineLogo("whe-play-plus") },
-  { name: "Awdio", logo: hubCineLogo("audio") },
-  { name: "TV Aparecida", logo: hubCineLogo("aparecida") },
-  { name: "Canção Nova", logo: hubCineLogo("cancao-nova") },
-  { name: "RedeVida", logo: hubCineLogo("redevida") },
-  { name: "TV Evangelizar", logo: hubCineLogo("tv-evangelizar") },
+const CHANNEL_CATALOG = {
+  "hbo-max": "HBO",
+  "telecine-premium": "Telecine Premium",
+  amc: "AMC",
+  "sony-one": "Sony One",
+  "universal-plus": "Universal+",
+  "cnn-brasil": "CNN Brasil",
+  "telecine-action": "Telecine Action",
+  "telecine-cult": "Telecine Cult",
+  "telecine-fun": "Telecine Fun",
+  "telecine-pipoca": "Telecine Pipoca",
+  "telecine-touch": "Telecine Touch",
+  "film-and-arts": "Film & Arts",
+  "w-collection": "W Collection",
+  band: "Band",
+  sbt: "SBT",
+  recordtv: "RecordTV",
+  "rede-tv": "RedeTV!",
+  cultura: "TV Cultura",
+  "tv-brasil": "TV Brasil",
+  gazeta: "TV Gazeta",
+  futura: "Futura",
+  "ra-tim-bum": "Rá-Tim-Bum",
+  moonbug: "Moonbug",
+  edye: "Edye",
+  "manual-do-mundo": "Manual do Mundo",
+  "fatos-desconhecidos": "Fatos Desconhecidos",
+  desimpedidos: "Desimpedidos",
+  acelerados: "Acelerados",
+  "good-game-tv": "Good Game TV",
+  fitdance: "FitDance",
+  "xpeed-school": "Xpeed School",
+  "canal-artesanal": "Canal Artesanal",
+  "itau-cultural-play": "Itaú Cultural Play",
+  "whe-play-plus": "WhE Play Plus",
+  audio: "Awdio",
+  aparecida: "TV Aparecida",
+  "cancao-nova": "Canção Nova",
+  redevida: "RedeVida",
+  "tv-evangelizar": "TV Evangelizar",
+} as const;
+
+type ChannelSlug = keyof typeof CHANNEL_CATALOG;
+
+/**
+ * Monta a lista de um pacote. A ordem importa: os `featured` aparecem no
+ * painel na sequência em que estão aqui; o modal segue a mesma ordem.
+ */
+function channelList(
+  slugs: readonly ChannelSlug[],
+  featured: readonly ChannelSlug[]
+): readonly ContentChannel[] {
+  return slugs.map((slug) => ({
+    name: CHANNEL_CATALOG[slug],
+    logo: `${CHANNEL_LOGO_DIR}/${slug}.webp`,
+    ...(featured.includes(slug) ? { featured: true } : {}),
+  }));
+}
+
+/** Canais comuns aos pacotes Hub, na ordem em que aparecem no modal. */
+const HUB_COMMON_CHANNELS: readonly ChannelSlug[] = [
+  "telecine-premium",
+  "amc",
+  "sony-one",
+  "universal-plus",
+  "cnn-brasil",
+  "telecine-action",
+  "telecine-cult",
+  "telecine-fun",
+  "telecine-pipoca",
+  "telecine-touch",
+  "film-and-arts",
+  "w-collection",
+  "band",
+  "sbt",
+  "recordtv",
+  "rede-tv",
+  "cultura",
+  "tv-brasil",
+  "gazeta",
+  "futura",
+  "ra-tim-bum",
+  "moonbug",
+  "edye",
+  "manual-do-mundo",
+  "fatos-desconhecidos",
+  "desimpedidos",
+  "acelerados",
+  "good-game-tv",
+  "fitdance",
+  "xpeed-school",
+  "canal-artesanal",
+  "itau-cultural-play",
+  "whe-play-plus",
+  "aparecida",
+  "cancao-nova",
+  "redevida",
+  "tv-evangelizar",
 ];
+
+/**
+ * Hub Cine: os canais comuns + Awdio. Max, Premiere e ESPN são prioridade
+ * comercial, mas ainda não temos os logos — quando chegarem, registre no
+ * CHANNEL_CATALOG, coloque no topo desta lista e nos `featured`.
+ */
+const HUB_CINE_CHANNELS = channelList(
+  [...HUB_COMMON_CHANNELS, "audio"],
+  ["telecine-premium", "amc", "sony-one", "universal-plus", "cnn-brasil"]
+);
+
+/** Hub Mix: HBO + os canais comuns (sem Awdio). */
+const HUB_MIX_CHANNELS = channelList(
+  ["hbo-max", ...HUB_COMMON_CHANNELS],
+  ["hbo-max", "telecine-premium", "sony-one", "universal-plus", "cnn-brasil"]
+);
 
 export const CONTENT_PACKAGES: readonly ContentPackage[] = [
   {
@@ -147,12 +215,11 @@ export const CONTENT_PACKAGES: readonly ContentPackage[] = [
   {
     id: "hub-mix",
     name: "Hub Mix",
-    channelCount: 24,
-    channels: [], // logos do Hub Mix ainda não fornecidos
+    channels: HUB_MIX_CHANNELS,
     description:
-      "Conteúdos ao vivo e sob demanda em formato de pacote adicional à sua internet.",
+      "Filmes, séries, esportes, notícias e entretenimento em um só pacote.",
     descriptionSecondary:
-      "Uma seleção de canais e conteúdos para assistir ao vivo e quando quiser.",
+      "Tenha acesso a grandes canais e conteúdos para assistir ao vivo e quando quiser.",
     whatsappMessage:
       "Olá! Tenho interesse no pacote Hub Mix da RedeSub.",
   },
