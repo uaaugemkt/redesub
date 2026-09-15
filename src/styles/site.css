@@ -5661,8 +5661,10 @@
   margin-top: 8px;
 }
 
-.content-packages__desc--secondary {
-  margin-top: -6px;
+/* Continuação do parágrafo acima: reduz o gap de 14px do detalhe para 6px.
+   Seletor composto para vencer o `margin: 0` de .content-packages__desc. */
+.content-packages__desc.content-packages__desc--secondary {
+  margin-top: -8px;
   font-size: 0.92rem;
   opacity: 0.85;
 }
@@ -5707,26 +5709,6 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.72);
-}
-
-.content-packages__chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.content-packages__chip {
-  display: inline-flex;
-  padding: 7px 12px;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.92);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 .content-packages__desc {
@@ -5967,12 +5949,6 @@
   color: rgba(255, 255, 255, 0.82);
 }
 
-.content-packages--home .content-packages__chip {
-  color: var(--brand-navy);
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(255, 255, 255, 0.38);
-}
-
 /* Painel laranja: todos os textos em branco sólido */
 .content-packages--home .content-packages__desc,
 .content-packages--home .content-packages__channels-label,
@@ -6093,12 +6069,6 @@
 
 .content-packages--plans .content-packages__channels-label {
   color: rgba(var(--brand-navy-rgb), 0.72);
-}
-
-.content-packages--plans .content-packages__chip {
-  color: var(--brand-navy);
-  background: rgba(var(--brand-navy-rgb), 0.06);
-  border-color: rgba(var(--brand-navy-rgb), 0.12);
 }
 
 .content-packages--plans .content-packages__desc {

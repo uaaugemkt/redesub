@@ -98,7 +98,7 @@ export default function ChannelsModal({
 
   if (!open) return null;
 
-  const channels = pkg.channels ?? [];
+  const channels = pkg.channels;
   const count = getChannelCount(pkg);
 
   return createPortal(

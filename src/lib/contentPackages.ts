@@ -2,9 +2,11 @@
  * Pacotes de conteúdos (SVA) — upgrades opcionais ao plano de internet.
  * Fonte única. Não inventar canais: só entram na lista os que têm logo
  * oficial em /public.
+ *
+ * Todos os pacotes seguem a mesma estrutura de painel: título, quantidade,
+ * descrição, linha de apoio, faixa de marcas em destaque e CTAs. A faixa e
+ * o botão "Ver todos os canais" só aparecem quando `channels` tem itens.
  */
-
-export type ContentGroupType = "ao-vivo" | "ao-vivo-vod" | "vod";
 
 export interface ContentChannel {
   name: string;
@@ -14,37 +16,29 @@ export interface ContentChannel {
   featured?: boolean;
 }
 
-export interface ContentGroup {
-  type: ContentGroupType;
-  label: string;
-}
-
 export interface ContentPackage {
   id: string;
   name: string;
   /**
-   * Usado só quando o pacote ainda não tem `channels` — assim que a lista
-   * oficial existir, a quantidade passa a ser derivada dela.
+   * Usado só enquanto `channels` estiver vazio — assim que a lista oficial
+   * existir, a quantidade passa a ser derivada dela.
    */
   channelCount?: number;
-  /** Lista oficial de canais/marcas; gera destaques, modal e contagem. */
-  channels?: readonly ContentChannel[];
-  groups: readonly ContentGroup[];
+  /**
+   * Lista oficial de canais/marcas; gera destaques (`featured`), o modal
+   * "Ver todos os canais" e a contagem. Vazia até os logos do pacote serem
+   * adicionados em /public/media/<pacote>/.
+   */
+  channels: readonly ContentChannel[];
   featured?: boolean;
   description: string;
-  /** Linha de apoio abaixo da descrição (opcional) */
-  descriptionSecondary?: string;
+  /** Linha de apoio abaixo da descrição */
+  descriptionSecondary: string;
   whatsappMessage: string;
 }
 
 /** Quantas marcas o painel destaca — o restante fica só no modal. */
 export const FEATURED_CHANNELS_LIMIT = 5;
-
-const GROUPS_LIVE_VOD: readonly ContentGroup[] = [
-  { type: "ao-vivo", label: "Ao vivo" },
-  { type: "ao-vivo-vod", label: "Ao vivo e VOD" },
-  { type: "vod", label: "VOD" },
-];
 
 const HUB_CINE_LOGO_DIR = "/media/hub-cine";
 const hubCineLogo = (file: string) => `${HUB_CINE_LOGO_DIR}/${file}.webp`;
@@ -106,9 +100,11 @@ export const CONTENT_PACKAGES: readonly ContentPackage[] = [
     id: "power-play",
     name: "Power Play",
     channelCount: 66,
-    groups: GROUPS_LIVE_VOD,
+    channels: [], // logos do Power Play ainda não fornecidos
     description:
       "Conteúdos ao vivo e sob demanda em um pacote adicional para sua internet RedeSub.",
+    descriptionSecondary:
+      "Canais e conteúdos para o dia a dia da sua casa, ao vivo e quando quiser.",
     whatsappMessage:
       "Olá! Tenho interesse no pacote Power Play da RedeSub.",
   },
@@ -116,10 +112,12 @@ export const CONTENT_PACKAGES: readonly ContentPackage[] = [
     id: "power-elite",
     name: "Power Elite",
     channelCount: 80,
-    groups: GROUPS_LIVE_VOD,
+    channels: [], // logos do Power Elite ainda não fornecidos
     featured: true,
     description:
       "Pacote adicional com conteúdos ao vivo e sob demanda para complementar sua conexão.",
+    descriptionSecondary:
+      "Mais canais e conteúdos para assistir ao vivo e quando quiser.",
     whatsappMessage:
       "Olá! Tenho interesse no pacote Power Elite da RedeSub.",
   },
@@ -127,9 +125,11 @@ export const CONTENT_PACKAGES: readonly ContentPackage[] = [
     id: "power-ultra",
     name: "Power Ultra",
     channelCount: 72,
-    groups: GROUPS_LIVE_VOD,
+    channels: [], // logos do Power Ultra ainda não fornecidos
     description:
       "Upgrade de conteúdos ao vivo e sob demanda para aproveitar ainda mais sua internet.",
+    descriptionSecondary:
+      "Canais e conteúdos para assistir ao vivo e quando quiser, na sua internet RedeSub.",
     whatsappMessage:
       "Olá! Tenho interesse no pacote Power Ultra da RedeSub.",
   },
@@ -137,7 +137,6 @@ export const CONTENT_PACKAGES: readonly ContentPackage[] = [
     id: "hub-cine",
     name: "Hub Cine",
     channels: HUB_CINE_CHANNELS,
-    groups: GROUPS_LIVE_VOD,
     description:
       "Filmes, séries, esportes, notícias e entretenimento em um só pacote.",
     descriptionSecondary:
@@ -149,9 +148,11 @@ export const CONTENT_PACKAGES: readonly ContentPackage[] = [
     id: "hub-mix",
     name: "Hub Mix",
     channelCount: 24,
-    groups: GROUPS_LIVE_VOD,
+    channels: [], // logos do Hub Mix ainda não fornecidos
     description:
       "Conteúdos ao vivo e sob demanda em formato de pacote adicional à sua internet.",
+    descriptionSecondary:
+      "Uma seleção de canais e conteúdos para assistir ao vivo e quando quiser.",
     whatsappMessage:
       "Olá! Tenho interesse no pacote Hub Mix da RedeSub.",
   },
@@ -166,13 +167,13 @@ export function getContentPackageById(
 
 /** Quantidade exibida: derivada da lista quando ela existe. */
 export function getChannelCount(pkg: ContentPackage): number {
-  return pkg.channels?.length ?? pkg.channelCount ?? 0;
+  return pkg.channels.length > 0 ? pkg.channels.length : (pkg.channelCount ?? 0);
 }
 
 export function getFeaturedChannels(
   pkg: ContentPackage
 ): readonly ContentChannel[] {
-  return (pkg.channels ?? [])
+  return pkg.channels
     .filter((channel) => channel.featured)
     .slice(0, FEATURED_CHANNELS_LIMIT);
 }

@@ -89,7 +89,7 @@ export default function AppsSection({ variant = "preview" }: AppsSectionProps = 
 
   const channelCount = getChannelCount(activePackage);
   const featuredChannels = getFeaturedChannels(activePackage);
-  const hasChannelList = (activePackage.channels?.length ?? 0) > 0;
+  const hasChannelList = activePackage.channels.length > 0;
 
   const openChannels = useCallback(() => setChannelsOpen(true), []);
   const closeChannels = useCallback(() => setChannelsOpen(false), []);
@@ -165,25 +165,13 @@ export default function AppsSection({ variant = "preview" }: AppsSectionProps = 
                   <span className="content-packages__channels-label">Canais</span>
                 </p>
 
-                {/* Com lista de canais, as marcas em destaque ocupam o lugar das tags. */}
-                {!hasChannelList && (
-                  <ul className="content-packages__chips">
-                    {activePackage.groups.map((group) => (
-                      <li key={`${activePackage.id}-${group.type}`}>
-                        <span className="content-packages__chip">{group.label}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
                 <p className="content-packages__desc">{activePackage.description}</p>
-                {activePackage.descriptionSecondary && (
-                  <p className="content-packages__desc content-packages__desc--secondary">
-                    {activePackage.descriptionSecondary}
-                  </p>
-                )}
+                <p className="content-packages__desc content-packages__desc--secondary">
+                  {activePackage.descriptionSecondary}
+                </p>
 
-                {hasChannelList && featuredChannels.length > 0 && (
+                {/* Aparece assim que o pacote tiver logos em `channels` com `featured`. */}
+                {featuredChannels.length > 0 && (
                   <FeaturedLogos channels={featuredChannels} />
                 )}
 
