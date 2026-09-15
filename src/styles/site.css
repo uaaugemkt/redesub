@@ -5606,8 +5606,9 @@
 .content-packages__logos {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-top: -2px;
+  gap: 8px;
+  /* Bloco próprio, separado do texto acima (soma ao gap de 14px do detalhe). */
+  margin-top: 12px;
 }
 
 .content-packages__logos-label {
