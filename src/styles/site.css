@@ -5447,6 +5447,150 @@
   border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
+/* Movimento contínuo da arte orbital — sutil, só CSS */
+.content-packages__stage-glow {
+  animation: stageGlowBreathe 6s ease-in-out infinite alternate;
+}
+
+.content-packages__stage-ring--outer {
+  animation: stageOrbit 32s linear infinite;
+}
+
+.content-packages__stage-ring--inner {
+  animation: stageOrbit 20s linear infinite reverse;
+}
+
+/* Satélite que percorre cada anel (o anel gira; a borda uniforme esconde o giro) */
+.content-packages__stage-ring::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+}
+
+.content-packages__stage-ring--inner::before {
+  width: 6px;
+  height: 6px;
+  top: -3px;
+  margin-left: -3px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.content-packages__stage-play {
+  animation: stagePlayFloat 5s ease-in-out infinite;
+}
+
+.content-packages__stage-play::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  animation: stagePlayPulse 3.2s ease-out infinite;
+  pointer-events: none;
+}
+
+.content-packages__stage-chip--a {
+  animation: stageChipFloat 6.5s ease-in-out infinite;
+}
+
+.content-packages__stage-chip--b {
+  animation: stageChipFloat 7.5s ease-in-out infinite 1.2s;
+}
+
+.content-packages__stage-chip--c {
+  animation: stageChipFloat 5.8s ease-in-out infinite 0.6s;
+}
+
+.content-packages__stage-orb--1 {
+  animation: stageOrbTwinkle 4s ease-in-out infinite;
+}
+
+.content-packages__stage-orb--2 {
+  animation: stageOrbTwinkle 5.5s ease-in-out infinite 1.5s;
+}
+
+.content-packages__stage-orb--3 {
+  animation: stageOrbTwinkle 6.5s ease-in-out infinite 0.8s;
+}
+
+@keyframes stageGlowBreathe {
+  from {
+    transform: scale(0.94);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes stageOrbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes stagePlayFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes stagePlayPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+@keyframes stageChipFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes stageOrbTwinkle {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content-packages__stage-glow,
+  .content-packages__stage-ring,
+  .content-packages__stage-play,
+  .content-packages__stage-play::after,
+  .content-packages__stage-chip,
+  .content-packages__stage-orb {
+    animation: none;
+  }
+}
+
 .content-packages__detail {
   position: relative;
   z-index: 1;
