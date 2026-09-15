@@ -5259,7 +5259,8 @@
 .content-packages__panel {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  /* Coluna da direita mais larga para a descrição caber em uma linha. */
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   gap: clamp(24px, 4vw, 48px);
   align-items: center;
   min-height: 420px;
@@ -5669,25 +5670,6 @@
   box-shadow: none;
 }
 
-.content-packages__family {
-  margin: 0;
-  display: inline-flex;
-  padding: 5px 10px;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--brand-white);
-  background: rgba(var(--brand-orange-rgb), 0.22);
-  border: 1px solid rgba(var(--brand-orange-rgb), 0.35);
-}
-
-.content-packages__family[data-family="hub"] {
-  background: rgba(56, 189, 248, 0.18);
-  border-color: rgba(56, 189, 248, 0.35);
-}
-
 .content-packages__name {
   margin: 0;
   font-size: clamp(1.8rem, 3.2vw, 2.55rem);
@@ -5971,18 +5953,6 @@
   border-color: rgba(255, 255, 255, 0.22);
 }
 
-.content-packages--home .content-packages__family {
-  color: rgba(255, 255, 255, 0.92);
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.24);
-}
-
-.content-packages--home .content-packages__family[data-family="hub"] {
-  color: rgba(255, 255, 255, 0.92);
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.24);
-}
-
 .content-packages--home .content-packages__name {
   color: var(--brand-white);
 }
@@ -6103,18 +6073,6 @@
 
 .content-packages--plans .content-packages__stage-orb--2 {
   background: rgba(var(--brand-orange-rgb), 0.65);
-}
-
-.content-packages--plans .content-packages__family {
-  color: var(--brand-orange);
-  background: rgba(var(--brand-orange-rgb), 0.12);
-  border-color: rgba(var(--brand-orange-rgb), 0.24);
-}
-
-.content-packages--plans .content-packages__family[data-family="hub"] {
-  color: var(--brand-orange);
-  background: rgba(var(--brand-orange-rgb), 0.12);
-  border-color: rgba(var(--brand-orange-rgb), 0.24);
 }
 
 .content-packages--plans .content-packages__name {

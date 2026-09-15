@@ -155,9 +155,6 @@ export default function AppsSection({ variant = "preview" }: AppsSectionProps = 
               <ShowcaseArt family={family} />
 
               <div key={activePackage.id} className="content-packages__detail">
-                <p className="content-packages__family" data-family={family}>
-                  {hasChannelList ? activePackage.name : family === "hub" ? "Hub" : "Power"}
-                </p>
                 <h3 className="content-packages__name">{activePackage.name}</h3>
 
                 <p
