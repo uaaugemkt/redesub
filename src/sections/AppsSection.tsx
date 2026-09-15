@@ -1,8 +1,12 @@
-import { useId, useState } from "react";
+import { useCallback, useId, useRef, useState } from "react";
+import ChannelsModal from "../components/ChannelsModal";
 import Reveal from "../components/ui/Reveal";
 import { VideoIcon } from "../components/icons/BusinessImpactIcons";
 import {
   CONTENT_PACKAGES,
+  getChannelCount,
+  getFeaturedChannels,
+  type ContentChannel,
   type ContentPackage,
 } from "../lib/contentPackages";
 import { buildWhatsAppLink } from "../lib/whatsapp";
@@ -17,6 +21,7 @@ function packageFamily(pkg: ContentPackage): "power" | "hub" {
   return pkg.id.startsWith("hub") ? "hub" : "power";
 }
 
+/** Arte abstrata — usada enquanto o pacote não tem lista oficial de canais. */
 function ShowcaseArt({ family }: { family: "power" | "hub" }) {
   return (
     <div className="content-packages__stage" aria-hidden="true" data-family={family}>
@@ -36,6 +41,54 @@ function ShowcaseArt({ family }: { family: "power" | "hub" }) {
   );
 }
 
+/**
+ * Composição editorial com as marcas em destaque: a primeira ganha a
+ * posição principal, as demais se distribuem em duas fileiras. As
+ * imagens carregam já (são o argumento comercial do painel).
+ */
+function BrandShowcase({
+  channels,
+  remaining,
+  onShowAll,
+}: {
+  channels: readonly ContentChannel[];
+  remaining: number;
+  onShowAll: () => void;
+}) {
+  return (
+    <div className="content-packages__brands">
+      <ul className="content-packages__brand-grid" aria-label="Marcas em destaque">
+        {channels.map((channel, index) => (
+          <li
+            key={channel.logo}
+            className={`content-packages__brand content-packages__brand--${index + 1}`}
+          >
+            <img
+              src={channel.logo}
+              alt={channel.name}
+              width={512}
+              height={512}
+              loading="eager"
+              decoding="async"
+              draggable={false}
+              className="content-packages__brand-logo"
+            />
+          </li>
+        ))}
+      </ul>
+      {remaining > 0 && (
+        <button
+          type="button"
+          className="content-packages__brand-more"
+          onClick={onShowAll}
+        >
+          + {remaining} canais no pacote
+        </button>
+      )}
+    </div>
+  );
+}
+
 interface AppsSectionProps {
   variant?: "preview" | "full";
   /** Mantido por compatibilidade — a seção é sempre a vitrine de pacotes */
@@ -45,6 +98,8 @@ interface AppsSectionProps {
 export default function AppsSection({ variant = "preview" }: AppsSectionProps = {}) {
   const tabsId = useId();
   const [activeId, setActiveId] = useState(() => getInitialPackage().id);
+  const [channelsOpen, setChannelsOpen] = useState(false);
+  const showAllButtonRef = useRef<HTMLButtonElement>(null);
   const activePackage =
     CONTENT_PACKAGES.find((pkg) => pkg.id === activeId) ?? getInitialPackage();
   const family = packageFamily(activePackage);
@@ -52,6 +107,28 @@ export default function AppsSection({ variant = "preview" }: AppsSectionProps = 
   const panelId = `${tabsId}-panel`;
   const variantClass =
     variant === "full" ? "content-packages--plans" : "content-packages--home";
+
+  const channelCount = getChannelCount(activePackage);
+  const featuredChannels = getFeaturedChannels(activePackage);
+  const hasChannelList = (activePackage.channels?.length ?? 0) > 0;
+
+  const openChannels = useCallback(() => setChannelsOpen(true), []);
+  const closeChannels = useCallback(() => setChannelsOpen(false), []);
+
+  const selectPackage = (id: string) => {
+    setActiveId(id);
+    setChannelsOpen(false);
+  };
+
+  const chips = (
+    <ul className="content-packages__chips">
+      {activePackage.groups.map((group) => (
+        <li key={`${activePackage.id}-${group.type}`}>
+          <span className="content-packages__chip">{group.label}</span>
+        </li>
+      ))}
+    </ul>
+  );
 
   return (
     <section
@@ -92,7 +169,7 @@ export default function AppsSection({ variant = "preview" }: AppsSectionProps = 
                     aria-controls={panelId}
                     tabIndex={selected ? 0 : -1}
                     className={`content-packages__tab${selected ? " is-active" : ""}`}
-                    onClick={() => setActiveId(pkg.id)}
+                    onClick={() => selectPackage(pkg.id)}
                   >
                     {pkg.name}
                   </button>
@@ -101,39 +178,51 @@ export default function AppsSection({ variant = "preview" }: AppsSectionProps = 
             </div>
 
             <div
-              className="content-packages__panel"
+              className={`content-packages__panel${hasChannelList ? " content-packages__panel--brands" : ""}`}
               role="tabpanel"
               id={panelId}
               aria-labelledby={`${tabsId}-${activePackage.id}`}
             >
-              <ShowcaseArt family={family} />
+              <div key={`${activePackage.id}-stage`} className="content-packages__stage-slot">
+                {hasChannelList ? (
+                  <BrandShowcase
+                    channels={featuredChannels}
+                    remaining={channelCount - featuredChannels.length}
+                    onShowAll={openChannels}
+                  />
+                ) : (
+                  <ShowcaseArt family={family} />
+                )}
+              </div>
 
-              <div key={activePackage.id} className="content-packages__detail">
+              <div key={`${activePackage.id}-detail`} className="content-packages__detail">
                 <p className="content-packages__family" data-family={family}>
-                  {family === "hub" ? "Hub" : "Power"}
+                  {hasChannelList ? activePackage.name : family === "hub" ? "Hub" : "Power"}
                 </p>
                 <h3 className="content-packages__name">{activePackage.name}</h3>
 
                 <p
                   className="content-packages__channels"
-                  aria-label={`${activePackage.channelCount} canais`}
+                  aria-label={`${channelCount} canais`}
                 >
-                  <span className="content-packages__channels-value">
-                    {activePackage.channelCount}
-                  </span>
+                  <span className="content-packages__channels-value">{channelCount}</span>
                   <span className="content-packages__channels-label">Canais</span>
                 </p>
 
-                <ul className="content-packages__chips">
-                  {activePackage.groups.map((group) => (
-                    <li key={`${activePackage.id}-${group.type}`}>
-                      <span className="content-packages__chip">{group.label}</span>
-                    </li>
-                  ))}
-                </ul>
+                {/* Com lista de canais, as marcas são o protagonista: tags vão depois do texto. */}
+                {!hasChannelList && chips}
 
                 <p className="content-packages__desc">{activePackage.description}</p>
+                {activePackage.descriptionSecondary && (
+                  <p className="content-packages__desc content-packages__desc--secondary">
+                    {activePackage.descriptionSecondary}
+                  </p>
+                )}
 
+                {hasChannelList && chips}
+              </div>
+
+              <div key={`${activePackage.id}-actions`} className="content-packages__actions">
                 <a
                   href={href}
                   target="_blank"
@@ -142,11 +231,30 @@ export default function AppsSection({ variant = "preview" }: AppsSectionProps = 
                 >
                   Quero este pacote
                 </a>
+                {hasChannelList && (
+                  <button
+                    ref={showAllButtonRef}
+                    type="button"
+                    className="btn btn--outline-light btn--lg content-packages__cta content-packages__cta--secondary"
+                    onClick={openChannels}
+                  >
+                    Ver todos os canais
+                  </button>
+                )}
               </div>
             </div>
           </div>
         </Reveal>
       </div>
+
+      {hasChannelList && (
+        <ChannelsModal
+          open={channelsOpen}
+          pkg={activePackage}
+          onClose={closeChannels}
+          returnFocusRef={showAllButtonRef}
+        />
+      )}
     </section>
   );
 }
