@@ -6465,11 +6465,18 @@
 
 .channels-modal__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  /* Desktop: 7 por linha; abaixo de 900px a grade vira adaptativa. */
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 12px;
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+@media (max-width: 900px) {
+  .channels-modal__grid {
+    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  }
 }
 
 .channels-modal__item {
