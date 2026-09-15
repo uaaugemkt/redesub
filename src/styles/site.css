@@ -5959,7 +5959,7 @@
 
 .content-packages--home .content-packages__channels-value,
 .content-packages--home .content-packages__showcase--hub .content-packages__channels-value {
-  color: rgba(255, 255, 255, 0.98);
+  color: var(--brand-white);
 }
 
 .content-packages--home .content-packages__channels-label {
@@ -5972,8 +5972,15 @@
   border-color: rgba(255, 255, 255, 0.38);
 }
 
-.content-packages--home .content-packages__desc {
-  color: rgba(255, 255, 255, 0.88);
+/* Painel laranja: todos os textos em branco sólido */
+.content-packages--home .content-packages__desc,
+.content-packages--home .content-packages__channels-label,
+.content-packages--home .content-packages__logos-label {
+  color: var(--brand-white);
+}
+
+.content-packages--home .content-packages__desc--secondary {
+  opacity: 1;
 }
 
 .content-packages--home .content-packages__cta.btn--primary {
