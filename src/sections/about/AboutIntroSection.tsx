@@ -1,4 +1,4 @@
-import { useEffect, useState, type PointerEvent, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import {
   MapPinIcon,
   MessageCircleIcon,
@@ -28,138 +28,9 @@ const PRINCIPLES: ReadonlyArray<{
   },
 ];
 
-const INTRO_SLIDES: ReadonlyArray<{
-  id: string;
-  src: string;
-  alt: string;
-}> = [
-  {
-    id: "equipe",
-    src: "/media/quem-somos/redesub-quem-somos-1.webp",
-    alt: "Técnicos da RedeSub em uma rua residencial instalando fibra óptica no poste, com o carro da empresa ao fundo",
-  },
-  {
-    id: "sede",
-    src: "/media/quem-somos/redesub-quem-somos-2.webp",
-    alt: "Fachada da sede da RedeSub com a frota de carros adesivados estacionada em frente",
-  },
-];
-
-// Ambas as imagens são 800x450 (16:9). Manter a proporção fixa evita
-// layout shift e garante que nenhuma delas seja cortada.
-const INTRO_SLIDE_WIDTH = 800;
-const INTRO_SLIDE_HEIGHT = 450;
-const INTRO_AUTOPLAY_MS = 4500;
-
-/**
- * Crossfade automático entre as fotos institucionais. Pausa apenas com
- * mouse (hover no desktop) ou foco nos indicadores; no touch segue
- * automático. Com prefers-reduced-motion, fica parado no primeiro slide
- * e os indicadores continuam navegáveis.
- */
-function AboutIntroSlider() {
-  const slideCount = INTRO_SLIDES.length;
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReducedMotion(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
-
-  useEffect(() => {
-    if (paused || reducedMotion || slideCount < 2) return;
-
-    const id = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % slideCount);
-    }, INTRO_AUTOPLAY_MS);
-
-    return () => window.clearInterval(id);
-  }, [paused, reducedMotion, slideCount]);
-
-  // Só o mouse pausa: no touch o pointerenter dispara no toque e não
-  // teria um pointerleave correspondente, travando o autoplay.
-  const onPointerEnter = (event: PointerEvent<HTMLDivElement>) => {
-    if (event.pointerType === "mouse") setPaused(true);
-  };
-  const onPointerLeave = (event: PointerEvent<HTMLDivElement>) => {
-    if (event.pointerType === "mouse") setPaused(false);
-  };
-
-  const activeSlide = INTRO_SLIDES[activeIndex];
-
-  return (
-    <div
-      className="about-intro__image-wrap about-intro__slider"
-      aria-roledescription="carrossel"
-      aria-label="Fotos da RedeSub"
-      onPointerEnter={onPointerEnter}
-      onPointerLeave={onPointerLeave}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-          setPaused(false);
-        }
-      }}
-    >
-      {INTRO_SLIDES.map((slide, index) => {
-        const isActive = index === activeIndex;
-        return (
-          <div
-            key={slide.id}
-            id={`about-intro-slide-${slide.id}`}
-            className={`about-intro__slide${isActive ? " is-active" : ""}`}
-            aria-hidden={!isActive}
-            aria-roledescription="slide"
-            aria-label={`${index + 1} de ${slideCount}`}
-          >
-            <img
-              src={slide.src}
-              alt={slide.alt}
-              width={INTRO_SLIDE_WIDTH}
-              height={INTRO_SLIDE_HEIGHT}
-              loading={index === 0 ? "eager" : "lazy"}
-              decoding="async"
-              draggable={false}
-              className="about-intro__image"
-            />
-          </div>
-        );
-      })}
-
-      <div className="about-intro__image-glow" aria-hidden="true" />
-
-      {slideCount > 1 && (
-        <div
-          className="about-intro__dots"
-          role="tablist"
-          aria-label="Selecionar foto"
-        >
-          {INTRO_SLIDES.map((slide, index) => (
-            <button
-              key={slide.id}
-              type="button"
-              role="tab"
-              aria-selected={index === activeIndex}
-              aria-controls={`about-intro-slide-${slide.id}`}
-              aria-label={`Foto ${index + 1} de ${slideCount}`}
-              className={`about-intro__dot${index === activeIndex ? " is-active" : ""}`}
-              onClick={() => setActiveIndex(index)}
-            />
-          ))}
-        </div>
-      )}
-
-      <p className="sr-only" aria-live="polite">
-        {activeSlide.alt}
-      </p>
-    </div>
-  );
-}
+// Foto 800x450 (16:9): proporção fixa reserva a altura e evita layout shift.
+const INTRO_IMAGE_WIDTH = 800;
+const INTRO_IMAGE_HEIGHT = 450;
 
 export default function AboutIntroSection() {
   return (
@@ -193,7 +64,18 @@ export default function AboutIntroSection() {
         </Reveal>
 
         <Reveal delay={100} className="about-intro__visual">
-          <AboutIntroSlider />
+          <div className="about-intro__image-wrap">
+            <img
+              src="/media/quem-somos/redesub-quem-somos-1.webp"
+              alt="Técnicos da RedeSub em uma rua residencial instalando fibra óptica no poste, com o carro da empresa ao fundo"
+              width={INTRO_IMAGE_WIDTH}
+              height={INTRO_IMAGE_HEIGHT}
+              decoding="async"
+              draggable={false}
+              className="about-intro__image"
+            />
+            <div className="about-intro__image-glow" aria-hidden="true" />
+          </div>
         </Reveal>
       </div>
     </section>

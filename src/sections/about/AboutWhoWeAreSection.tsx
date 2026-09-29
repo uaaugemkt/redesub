@@ -17,7 +17,7 @@ export default function AboutWhoWeAreSection() {
       <ConnectedSurfaceFx />
 
       <div className="container about-who__inner">
-        <Reveal>
+        <Reveal className="about-who__copy">
           <span className="eyebrow">Quem somos</span>
           <h2 className="section__title" id="about-who-title">
             O provedor regional que escolheu estar perto
@@ -34,7 +34,19 @@ export default function AboutWhoWeAreSection() {
           </p>
         </Reveal>
 
-        <Reveal delay={80}>
+        <Reveal delay={160} className="about-who__visual">
+          <figure className="about-who__figure">
+            <img
+              src="/media/quem-somos/redesub-quem-somos-2.webp"
+              alt="Fachada da sede da RedeSub com a frota de carros adesivados estacionada em frente"
+              width={800}
+              height={450}
+              loading="lazy"
+              decoding="async"
+              className="about-who__photo"
+            />
+          </figure>
+
           <aside className="about-who__aside" aria-labelledby="about-who-aside-title">
             <span className="about-who__aside-icon" aria-hidden="true">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none">

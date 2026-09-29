@@ -269,7 +269,7 @@
 
 .biz-seg {
   display: grid;
-  grid-template-rows: 140px auto;
+  grid-template-rows: auto 1fr;
   height: 100%;
   overflow: hidden;
   border-radius: 22px;
@@ -279,8 +279,25 @@
   transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
-.biz-seg--lg {
-  grid-template-rows: 170px auto;
+.biz-seg--lg .biz-seg__art {
+  aspect-ratio: 2 / 1;
+}
+
+.biz-seg--grandes .biz-seg__image {
+  object-position: center 35%;
+}
+
+.biz-seg--comercios .biz-seg__image,
+.biz-seg--pequenas .biz-seg__image {
+  object-position: center 30%;
+}
+
+.biz-seg--restaurantes .biz-seg__image {
+  object-position: center 40%;
+}
+
+.biz-seg--escritorios .biz-seg__image {
+  object-position: center 45%;
 }
 
 .biz-seg:hover {
@@ -291,6 +308,7 @@
 .biz-seg__art {
   position: relative;
   overflow: hidden;
+  aspect-ratio: 16 / 10;
   background: #e8eef5;
 }
 
@@ -1029,6 +1047,10 @@
   .biz-segments__top .reveal:last-child {
     grid-column: 1 / -1;
   }
+
+  .biz-segments__top .reveal:last-child .biz-seg__art {
+    aspect-ratio: 5 / 2;
+  }
 }
 
 @media (max-width: 900px) {
@@ -1073,6 +1095,10 @@
 
   .biz-segments__top .reveal:last-child {
     grid-column: auto;
+  }
+
+  .biz-segments__top .reveal:last-child .biz-seg__art {
+    aspect-ratio: 16 / 10;
   }
 
   .biz-plan__cta--solid:hover,

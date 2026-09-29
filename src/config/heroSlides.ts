@@ -41,6 +41,14 @@ export const HERO_SLIDES: readonly HeroSlide[] = [
     label: "Indique seu amigo e ganhe",
     link: { type: "external", href: REFERRAL_URL },
   },
+  {
+    id: "empresas",
+    imageSrc: "/media/banners/banner-empresas.webp",
+    imageAlt:
+      "Campanha RedeSub — internet empresarial de 700 e 900 mega com suporte especializado",
+    label: "Internet para empresas",
+    link: { type: "internal", to: "/para-empresas" },
+  },
 ] as const;
 
 export const HERO_AUTOPLAY_MS = 6000;

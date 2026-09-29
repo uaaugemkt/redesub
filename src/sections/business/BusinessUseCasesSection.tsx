@@ -23,7 +23,7 @@ const SEGMENTS: ReadonlyArray<{
     text: "Internet estável para atividades comerciais, sistemas e rotina administrativa.",
     icon: <RouterIcon />,
     image: "/media/empresa/segmentos/pequenas-empresas.webp",
-    imageAlt: "Pequena empresa com equipe trabalhando",
+    imageAlt: "Equipe trabalhando em pequena empresa",
     size: "sm",
   },
   {
@@ -32,7 +32,7 @@ const SEGMENTS: ReadonlyArray<{
     text: "Desempenho e estabilidade para operações com maior demanda.",
     icon: <GaugeIcon />,
     image: "/media/empresa/segmentos/grandes-empresas.webp",
-    imageAlt: "Equipe em ambiente corporativo",
+    imageAlt: "Equipe em ambiente empresarial de maior porte",
     size: "sm",
   },
   {
@@ -41,7 +41,7 @@ const SEGMENTS: ReadonlyArray<{
     text: "Internet para atendimento, sistemas, vendas e operação do estabelecimento.",
     icon: <ShoppingCartIcon />,
     image: "/media/empresa/segmentos/comercios.webp",
-    imageAlt: "Operação de comércio e atendimento",
+    imageAlt: "Atendimento em estabelecimento comercial",
     size: "sm",
   },
   {
@@ -50,7 +50,7 @@ const SEGMENTS: ReadonlyArray<{
     text: "Conexão para sistemas, pagamentos, atendimento e rotina do negócio.",
     icon: <MapPinIcon />,
     image: "/media/empresa/segmentos/restaurantes.webp",
-    imageAlt: "Restaurante em operação",
+    imageAlt: "Equipe e clientes em restaurante",
     size: "lg",
   },
   {
@@ -95,8 +95,8 @@ export default function BusinessUseCasesSection() {
                     src={item.image}
                     alt={item.imageAlt}
                     className="biz-seg__image"
-                    width={640}
-                    height={360}
+                    width={1600}
+                    height={1018}
                     loading="lazy"
                     decoding="async"
                   />
@@ -122,8 +122,8 @@ export default function BusinessUseCasesSection() {
                     src={item.image}
                     alt={item.imageAlt}
                     className="biz-seg__image"
-                    width={960}
-                    height={432}
+                    width={1600}
+                    height={1018}
                     loading="lazy"
                     decoding="async"
                   />
