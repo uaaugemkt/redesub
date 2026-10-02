@@ -5,9 +5,8 @@ import { VideoIcon } from "../components/icons/BusinessImpactIcons";
 import {
   CONTENT_PACKAGES,
   getChannelCount,
-  getFeaturedChannels,
-  type ContentChannel,
   type ContentPackage,
+  type PackageHighlight,
 } from "../lib/contentPackages";
 import { buildWhatsAppLink } from "../lib/whatsapp";
 
@@ -17,13 +16,9 @@ function getInitialPackage(): ContentPackage {
   );
 }
 
-function packageFamily(pkg: ContentPackage): "power" | "hub" {
-  return pkg.id.startsWith("hub") ? "hub" : "power";
-}
-
-function ShowcaseArt({ family }: { family: "power" | "hub" }) {
+function ShowcaseArt() {
   return (
-    <div className="content-packages__stage" aria-hidden="true" data-family={family}>
+    <div className="content-packages__stage" aria-hidden="true">
       <div className="content-packages__stage-glow" />
       <div className="content-packages__stage-ring content-packages__stage-ring--outer" />
       <div className="content-packages__stage-ring content-packages__stage-ring--inner" />
@@ -40,29 +35,42 @@ function ShowcaseArt({ family }: { family: "power" | "hub" }) {
   );
 }
 
+/** Área visual alvo de cada logo (px²) e altura máxima dentro do selo. */
+const LOGO_AREA = 1300;
+const LOGO_MAX_HEIGHT = 36;
+
 /**
- * Faixa discreta de marcas em destaque — ocupa o lugar das tags quando o
- * pacote tem lista de canais. Carrega já (é argumento comercial).
+ * Mesma área para todos: logo largo fica baixo, logo quadrado fica alto,
+ * e nenhum domina a faixa. O CSS ainda limita a largura ao selo.
  */
-function FeaturedLogos({ channels }: { channels: readonly ContentChannel[] }) {
+function logoHeight(ratio: number): number {
+  return Math.min(LOGO_MAX_HEIGHT, Math.sqrt(LOGO_AREA / ratio));
+}
+
+/** Faixa de marcas em destaque. Carrega já (é argumento comercial). */
+function FeaturedLogos({ brands }: { brands: readonly PackageHighlight[] }) {
   return (
     <div className="content-packages__logos">
       <p className="content-packages__logos-label">Grandes canais no pacote</p>
       <ul className="content-packages__logos-list" aria-label="Marcas em destaque">
-        {channels.map((channel) => (
-          <li key={channel.logo} className="content-packages__logo">
-            <img
-              src={channel.logo}
-              alt={channel.name}
-              width={512}
-              height={512}
-              loading="eager"
-              decoding="async"
-              draggable={false}
-              className="content-packages__logo-img"
-            />
-          </li>
-        ))}
+        {brands.map((brand) => {
+          const height = logoHeight(brand.ratio);
+          return (
+            <li key={brand.name} className="content-packages__logo">
+              <img
+                src={brand.logo}
+                alt={brand.name}
+                width={Math.round(height * brand.ratio)}
+                height={Math.round(height)}
+                style={{ height }}
+                loading="eager"
+                decoding="async"
+                draggable={false}
+                className="content-packages__logo-img"
+              />
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -81,14 +89,12 @@ export default function AppsSection({ variant = "preview" }: AppsSectionProps = 
   const showAllButtonRef = useRef<HTMLButtonElement>(null);
   const activePackage =
     CONTENT_PACKAGES.find((pkg) => pkg.id === activeId) ?? getInitialPackage();
-  const family = packageFamily(activePackage);
   const href = buildWhatsAppLink(activePackage.whatsappMessage);
   const panelId = `${tabsId}-panel`;
   const variantClass =
     variant === "full" ? "content-packages--plans" : "content-packages--home";
 
   const channelCount = getChannelCount(activePackage);
-  const featuredChannels = getFeaturedChannels(activePackage);
   const hasChannelList = activePackage.channels.length > 0;
 
   const openChannels = useCallback(() => setChannelsOpen(true), []);
@@ -120,7 +126,7 @@ export default function AppsSection({ variant = "preview" }: AppsSectionProps = 
         </Reveal>
 
         <Reveal delay={80}>
-          <div className={`content-packages__showcase content-packages__showcase--${family}`}>
+          <div className="content-packages__showcase content-packages__showcase--hub">
             <div
               className="content-packages__tabs"
               role="tablist"
@@ -152,7 +158,7 @@ export default function AppsSection({ variant = "preview" }: AppsSectionProps = 
               id={panelId}
               aria-labelledby={`${tabsId}-${activePackage.id}`}
             >
-              <ShowcaseArt family={family} />
+              <ShowcaseArt />
 
               <div key={activePackage.id} className="content-packages__detail">
                 <h3 className="content-packages__name">{activePackage.name}</h3>
@@ -170,9 +176,8 @@ export default function AppsSection({ variant = "preview" }: AppsSectionProps = 
                   {activePackage.descriptionSecondary}
                 </p>
 
-                {/* Aparece assim que o pacote tiver logos em `channels` com `featured`. */}
-                {featuredChannels.length > 0 && (
-                  <FeaturedLogos channels={featuredChannels} />
+                {activePackage.highlights.length > 0 && (
+                  <FeaturedLogos brands={activePackage.highlights} />
                 )}
 
                 <div className="content-packages__actions">

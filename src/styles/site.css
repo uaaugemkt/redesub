@@ -5265,7 +5265,9 @@ section.about-process.about-process--connected .use-cases__mouse-glow {
 }
 
 .content-packages__tab {
-  flex: 0 0 auto;
+  /* Poucas abas: dividem a barra por igual em vez de encostar à esquerda. */
+  flex: 1 1 0;
+  text-align: center;
   appearance: none;
   border: none;
   cursor: pointer;
@@ -5650,6 +5652,7 @@ section.about-process.about-process--connected .use-cases__mouse-glow {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  align-self: stretch;
   /* Bloco próprio, separado do texto acima (soma ao gap de 14px do detalhe). */
   margin-top: 12px;
 }
@@ -5664,34 +5667,32 @@ section.about-process.about-process--connected .use-cases__mouse-glow {
 }
 
 .content-packages__logos-list {
-  display: flex;
-  flex-wrap: wrap;
+  /* Selos de largura igual; a última linha só fica mais curta, sem vagas. */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
   gap: 8px;
+  width: 100%;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .content-packages__logo {
-  /* Canvas 512x512 com ~15% de margem transparente: bleed compensa. */
-  --logo-bleed: 1.22;
-  position: relative;
-  overflow: hidden;
-  width: 70px;
-  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  padding: 0 7px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
+/* Altura vem do componente (área visual igual); aqui só o teto de largura. */
 .content-packages__logo-img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
   display: block;
-  width: calc(100% * var(--logo-bleed));
-  height: calc(100% * var(--logo-bleed));
-  transform: translate(-50%, -50%);
+  width: auto;
+  max-width: 100%;
   object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
@@ -5816,9 +5817,22 @@ section.about-process.about-process--connected .use-cases__mouse-glow {
     gap: 6px;
   }
 
+  /* Três abas cabem sem rolagem: nomes longos quebram em duas linhas
+     equilibradas ("Power Esporte / Clube") em vez de serem cortados. */
   .content-packages__tab {
-    padding: 10px 14px;
+    flex: 1 1 auto;
+    padding: 10px 12px;
     font-size: 0.8125rem;
+    line-height: 1.2;
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  @media (max-width: 360px) {
+    .content-packages__tab {
+      padding-inline: 8px;
+      font-size: 0.75rem;
+    }
   }
 
   .content-packages__cta {
