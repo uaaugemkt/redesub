@@ -61,7 +61,7 @@ const RESIDENTIAL_PLANS: readonly Plan[] = [
     name: "+ Segurança",
     speed: "500 Mega",
     features: [
-      "Câmera IP Full HD com cartão de memória em comodato",
+      "Câmera IP Full HD em comodato",
       "Lê Aí e Historinhas",
       "Plataforma de filmes e séries",
       "Roteador 5G em comodato",
