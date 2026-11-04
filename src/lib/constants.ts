@@ -27,7 +27,7 @@ export const WHATSAPP_DISPLAY = PHONE_DISPLAY;
 export const REFERRAL_URL = "https://redesub.conecte.ai/indique";
 
 export const SUBSCRIBER_PORTAL_URL =
-  "https://sgp.redesub.com/accounts/central/login?_gl=1*1x07x3b*_ga*MTE4MzUwNDcyOS4xNzIyNjIxODQ1*_ga_M3Z9MC0V4N*MTcyODA3MzkxMi42LjEuMTcyODA3Mzk1Mi4wLjAuMA..*_gcl_au*MTM1MjQ5NTUxMC4xNzIyNjIxODQ0";
+  "https://redesubtelecom.sgplocal.com.br/accounts/central/login";
 
 export const SPEED_TEST_URL = "https://velocimetro.redesub.com";
 
