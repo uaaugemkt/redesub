@@ -6471,17 +6471,14 @@ section.about-process.about-process--connected .use-cases__mouse-glow {
 .speed-test-modal__body {
   flex: 1;
   min-height: 0;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
+  overflow: hidden;
 }
 
-/* Altura mínima: em telas baixas/estreitas o corpo rola em vez de cortar o velocímetro */
+/* A rolagem fica só dentro do iframe (o velocímetro rola sozinho em telas baixas) */
 .speed-test-modal__iframe {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 720px;
   border: 0;
 }
 
@@ -6494,10 +6491,6 @@ section.about-process.about-process--connected .use-cases__mouse-glow {
     width: 95vw;
     height: 88vh;
     height: 92dvh;
-  }
-
-  .speed-test-modal__iframe {
-    min-height: 900px;
   }
 }
 
